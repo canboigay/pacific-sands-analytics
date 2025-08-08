@@ -8,12 +8,15 @@ import asyncio
 import aiohttp
 import json
 import re
+import os
 from datetime import datetime
 from dataclasses import dataclass, asdict
 from typing import List, Dict, Optional
 import logging
 
 logger = logging.getLogger(__name__)
+
+BASE_DIR = os.environ.get("PS_DATA_DIR", os.path.dirname(os.path.abspath(__file__)))
 
 @dataclass
 class SocialMediaMention:
@@ -58,8 +61,9 @@ class SocialMediaScraper:
 
     def load_api_keys(self):
         """Load social media API keys"""
+        config_path = os.path.join(BASE_DIR, 'social-api-keys.json')
         try:
-            with open('/Users/simeong/data-upload-tools/social-api-keys.json', 'r') as f:
+            with open(config_path, 'r') as f:
                 return json.load(f)
         except FileNotFoundError:
             # Create template file
@@ -82,8 +86,8 @@ class SocialMediaScraper:
                     "user_agent": "PacificSandsScraper/1.0"
                 }
             }
-            
-            with open('/Users/simeong/data-upload-tools/social-api-keys.json', 'w') as f:
+
+            with open(config_path, 'w') as f:
                 json.dump(template, f, indent=2)
                 
             logger.info("Created social-api-keys.json template. Please add your API keys.")
@@ -328,7 +332,7 @@ async def main():
         
         # Save to JSON file
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-        filename = f'/Users/simeong/data-upload-tools/social_mentions_{timestamp}.json'
+        filename = os.path.join(BASE_DIR, f'social_mentions_{timestamp}.json')
         
         with open(filename, 'w') as f:
             json.dump([asdict(mention) for mention in mentions], f, indent=2, default=str)

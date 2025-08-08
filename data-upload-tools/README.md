@@ -52,6 +52,19 @@ All endpoints require: `Authorization: Bearer ps_me2w0k3e_x81fsv0yz3k`
 - **Every 2 hours** - Social media mentions
 - **Weekly Sunday 2:00 AM** - Full comprehensive scrape
 
+### Configuration & Logs
+
+Configuration files and log output are stored in a project-relative directory.
+By default, this is the folder containing the scraping scripts, but you can
+override it by setting the `PS_DATA_DIR` environment variable.
+
+Files written to this directory include:
+
+- `social-api-keys.json` – social media API credentials
+- `scraper-config.json` – scheduling options
+- `scraper.log` – scheduler log output
+- `social_mentions_*.json` – exported social media mentions
+
 ## 🧠 Custom GPT Integration
 
 1. Upload `pacific-sands-gpt-schema.json` to ChatGPT Actions
