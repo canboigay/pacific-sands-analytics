@@ -7,16 +7,16 @@
   },
   "servers": [
     {
-      "url": "https://data-upload-tools.vercel.app/api",
+      "url": "https://data-upload-tools-iuvx7njjd-pacific-sands.vercel.app/api",
       "description": "Pacific Sands Analytics Server"
     }
   ],
   "paths": {
-    "/analytics/insights": {
+    "/analytics": {
       "get": {
-        "summary": "Get business insights",
-        "description": "Retrieve insights from historical data including pricing trends, occupancy patterns, and recommendations",
-        "operationId": "getInsights",
+        "summary": "Get business insights and analytics",
+        "description": "Retrieve comprehensive analytics including pricing trends, occupancy patterns, competitor analysis, and recommendations",
+        "operationId": "getAnalytics",
         "parameters": [
           {
             "name": "date_from",
@@ -43,11 +43,21 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "analysis_type",
+            "in": "query",
+            "description": "Type of analysis to perform",
+            "schema": {
+              "type": "string",
+              "enum": ["insights", "competitors", "trends", "recommendations"],
+              "default": "insights"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Insights retrieved successfully",
+            "description": "Analytics retrieved successfully",
             "content": {
               "application/json": {
                 "schema": {
@@ -67,6 +77,14 @@
                         "average_occupancy": {"type": "number"},
                         "peak_periods": {"type": "array", "items": {"type": "string"}},
                         "low_periods": {"type": "array", "items": {"type": "string"}}
+                      }
+                    },
+                    "competitor_analysis": {
+                      "type": "object",
+                      "properties": {
+                        "pacific_sands": {"type": "object"},
+                        "competitors": {"type": "array", "items": {"type": "object"}},
+                        "market_position": {"type": "object"}
                       }
                     },
                     "recommendations": {
@@ -89,11 +107,6 @@
         }
       }
     },
-    "/analytics/competitors": {
-      "get": {
-        "summary": "Get competitor analysis",
-        "description": "Retrieve competitor pricing and occupancy data compared to Pacific Sands",
-        "operationId": "getCompetitorAnalysis",
         "parameters": [
           {
             "name": "metric",

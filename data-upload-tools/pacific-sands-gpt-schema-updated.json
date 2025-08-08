@@ -1,0 +1,603 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Pacific Sands Analytics API",
+    "description": "API for accessing Pacific Sands historical data, analytics, and competitor insights",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://data-upload-tools-iuvx7njjd-pacific-sands.vercel.app/api",
+      "description": "Pacific Sands Analytics Server"
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "summary": "API Information",
+        "description": "Get API information and available endpoints",
+        "operationId": "getApiInfo",
+        "responses": {
+          "200": {
+            "description": "API info retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {"type": "string"},
+                    "version": {"type": "string"},
+                    "endpoints": {"type": "array", "items": {"type": "string"}}
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/upload": {
+      "post": {
+        "summary": "Upload historical data",
+        "description": "Upload CSV data for analysis (rates, bookings, reviews, etc.)",
+        "operationId": "uploadData",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data_type": {
+                    "type": "string",
+                    "enum": ["rates", "occupancy", "reviews", "competitors", "pace"],
+                    "description": "Type of data being uploaded"
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {"type": "object"},
+                    "description": "Array of data records"
+                  },
+                  "date_range": {
+                    "type": "object",
+                    "properties": {
+                      "start": {"type": "string", "format": "date"},
+                      "end": {"type": "string", "format": "date"}
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Data uploaded successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {"type": "boolean"},
+                    "records_processed": {"type": "integer"},
+                    "message": {"type": "string"},
+                    "insights_generated": {"type": "array", "items": {"type": "string"}}
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/analytics": {
+      "get": {
+        "summary": "Get business analytics",
+        "description": "Retrieve comprehensive analytics including pricing trends, occupancy patterns, competitor analysis, and recommendations",
+        "operationId": "getAnalytics",
+        "parameters": [
+          {
+            "name": "date_from",
+            "in": "query",
+            "description": "Start date for analysis (YYYY-MM-DD)",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "date_to",
+            "in": "query",
+            "description": "End date for analysis (YYYY-MM-DD)",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "room_type",
+            "in": "query",
+            "description": "Filter by specific room type",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Analytics retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pricing_insights": {
+                      "type": "object",
+                      "properties": {
+                        "average_rate": {"type": "number"},
+                        "rate_trend": {"type": "string"},
+                        "seasonal_patterns": {"type": "array", "items": {"type": "object"}}
+                      }
+                    },
+                    "occupancy_insights": {
+                      "type": "object",
+                      "properties": {
+                        "average_occupancy": {"type": "number"},
+                        "peak_periods": {"type": "array", "items": {"type": "string"}},
+                        "low_periods": {"type": "array", "items": {"type": "string"}}
+                      }
+                    },
+                    "competitor_analysis": {
+                      "type": "object",
+                      "properties": {
+                        "pacific_sands": {"type": "object"},
+                        "competitors": {"type": "array", "items": {"type": "object"}},
+                        "market_position": {"type": "object"}
+                      }
+                    },
+                    "recommendations": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "title": {"type": "string"},
+                          "description": {"type": "string"},
+                          "impact": {"type": "string", "enum": ["high", "medium", "low"]},
+                          "confidence": {"type": "number"}
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/forecasting": {
+      "get": {
+        "summary": "Get rate forecasting",
+        "description": "Get AI-powered rate predictions based on historical data and market conditions",
+        "operationId": "getRateForecasting",
+        "parameters": [
+          {
+            "name": "room_type",
+            "in": "query",
+            "description": "Room type to forecast",
+            "schema": {"type": "string"}
+          },
+          {
+            "name": "forecast_days",
+            "in": "query",
+            "description": "Number of days to forecast",
+            "schema": {"type": "integer", "default": 30, "minimum": 1, "maximum": 365}
+          },
+          {
+            "name": "include_events",
+            "in": "query",
+            "description": "Include local events in forecasting",
+            "schema": {"type": "boolean", "default": true}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Rate forecast retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "room_type": {"type": "string"},
+                    "forecast_period": {"type": "string"},
+                    "current_rate": {"type": "number"},
+                    "trend_analysis": {
+                      "type": "object",
+                      "properties": {
+                        "direction": {"type": "string"},
+                        "strength": {"type": "string"},
+                        "factor": {"type": "number"}
+                      }
+                    },
+                    "forecast": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "date": {"type": "string", "format": "date"},
+                          "suggested_rate": {"type": "number"},
+                          "confidence": {"type": "number"},
+                          "factors": {"type": "array", "items": {"type": "string"}}
+                        }
+                      }
+                    },
+                    "revenue_impact": {
+                      "type": "object",
+                      "properties": {
+                        "current_trajectory": {"type": "number"},
+                        "optimized_trajectory": {"type": "number"},
+                        "potential_uplift": {"type": "number"},
+                        "uplift_percentage": {"type": "number"}
+                      }
+                    },
+                    "data_quality": {
+                      "type": "object",
+                      "properties": {
+                        "historical_records": {"type": "integer"},
+                        "occupancy_records": {"type": "integer"},
+                        "confidence_level": {"type": "string"}
+                      }
+                    },
+                    "recommendations": {
+                      "type": "array",
+                      "items": {"type": "string"}
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/knowledge": {
+      "post": {
+        "summary": "Store qualitative insights",
+        "description": "Store GPT-generated insights, observations, and qualitative analysis for future reference",
+        "operationId": "storeKnowledge",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "insight_type": {
+                    "type": "string",
+                    "enum": ["customer_insight", "market_observation", "operational_finding", "strategic_recommendation", "trend_analysis", "competitive_intelligence"]
+                  },
+                  "title": {"type": "string"},
+                  "content": {"type": "string"},
+                  "confidence_level": {"type": "number", "minimum": 0, "maximum": 1},
+                  "data_sources": {"type": "array", "items": {"type": "string"}},
+                  "tags": {"type": "array", "items": {"type": "string"}},
+                  "date_range": {
+                    "type": "object",
+                    "properties": {
+                      "start": {"type": "string", "format": "date"},
+                      "end": {"type": "string", "format": "date"}
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Knowledge stored successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {"type": "boolean"},
+                    "insight_id": {"type": "string"},
+                    "message": {"type": "string"}
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Retrieve stored knowledge",
+        "description": "Search and retrieve previously stored insights for context and memory",
+        "operationId": "getKnowledge",
+        "parameters": [
+          {
+            "name": "search_query",
+            "in": "query",
+            "schema": {"type": "string"},
+            "description": "Search term to find relevant insights"
+          },
+          {
+            "name": "insight_type",
+            "in": "query",
+            "schema": {"type": "string"},
+            "description": "Filter by type of insight"
+          },
+          {
+            "name": "tags",
+            "in": "query",
+            "schema": {"type": "string"},
+            "description": "Comma-separated tags to search for"
+          },
+          {
+            "name": "synthesis",
+            "in": "query",
+            "schema": {"type": "boolean", "default": false},
+            "description": "Whether to synthesize insights with quantitative data"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Knowledge retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "insights": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {"type": "string"},
+                          "title": {"type": "string"},
+                          "content": {"type": "string"},
+                          "confidence_level": {"type": "number"},
+                          "tags": {"type": "array", "items": {"type": "string"}},
+                          "created_at": {"type": "string", "format": "date-time"}
+                        }
+                      }
+                    },
+                    "synthesis": {
+                      "type": "object",
+                      "properties": {
+                        "executive_summary": {"type": "string"},
+                        "key_findings": {"type": "array", "items": {"type": "object"}},
+                        "recommendations": {"type": "array", "items": {"type": "object"}}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "summary": "Health check",
+        "description": "Check API and database health status",
+        "operationId": "healthCheck",
+        "responses": {
+          "200": {
+            "description": "Health status retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {"type": "string"},
+                    "database": {"type": "string"},
+                    "custom_gpt_ready": {"type": "boolean"},
+                    "timestamp": {"type": "string", "format": "date-time"},
+                    "records": {
+                      "type": "object",
+                      "properties": {
+                        "rates": {"type": "integer"},
+                        "occupancy": {"type": "integer"},
+                        "insights": {"type": "integer"},
+                        "total": {"type": "integer"}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ApiInfo": {
+        "type": "object",
+        "properties": {
+          "name": {"type": "string"},
+          "version": {"type": "string"},
+          "endpoints": {"type": "array", "items": {"type": "string"}}
+        }
+      },
+      "UploadRequest": {
+        "type": "object",
+        "properties": {
+          "data_type": {
+            "type": "string",
+            "enum": ["rates", "occupancy", "reviews", "competitors", "pace"]
+          },
+          "data": {
+            "type": "array",
+            "items": {"type": "object"}
+          },
+          "date_range": {
+            "type": "object",
+            "properties": {
+              "start": {"type": "string", "format": "date"},
+              "end": {"type": "string", "format": "date"}
+            }
+          }
+        }
+      },
+      "AnalyticsResponse": {
+        "type": "object",
+        "properties": {
+          "pricing_insights": {"$ref": "#/components/schemas/PricingInsights"},
+          "occupancy_insights": {"$ref": "#/components/schemas/OccupancyInsights"},
+          "competitor_analysis": {"$ref": "#/components/schemas/CompetitorAnalysis"},
+          "recommendations": {
+            "type": "array",
+            "items": {"$ref": "#/components/schemas/Recommendation"}
+          }
+        }
+      },
+      "PricingInsights": {
+        "type": "object",
+        "properties": {
+          "average_rate": {"type": "number"},
+          "rate_trend": {"type": "string"},
+          "seasonal_patterns": {"type": "array", "items": {"type": "object"}}
+        }
+      },
+      "OccupancyInsights": {
+        "type": "object",
+        "properties": {
+          "average_occupancy": {"type": "number"},
+          "peak_periods": {"type": "array", "items": {"type": "string"}},
+          "low_periods": {"type": "array", "items": {"type": "string"}}
+        }
+      },
+      "CompetitorAnalysis": {
+        "type": "object",
+        "properties": {
+          "pacific_sands": {"type": "object"},
+          "competitors": {"type": "array", "items": {"type": "object"}},
+          "market_position": {"type": "object"}
+        }
+      },
+      "Recommendation": {
+        "type": "object",
+        "properties": {
+          "title": {"type": "string"},
+          "description": {"type": "string"},
+          "impact": {"type": "string", "enum": ["high", "medium", "low"]},
+          "confidence": {"type": "number"}
+        }
+      },
+      "ForecastingResponse": {
+        "type": "object",
+        "properties": {
+          "room_type": {"type": "string"},
+          "forecast_period": {"type": "string"},
+          "current_rate": {"type": "number"},
+          "trend_analysis": {"$ref": "#/components/schemas/TrendAnalysis"},
+          "forecast": {
+            "type": "array",
+            "items": {"$ref": "#/components/schemas/ForecastItem"}
+          },
+          "revenue_impact": {"$ref": "#/components/schemas/RevenueImpact"},
+          "data_quality": {"$ref": "#/components/schemas/DataQuality"},
+          "recommendations": {"type": "array", "items": {"type": "string"}}
+        }
+      },
+      "TrendAnalysis": {
+        "type": "object",
+        "properties": {
+          "direction": {"type": "string"},
+          "strength": {"type": "string"},
+          "factor": {"type": "number"}
+        }
+      },
+      "ForecastItem": {
+        "type": "object",
+        "properties": {
+          "date": {"type": "string", "format": "date"},
+          "suggested_rate": {"type": "number"},
+          "confidence": {"type": "number"},
+          "factors": {"type": "array", "items": {"type": "string"}}
+        }
+      },
+      "RevenueImpact": {
+        "type": "object",
+        "properties": {
+          "current_trajectory": {"type": "number"},
+          "optimized_trajectory": {"type": "number"},
+          "potential_uplift": {"type": "number"},
+          "uplift_percentage": {"type": "number"}
+        }
+      },
+      "DataQuality": {
+        "type": "object",
+        "properties": {
+          "historical_records": {"type": "integer"},
+          "occupancy_records": {"type": "integer"},
+          "confidence_level": {"type": "string"}
+        }
+      },
+      "KnowledgeRequest": {
+        "type": "object",
+        "properties": {
+          "insight_type": {
+            "type": "string",
+            "enum": ["customer_insight", "market_observation", "operational_finding", "strategic_recommendation", "trend_analysis", "competitive_intelligence"]
+          },
+          "title": {"type": "string"},
+          "content": {"type": "string"},
+          "confidence_level": {"type": "number", "minimum": 0, "maximum": 1},
+          "data_sources": {"type": "array", "items": {"type": "string"}},
+          "tags": {"type": "array", "items": {"type": "string"}},
+          "date_range": {
+            "type": "object",
+            "properties": {
+              "start": {"type": "string", "format": "date"},
+              "end": {"type": "string", "format": "date"}
+            }
+          }
+        }
+      },
+      "HealthResponse": {
+        "type": "object",
+        "properties": {
+          "status": {"type": "string"},
+          "database": {"type": "string"},
+          "custom_gpt_ready": {"type": "boolean"},
+          "timestamp": {"type": "string", "format": "date-time"},
+          "records": {
+            "type": "object",
+            "properties": {
+              "rates": {"type": "integer"},
+              "occupancy": {"type": "integer"},
+              "insights": {"type": "integer"},
+              "total": {"type": "integer"}
+            }
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": {"type": "string"},
+          "message": {"type": "string"},
+          "timestamp": {"type": "string", "format": "date-time"}
+        }
+      }
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "API Key"
+      }
+    }
+  },
+  "security": [
+    {
+      "BearerAuth": []
+    }
+  ]
+}
