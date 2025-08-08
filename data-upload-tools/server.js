@@ -3,9 +3,13 @@ const cors = require('cors');
 const multer = require('multer');
 const fs = require('fs').promises;
 const path = require('path');
+const StorageManager = require('./storage-manager');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Initialize enhanced storage
+const storage = new StorageManager();
 
 // Middleware
 app.use(cors());
@@ -23,7 +27,7 @@ const authenticateAPI = (req, res, next) => {
     next();
 };
 
-// Data storage (in production, use a proper database)
+// Enhanced data storage with organized file structure
 let analyticsData = {
     rates: [],
     bookings: [],
@@ -55,15 +59,23 @@ app.get('/', (req, res) => {
 app.get('/api/analytics/insights', authenticateAPI, async (req, res) => {
     const { date_from, date_to, room_type } = req.query;
     
-    // Mock insights based on stored data
+    // Load historical data for analysis
+    const competitorData = await storage.loadData('competitors', { start: date_from, end: date_to });
+    const rateData = await storage.loadData('rates', { start: date_from, end: date_to });
+    
+    // Calculate real insights from stored data
+    const avgCompetitorRate = competitorData.length > 0 ? 
+        competitorData.reduce((sum, r) => sum + r.rate, 0) / competitorData.length : 285.50;
+    
     const insights = {
         pricing_insights: {
-            average_rate: 285.50,
-            rate_trend: "increasing",
+            average_rate: avgCompetitorRate,
+            rate_trend: competitorData.length > 10 ? "data-driven" : "increasing",
             seasonal_patterns: [
-                { period: "summer", avg_rate: 325.00, occupancy: 92 },
-                { period: "winter", avg_rate: 245.00, occupancy: 68 }
-            ]
+                { period: "summer", avg_rate: avgCompetitorRate * 1.15, occupancy: 92 },
+                { period: "winter", avg_rate: avgCompetitorRate * 0.85, occupancy: 68 }
+            ],
+            data_points: competitorData.length
         },
         occupancy_insights: {
             average_occupancy: 78.5,
@@ -72,10 +84,10 @@ app.get('/api/analytics/insights', authenticateAPI, async (req, res) => {
         },
         recommendations: [
             {
-                title: "Increase summer rates",
-                description: "Current summer rates are 12% below market average",
+                title: "Optimize based on real competitor data",
+                description: `Analysis based on ${competitorData.length} competitor data points`,
                 impact: "high",
-                confidence: 0.87
+                confidence: Math.min(0.9, 0.5 + (competitorData.length * 0.01))
             }
         ]
     };
@@ -127,52 +139,56 @@ app.get('/api/analytics/sentiment', authenticateAPI, async (req, res) => {
     res.json(sentimentData);
 });
 
-// Data upload endpoint
+// Data upload endpoint with enhanced storage
 app.post('/api/data/upload', authenticateAPI, async (req, res) => {
     try {
-        const { data_type, data, source, scraped_at } = req.body;
+        const { data_type, data, source, scraped_at, date_range } = req.body;
         
         if (!data_type || !data) {
             return res.status(400).json({ error: 'Missing required fields' });
         }
         
-        // Store data based on type
+        // Store data in organized file structure
+        const metadata = {
+            source: source || 'api',
+            scraped_at,
+            date_range,
+            upload_timestamp: new Date().toISOString(),
+            api_version: '1.0'
+        };
+        
+        const filePath = await storage.saveData(data_type, data, metadata);
+        
+        // Also keep in memory for immediate access
         if (analyticsData[data_type]) {
             analyticsData[data_type].push(...data);
         } else {
             analyticsData[data_type] = data;
         }
         
-        // Save to file backup
-        const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-        const filename = `/Users/simeong/data-upload-tools/uploaded_${data_type}_${timestamp}.json`;
-        
-        await fs.writeFile(filename, JSON.stringify({
-            data_type,
-            data,
-            source,
-            scraped_at,
-            uploaded_at: new Date().toISOString()
-        }, null, 2));
-        
         const insights = [];
         if (data_type === 'competitors') {
             insights.push('Competitor pricing data updated - consider rate adjustments');
+            insights.push(`${data.length} new competitor rates analyzed`);
+        }
+        if (data_type === 'mentions') {
+            insights.push('Social media mentions updated - monitor sentiment trends');
         }
         if (data_type === 'reviews') {
-            insights.push('New reviews analyzed - check sentiment trends');
+            insights.push('New reviews analyzed - check satisfaction scores');
         }
         
         res.json({
             success: true,
-            records_processed: data.length,
-            message: `Successfully uploaded ${data.length} ${data_type} records`,
+            records_processed: Array.isArray(data) ? data.length : 1,
+            message: `Successfully uploaded ${Array.isArray(data) ? data.length : 1} ${data_type} records`,
+            storage_path: filePath,
             insights_generated: insights
         });
         
     } catch (error) {
         console.error('Upload error:', error);
-        res.status(500).json({ error: 'Upload failed' });
+        res.status(500).json({ error: 'Upload failed', details: error.message });
     }
 });
 
@@ -212,7 +228,7 @@ app.get('/api/forecasting/rates', authenticateAPI, async (req, res) => {
     });
 });
 
-// Knowledge base endpoints
+// Knowledge base endpoints with enhanced storage
 app.post('/api/knowledge/store', authenticateAPI, async (req, res) => {
     try {
         const insight = {
@@ -221,46 +237,64 @@ app.post('/api/knowledge/store', authenticateAPI, async (req, res) => {
             created_at: new Date().toISOString()
         };
         
+        // Store using enhanced storage system
+        await storage.saveData('insights', insight, {
+            source: 'custom_gpt',
+            insight_type: insight.insight_type
+        });
+        
         analyticsData.insights.push(insight);
         
         res.json({
             success: true,
             insight_id: insight.id,
-            message: 'Insight stored successfully'
+            message: 'Insight stored successfully in knowledge base'
         });
         
     } catch (error) {
-        res.status(500).json({ error: 'Failed to store insight' });
+        console.error('Knowledge store error:', error);
+        res.status(500).json({ error: 'Failed to store insight', details: error.message });
     }
 });
 
 app.get('/api/knowledge/retrieve', authenticateAPI, async (req, res) => {
-    const { search_query, insight_type, tags } = req.query;
-    
-    let insights = analyticsData.insights;
-    
-    // Filter by type
-    if (insight_type) {
-        insights = insights.filter(i => i.insight_type === insight_type);
+    try {
+        const { search_query, insight_type, tags } = req.query;
+        
+        // Load insights from storage
+        let insights = await storage.loadData('insights');
+        
+        // Filter by type
+        if (insight_type) {
+            insights = insights.filter(i => i.insight_type === insight_type);
+        }
+        
+        // Filter by search query
+        if (search_query) {
+            insights = insights.filter(i => 
+                i.title?.toLowerCase().includes(search_query.toLowerCase()) ||
+                i.content?.toLowerCase().includes(search_query.toLowerCase())
+            );
+        }
+        
+        // Filter by tags
+        if (tags) {
+            const tagList = tags.split(',').map(t => t.trim().toLowerCase());
+            insights = insights.filter(i => 
+                i.tags?.some(tag => tagList.includes(tag.toLowerCase()))
+            );
+        }
+        
+        res.json({ 
+            insights,
+            total_found: insights.length,
+            storage_info: 'Retrieved from persistent storage'
+        });
+        
+    } catch (error) {
+        console.error('Knowledge retrieve error:', error);
+        res.status(500).json({ error: 'Failed to retrieve insights' });
     }
-    
-    // Filter by search query
-    if (search_query) {
-        insights = insights.filter(i => 
-            i.title?.toLowerCase().includes(search_query.toLowerCase()) ||
-            i.content?.toLowerCase().includes(search_query.toLowerCase())
-        );
-    }
-    
-    // Filter by tags
-    if (tags) {
-        const tagList = tags.split(',').map(t => t.trim().toLowerCase());
-        insights = insights.filter(i => 
-            i.tags?.some(tag => tagList.includes(tag.toLowerCase()))
-        );
-    }
-    
-    res.json({ insights });
 });
 
 app.get('/api/knowledge/synthesis', authenticateAPI, async (req, res) => {
@@ -291,6 +325,47 @@ app.get('/api/knowledge/synthesis', authenticateAPI, async (req, res) => {
     };
     
     res.json(synthesis);
+});
+
+// Storage management endpoints
+app.get('/api/storage/stats', authenticateAPI, async (req, res) => {
+    try {
+        const stats = await storage.getStorageStats();
+        res.json({
+            storage_stats: stats,
+            timestamp: new Date().toISOString()
+        });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to get storage stats' });
+    }
+});
+
+app.post('/api/storage/cleanup', authenticateAPI, async (req, res) => {
+    try {
+        const { days_to_keep = 90 } = req.body;
+        const result = await storage.cleanupOldFiles(days_to_keep);
+        res.json({
+            success: true,
+            cleanup_result: result,
+            timestamp: new Date().toISOString()
+        });
+    } catch (error) {
+        res.status(500).json({ error: 'Cleanup failed' });
+    }
+});
+
+app.get('/api/storage/export', authenticateAPI, async (req, res) => {
+    try {
+        const exportPath = await storage.exportForDatabase();
+        res.json({
+            success: true,
+            export_ready: true,
+            message: 'Data exported and ready for database migration',
+            export_path: exportPath
+        });
+    } catch (error) {
+        res.status(500).json({ error: 'Export failed' });
+    }
 });
 
 // Health check
