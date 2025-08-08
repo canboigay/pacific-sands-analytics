@@ -51,7 +51,8 @@ model OccupancyRecord {
 model UploadMetadata {
   id            Int      @id @default(autoincrement())
   filename      String
-  dataType      String   @map("data_type")
+  dataType     DataType @relation(fields: [dataTypeId], references: [id])
+  dataTypeId   Int      @map("data_type_id")
   recordsCount  Int      @map("records_count")
   source        String   @default("csv_upload")
   uploadedAt    DateTime @default(now()) @map("uploaded_at")
@@ -59,6 +60,28 @@ model UploadMetadata {
   processingTimeMs Int? @map("processing_time_ms")
 
   @@map("upload_metadata")
+}
+
+model DataType {
+  id          Int               @id @default(autoincrement())
+  name        String            @unique
+  description String?
+  fields      FieldDefinition[]
+  uploads     UploadMetadata[]
+
+  @@map("data_types")
+}
+
+model FieldDefinition {
+  id         Int       @id @default(autoincrement())
+  name       String
+  header     String
+  type       String
+  required   Boolean   @default(false)
+  dataType   DataType  @relation(fields: [dataTypeId], references: [id])
+  dataTypeId Int       @map("data_type_id")
+
+  @@map("field_definitions")
 }
 
 model Insight {
