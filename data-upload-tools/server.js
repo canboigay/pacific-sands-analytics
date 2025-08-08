@@ -2,9 +2,26 @@
 const express = require('express');
 const cors = require('cors');
 const { PrismaClient } = require('@prisma/client');
+const { z } = require('zod');
 
 const app = express();
 const prisma = new PrismaClient();
+
+// Validation schemas
+const rateSchema = z.object({
+    date: z.date(),
+    roomType: z.string().min(1),
+    rate: z.number().min(0).max(10000),
+    channel: z.string().min(1)
+});
+
+const occupancySchema = z.object({
+    date: z.date(),
+    roomType: z.string().min(1),
+    occupancyRate: z.number().min(0).max(100),
+    roomsSold: z.number().int().min(0),
+    roomsAvailable: z.number().int().min(0)
+});
 
 // Middleware
 app.use(cors());
@@ -101,15 +118,30 @@ app.post('/api/data/upload', authenticateAPI, async (req, res) => {
 
         // Process different data types
         if (data_type === 'rates') {
-            const rateRecords = records.map(record => ({
-                date: new Date(record.date || record.Date || record['Stay Date'] || new Date()),
-                roomType: record.room_type || record.RoomType || record['Room Type'] || 'Standard',
-                rate: parseFloat(record.rate || record.Rate || record.ADR || record['Daily Rate'] || 0),
-                channel: record.channel || record.Channel || record['Booking Source'] || 'Direct',
-                source: source || 'csv_upload',
-                filename: filename || 'unknown',
-                metadata: { originalRecord: record }
-            }));
+            const rateRecords = [];
+            for (const [index, record] of records.entries()) {
+                const candidate = {
+                    date: new Date(record.date || record.Date || record['Stay Date']),
+                    roomType: record.room_type || record.RoomType || record['Room Type'],
+                    rate: parseFloat(record.rate || record.Rate || record.ADR || record['Daily Rate']),
+                    channel: record.channel || record.Channel || record['Booking Source']
+                };
+
+                const validation = rateSchema.safeParse(candidate);
+                if (!validation.success) {
+                    return res.status(400).json({
+                        error: `Invalid rate record at index ${index}`,
+                        details: validation.error.errors
+                    });
+                }
+
+                rateRecords.push({
+                    ...validation.data,
+                    source: source || 'csv_upload',
+                    filename: filename || 'unknown',
+                    metadata: { originalRecord: record }
+                });
+            }
 
             await prisma.rateRecord.createMany({
                 data: rateRecords,
@@ -118,16 +150,31 @@ app.post('/api/data/upload', authenticateAPI, async (req, res) => {
             uploadedCount = rateRecords.length;
 
         } else if (data_type === 'occupancy') {
-            const occupancyRecords = records.map(record => ({
-                date: new Date(record.date || record.Date || record['Stay Date'] || new Date()),
-                roomType: record.room_type || record.RoomType || record['Room Type'] || 'Standard',
-                occupancyRate: parseFloat(record.occupancy_rate || record.OccupancyRate || record['Occupancy Rate'] || record.occupancy || 0),
-                roomsSold: parseInt(record.rooms_sold || record.RoomsSold || record['Rooms Sold'] || 0),
-                roomsAvailable: parseInt(record.rooms_available || record.RoomsAvailable || record['Rooms Available'] || record.inventory || 0),
-                source: source || 'csv_upload',
-                filename: filename || 'unknown',
-                metadata: { originalRecord: record }
-            }));
+            const occupancyRecords = [];
+            for (const [index, record] of records.entries()) {
+                const candidate = {
+                    date: new Date(record.date || record.Date || record['Stay Date']),
+                    roomType: record.room_type || record.RoomType || record['Room Type'],
+                    occupancyRate: parseFloat(record.occupancy_rate || record.OccupancyRate || record['Occupancy Rate'] || record.occupancy),
+                    roomsSold: parseInt(record.rooms_sold || record.RoomsSold || record['Rooms Sold']),
+                    roomsAvailable: parseInt(record.rooms_available || record.RoomsAvailable || record['Rooms Available'] || record.inventory)
+                };
+
+                const validation = occupancySchema.safeParse(candidate);
+                if (!validation.success) {
+                    return res.status(400).json({
+                        error: `Invalid occupancy record at index ${index}`,
+                        details: validation.error.errors
+                    });
+                }
+
+                occupancyRecords.push({
+                    ...validation.data,
+                    source: source || 'csv_upload',
+                    filename: filename || 'unknown',
+                    metadata: { originalRecord: record }
+                });
+            }
 
             await prisma.occupancyRecord.createMany({
                 data: occupancyRecords,
