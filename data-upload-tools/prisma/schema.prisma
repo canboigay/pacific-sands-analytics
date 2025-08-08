@@ -49,14 +49,14 @@ model OccupancyRecord {
 }
 
 model UploadMetadata {
-  id            Int      @id @default(autoincrement())
-  filename      String
-  dataType      String   @map("data_type")
-  recordsCount  Int      @map("records_count")
-  source        String   @default("csv_upload")
-  uploadedAt    DateTime @default(now()) @map("uploaded_at")
-  fileSize      Int?     @map("file_size")
-  processingTimeMs Int? @map("processing_time_ms")
+  id               Int      @id @default(autoincrement())
+  filename         String
+  dataType         String   @map("data_type")
+  recordsCount     Int      @map("records_count")
+  source           String   @default("csv_upload")
+  uploadedAt       DateTime @default(now()) @map("uploaded_at")
+  fileSize         Int?     @map("file_size")
+  processingTimeMs Int?     @map("processing_time_ms")
 
   @@map("upload_metadata")
 }
@@ -72,4 +72,16 @@ model Insight {
   updatedAt  DateTime @updatedAt @map("updated_at")
 
   @@map("insights")
+}
+
+model RawRecord {
+  id        Int      @id @default(autoincrement())
+  dataType  String   @map("data_type")
+  payload   Json
+  embedding Bytes?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([payload], type: Gin)
+  @@map("raw_records")
 }
