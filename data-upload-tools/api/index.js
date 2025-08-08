@@ -1,5 +1,5 @@
 // Vercel serverless function for Pacific Sands Analytics with Prisma
-const { PrismaClient } = require('@prisma/client');
+const { PrismaClient } = require('../app/generated/prisma-client');
 
 // Initialize Prisma client once
 let prisma;

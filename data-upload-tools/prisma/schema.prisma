@@ -1,14 +1,21 @@
-// Prisma schema for Pacific Sands Analytics
-// Supports Prisma Accelerate for optimal performance
-
-generator client {
-  provider = "prisma-client-js"
+// Define database connection via Prisma Accelerate
+datasource db {
+  provider = "postgresql"
+  url      = env("PRISMA_DATABASE_URL")
 }
 
-datasource db {
-  provider  = "postgresql"
-  url       = env("PRISMA_DATABASE_URL")
-  directUrl = env("POSTGRES_URL")
+// Define custom output path for generated Prisma Client
+generator client {
+  provider = "prisma-client-js"
+  output   = "../app/generated/prisma-client"
+}
+
+// Example data model (from your setup)
+model User {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  email     String   @unique
+  name      String?
 }
 
 model RateRecord {
