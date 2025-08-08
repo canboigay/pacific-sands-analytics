@@ -1,16 +1,10 @@
 // Knowledge management endpoints for Pacific Sands GPT
-const { PrismaClient } = require('@prisma/client');
-
-let prisma;
-if (!global.prisma) {
-    global.prisma = new PrismaClient();
-}
-prisma = global.prisma;
+const prisma = require('../src/lib/prisma');
 
 // API Key authentication
 const authenticateAPI = (req) => {
-    const authHeader = req.headers.authorization;
-    const validKey = 'Bearer ps_me2w0k3e_x81fsv0yz3k';
+    const authHeader = req.headers.authorization || '';
+    const validKey = `Bearer ${process.env.API_KEY}`;
     return authHeader === validKey;
 };
 
@@ -52,14 +46,16 @@ module.exports = async function handler(req, res) {
 
 async function storeInsight(req, res) {
     try {
-        const { 
-            insight_type, 
-            title, 
-            content, 
-            confidence_level = 0.7, 
-            data_sources = [], 
-            tags = [], 
-            date_range 
+        const {
+            insight_type,
+            title,
+            content,
+            confidence_level = 0.7,
+            data_sources = [],
+            tags = [],
+            date_range,
+            related_ids = [],
+            source_url
         } = req.body;
 
         if (!title || !content) {
@@ -99,9 +95,19 @@ async function storeInsight(req, res) {
                     tags,
                     date_range,
                     stored_by: 'custom_gpt'
-                }
+                },
+                tags,
+                sourceUrl: source_url || null
             }
         });
+
+        if (Array.isArray(related_ids) && related_ids.length) {
+            await prisma.$transaction(
+                related_ids.map((uploadId) =>
+                    prisma.insightUploadLink.create({ data: { insightId: insight.id, uploadId } })
+                )
+            );
+        }
 
         return res.json({
             success: true,
@@ -111,7 +117,9 @@ async function storeInsight(req, res) {
                 type: insight_type || 'general',
                 title,
                 confidence_level: parseFloat(confidence_level),
-                tags
+                tags,
+                related_ids,
+                source_url: source_url || null
             },
             timestamp: new Date().toISOString()
         });

@@ -58,18 +58,18 @@
                     "items": {"type": "object"},
                     "description": "Array of data records"
                   },
-                  "date_range": {
-                    "type": "object",
-                    "properties": {
-                      "start": {"type": "string", "format": "date"},
-                      "end": {"type": "string", "format": "date"}
+                    "date_range": {
+                      "type": "object",
+                      "properties": {
+                        "start": {"type": "string", "format": "date"},
+                        "end": {"type": "string", "format": "date"}
+                      }
                     }
                   }
                 }
               }
             }
-          }
-        },
+          },
         "responses": {
           "200": {
             "description": "Data uploaded successfully",
@@ -260,6 +260,98 @@
         }
       }
     },
+    "/uploads/presign": {
+      "post": {
+        "tags": ["ingest"],
+        "summary": "Create a presigned URL for direct upload",
+        "operationId": "createUploadUrl",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "filename": { "type": "string" },
+                  "content_type": { "type": "string" },
+                  "purpose": { "type": "string" }
+                },
+                "required": ["filename", "content_type"]
+              }
+            }
+          }
+        },
+        "responses": { "200": { "description": "OK" } },
+        "x-gpt": {
+          "intent": "data.upload",
+          "examples": [
+            {
+              "user": "Create an upload URL for sample.csv (text/csv) for rates data.",
+              "mapped_parameters": { "filename": "sample.csv", "content_type": "text/csv", "purpose": "rates" }
+            }
+          ]
+        }
+      }
+    },
+    "/uploads/confirm": {
+      "post": {
+        "tags": ["ingest"],
+        "summary": "Confirm and persist an uploaded file record",
+        "operationId": "confirmUpload",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file_id": { "type": "string" },
+                  "key": { "type": "string" },
+                  "bytes": { "type": "integer" },
+                  "content_type": { "type": "string" },
+                  "tags": { "type": "array", "items": { "type": "string" } },
+                  "purpose": { "type": "string" },
+                  "filename": { "type": "string" },
+                  "source": { "type": "string" }
+                },
+                "required": ["file_id", "key"]
+              }
+            }
+          }
+        },
+        "responses": { "200": { "description": "Confirmed" } }
+      }
+    },
+    "/metrics": {
+      "get": {
+        "tags": ["analysis"],
+        "summary": "Query hospitality metrics with grouping and filters",
+        "description": "Compute ADR, RevPAR, Occupancy, Revenue, Bookings over a time range with grouping and filters.",
+        "operationId": "getMetrics",
+        "parameters": [
+          { "in": "query", "name": "metrics", "schema": { "type": "string" }, "description": "Comma-separated metrics: adr,revpar,occupancy,revenue,bookings" },
+          { "in": "query", "name": "date_from", "schema": { "type": "string", "format": "date" } },
+          { "in": "query", "name": "date_to", "schema": { "type": "string", "format": "date" } },
+          { "in": "query", "name": "granularity", "schema": { "type": "string", "enum": ["day", "week", "month"], "default": "day" } },
+          { "in": "query", "name": "group_by", "schema": { "type": "string" }, "description": "Comma-separated dimensions: room_type,channel,market,competitor" },
+          { "in": "query", "name": "filters", "schema": { "type": "string" }, "description": "JSON-encoded filters: e.g. {\"room_type\":\"Queen Suite\"}" },
+          { "in": "query", "name": "limit", "schema": { "type": "integer", "default": 500 } },
+          { "in": "query", "name": "sort", "schema": { "type": "string" }, "description": "e.g. date:asc,revenue:desc" },
+          { "in": "query", "name": "timezone", "schema": { "type": "string", "default": "America/Vancouver" } },
+          { "in": "query", "name": "dry_run", "schema": { "type": "string", "enum": ["true", "false"], "default": "false" } }
+        ],
+        "responses": { "200": { "description": "Metrics returned" } },
+        "x-gpt": {
+          "intent": "analytics.query",
+          "examples": [
+            {
+              "user": "Show ADR and RevPAR by room type weekly since 2025-05-01.",
+              "mapped_parameters": { "metrics": "adr,revpar", "date_from": "2025-05-01", "granularity": "week", "group_by": "room_type" }
+            }
+          ]
+        }
+      }
+    },
     "/knowledge": {
       "post": {
         "summary": "Store qualitative insights",
@@ -287,7 +379,9 @@
                       "start": {"type": "string", "format": "date"},
                       "end": {"type": "string", "format": "date"}
                     }
-                  }
+                  },
+                  "related_ids": {"type": "array", "items": {"type": "string"}},
+                  "source_url": {"type": "string"}
                 }
               }
             }
@@ -557,7 +651,9 @@
               "start": {"type": "string", "format": "date"},
               "end": {"type": "string", "format": "date"}
             }
-          }
+          },
+          "related_ids": {"type": "array", "items": {"type": "string"}},
+          "source_url": {"type": "string"}
         }
       },
       "HealthResponse": {
