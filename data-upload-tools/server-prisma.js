@@ -395,6 +395,58 @@ app.get('/api/data/occupancy', authenticateAPI, async (req, res) => {
     }
 });
 
+// Semantic search using pgvector embeddings
+app.post('/api/raw-records/semantic-search', authenticateAPI, async (req, res) => {
+    try {
+        const { embedding, top_k = 5 } = req.body;
+
+        if (!embedding || !Array.isArray(embedding)) {
+            return res.status(400).json({ error: 'embedding array required' });
+        }
+
+        const limit = parseInt(top_k) || 5;
+
+        const results = await prisma.$queryRaw`
+            SELECT id, payload, embedding <-> ${embedding} AS distance
+            FROM raw_records
+            ORDER BY embedding <-> ${embedding}
+            LIMIT ${limit}
+        `;
+
+        res.json({ results, count: results.length });
+    } catch (error) {
+        res.status(500).json({ error: 'Semantic search failed', details: error.message });
+    }
+});
+
+// Filter RawRecords by JSON payload fields
+app.get('/api/raw-records/search', authenticateAPI, async (req, res) => {
+    try {
+        const { field, value, limit = 100 } = req.query;
+
+        if (!field || !value) {
+            return res.status(400).json({ error: 'field and value are required' });
+        }
+
+        if (!/^[a-zA-Z0-9_]+$/.test(field)) {
+            return res.status(400).json({ error: 'invalid field' });
+        }
+
+        const sql = `
+            SELECT id, payload
+            FROM raw_records
+            WHERE payload->>'${field}' = $1
+            ORDER BY id DESC
+            LIMIT $2
+        `;
+
+        const records = await prisma.$queryRawUnsafe(sql, value, parseInt(limit));
+        res.json({ results: records, count: records.length });
+    } catch (error) {
+        res.status(500).json({ error: 'Search failed', details: error.message });
+    }
+});
+
 // Graceful shutdown
 process.on('beforeExit', async () => {
     await prisma.$disconnect();
