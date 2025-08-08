@@ -1,14 +1,11 @@
-// Public API endpoint for CSV uploads to Prisma database
-const { PrismaClient } = require('../app/generated/prisma-client');
+// Data upload endpoint for Pacific Sands GPT
+const { PrismaClient } = require('@prisma/client');
 
 let prisma;
-try {
-    prisma = new PrismaClient();
-} catch (error) {
-    console.log('Using fallback Prisma client');
-    const { PrismaClient: FallbackPrisma } = require('@prisma/client');
-    prisma = new FallbackPrisma();
+if (!global.prisma) {
+    global.prisma = new PrismaClient();
 }
+prisma = global.prisma;
 
 // API Key authentication
 const authenticateAPI = (req) => {

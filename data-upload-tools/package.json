@@ -4,12 +4,13 @@
   "description": "Analytics API for Pacific Sands hotel data and insights",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js",
-    "deploy": "git add . && git commit -m 'Deploy API' && git push",
+    "dev": "vercel dev",
+    "build": "prisma generate",
+    "deploy": "vercel --prod",
     "postinstall": "prisma generate",
-    "db:migrate": "prisma migrate deploy",
-    "db:seed": "node prisma/seed.js"
+    "db:migrate": "prisma db push",
+    "db:seed": "node prisma/seed.js",
+    "db:studio": "prisma studio"
   },
   "keywords": ["api", "analytics", "hospitality", "hotel", "pacific-sands"],
   "author": "Pacific Sands",

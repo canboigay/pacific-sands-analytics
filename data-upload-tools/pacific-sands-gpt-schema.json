@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "https://your-domain.com/api",
+      "url": "https://data-upload-tools.vercel.app/api",
       "description": "Pacific Sands Analytics Server"
     }
   ],

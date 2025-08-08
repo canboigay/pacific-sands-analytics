@@ -4,13 +4,12 @@ datasource db {
   url      = env("PRISMA_DATABASE_URL")
 }
 
-// Define custom output path for generated Prisma Client
+// Define Prisma Client generation
 generator client {
   provider = "prisma-client-js"
-  output   = "../app/generated/prisma-client"
 }
 
-// Example data model (from your setup)
+// Data models for Pacific Sands Analytics
 model User {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())

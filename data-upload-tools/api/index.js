@@ -1,7 +1,7 @@
 // Vercel serverless function for Pacific Sands Analytics with Prisma
-const { PrismaClient } = require('../app/generated/prisma-client');
+const { PrismaClient } = require('@prisma/client');
 
-// Initialize Prisma client once
+// Initialize Prisma client once (connection pooling for serverless)
 let prisma;
 if (!global.prisma) {
     global.prisma = new PrismaClient();
@@ -28,105 +28,86 @@ module.exports = async function handler(req, res) {
     const { method, url } = req;
     
     try {
-        // Route handling
-        if (method === 'GET' && url === '/') {
+        // Main API info endpoint
+        if (method === 'GET' && (url === '/' || url === '/api')) {
             return res.json({
                 message: 'Pacific Sands Analytics API with Prisma',
                 version: '2.0.0',
                 status: 'operational',
                 database: 'prisma-postgres',
-                endpoints: [
-                    '/health',
-                    '/api/data/upload',
-                    '/api/analytics/insights'
-                ],
+                custom_gpt_ready: true,
+                endpoints: {
+                    analytics: {
+                        insights: '/api/analytics?endpoint=insights',
+                        competitors: '/api/analytics?endpoint=competitors', 
+                        sentiment: '/api/analytics?endpoint=sentiment'
+                    },
+                    data: {
+                        upload: '/api/upload',
+                        rates: '/api/data/rates',
+                        occupancy: '/api/data/occupancy'
+                    },
+                    forecasting: {
+                        rates: '/api/forecasting'
+                    },
+                    knowledge: {
+                        store: '/api/knowledge?action=store',
+                        retrieve: '/api/knowledge?action=retrieve',
+                        synthesis: '/api/knowledge?action=synthesis'
+                    }
+                },
+                authentication: 'Bearer ps_me2w0k3e_x81fsv0yz3k',
                 timestamp: new Date().toISOString()
             });
         }
 
+        // Health check with database status
         if (method === 'GET' && url === '/health') {
-            // Test database connection
-            await prisma.$queryRaw`SELECT 1`;
-            
-            const [rateCount, occupancyCount, insightCount] = await Promise.all([
-                prisma.rateRecord.count(),
-                prisma.occupancyRecord.count(), 
-                prisma.insight.count()
-            ]);
+            try {
+                // Test database connection
+                await prisma.$queryRaw`SELECT 1`;
+                
+                const [rateCount, occupancyCount, insightCount] = await Promise.all([
+                    prisma.rateRecord.count(),
+                    prisma.occupancyRecord.count(),
+                    prisma.insight.count()
+                ]);
 
-            return res.json({
-                status: 'healthy',
-                database: 'connected', 
-                timestamp: new Date().toISOString(),
-                records: {
-                    rates: rateCount,
-                    occupancy: occupancyCount,
-                    insights: insightCount,
-                    total: rateCount + occupancyCount + insightCount
-                }
-            });
+                return res.json({
+                    status: 'healthy',
+                    database: 'connected',
+                    custom_gpt_ready: true,
+                    timestamp: new Date().toISOString(),
+                    records: {
+                        rates: rateCount,
+                        occupancy: occupancyCount,
+                        insights: insightCount,
+                        total: rateCount + occupancyCount + insightCount
+                    }
+                });
+            } catch (error) {
+                return res.status(500).json({
+                    status: 'error',
+                    database: 'disconnected',
+                    error: error.message,
+                    timestamp: new Date().toISOString()
+                });
+            }
         }
 
-        if (method === 'POST' && url === '/api/data/upload') {
-            if (!authenticateAPI(req)) {
-                return res.status(401).json({ error: 'Invalid API key' });
-            }
-
-            const { data_type, data, source, filename } = req.body;
-            
-            if (!data_type || !data) {
-                return res.status(400).json({ error: 'Missing required fields: data_type, data' });
-            }
-
-            const records = Array.isArray(data) ? data : [data];
-            let uploadedCount = 0;
-
-            if (data_type === 'rates') {
-                const rateRecords = records.map(record => ({
-                    date: new Date(record.date || record.Date || new Date()),
-                    roomType: record.room_type || record.RoomType || 'Standard',
-                    rate: parseFloat(record.rate || record.Rate || record.ADR || 0),
-                    channel: record.channel || record.Channel || 'Direct',
-                    source: source || 'csv_upload',
-                    filename: filename || 'unknown',
-                    metadata: { originalRecord: record }
-                }));
-
-                await prisma.rateRecord.createMany({
-                    data: rateRecords,
-                    skipDuplicates: true
-                });
-                uploadedCount = rateRecords.length;
-
-            } else if (data_type === 'occupancy') {
-                const occupancyRecords = records.map(record => ({
-                    date: new Date(record.date || record.Date || new Date()),
-                    roomType: record.room_type || record.RoomType || 'Standard',
-                    occupancyRate: parseFloat(record.occupancy_rate || record.OccupancyRate || 0),
-                    roomsSold: parseInt(record.rooms_sold || record.RoomsSold || 0),
-                    roomsAvailable: parseInt(record.rooms_available || record.RoomsAvailable || 0),
-                    source: source || 'csv_upload',
-                    filename: filename || 'unknown',
-                    metadata: { originalRecord: record }
-                }));
-
-                await prisma.occupancyRecord.createMany({
-                    data: occupancyRecords,
-                    skipDuplicates: true
-                });
-                uploadedCount = occupancyRecords.length;
-            }
-
-            return res.json({
-                success: true,
-                records_processed: uploadedCount,
-                message: `Successfully uploaded ${uploadedCount} ${data_type} records`,
-                timestamp: new Date().toISOString()
-            });
-        }
-
-        // Default 404
-        return res.status(404).json({ error: 'Not found' });
+        // For other endpoints, provide helpful routing info
+        return res.status(404).json({ 
+            error: 'Endpoint not found',
+            available_endpoints: [
+                '/api/',
+                '/health',
+                '/api/analytics',
+                '/api/upload',
+                '/api/forecasting', 
+                '/api/knowledge'
+            ],
+            message: 'This is the main API router. Use specific endpoint URLs for functionality.'
+        });
 
     } catch (error) {
         console.error('API Error:', error);
