@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV Data Processor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+        
+        .main-content {
+            padding: 2rem;
+        }
+        
+        .upload-zone {
+            border: 3px dashed #e2e8f0;
+            border-radius: 12px;
+            padding: 3rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .upload-zone:hover, .upload-zone.dragover {
+            border-color: #4F46E5;
+            background: #f8faff;
+        }
+        
+        .upload-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #64748b;
+        }
+        
+        .upload-zone h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: #334155;
+        }
+        
+        .upload-zone p {
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+        
+        .file-info {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            display: none;
+        }
+        
+        .data-summary {
+            display: none;
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .summary-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .summary-card h4 {
+            color: #4F46E5;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .summary-card p {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+        
+        .columns-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .column-tag {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            color: #334155;
+            text-align: center;
+        }
+        
+        .column-tag.date { border-color: #10b981; color: #10b981; }
+        .column-tag.number { border-color: #f59e0b; color: #f59e0b; }
+        .column-tag.text { border-color: #6366f1; color: #6366f1; }
+        
+        .data-preview {
+            margin-top: 2rem;
+        }
+        
+        .preview-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            font-size: 0.875rem;
+        }
+        
+        .preview-table th {
+            background: #f8fafc;
+            padding: 1rem 0.75rem;
+            text-align: left;
+            font-weight: 600;
+            color: #334155;
+            border-bottom: 1px solid #e2e8f0;
+            position: sticky;
+            top: 0;
+        }
+        
+        .preview-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        
+        .preview-table tbody tr:hover {
+            background: #f8fafc;
+        }
+        
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .btn {
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3);
+        }
+        
+        .btn-secondary {
+            background: #f1f5f9;
+            color: #64748b;
+        }
+        
+        .btn-secondary:hover {
+            background: #e2e8f0;
+        }
+        
+        .progress-section {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4F46E5, #7C3AED);
+            width: 0%;
+            transition: width 0.3s;
+        }
+        
+        .success-message {
+            display: none;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            border-radius: 12px;
+            margin-top: 2rem;
+        }
+        
+        .table-container {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+        
+        .insights {
+            background: linear-gradient(135deg, #fef3c7, #f59e0b);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 2rem;
+            color: #92400e;
+        }
+        
+        .insights h3 {
+            margin-bottom: 1rem;
+            color: #92400e;
+        }
+        
+        .insight-item {
+            background: rgba(255,255,255,0.8);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Historical Data Processor</h1>
+            <p>Upload your CSV data to build reference databases and analytics</p>
+        </div>
+        
+        <div class="main-content">
+            <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
+                <div class="upload-icon">📁</div>
+                <h3>Drop your CSV file here</h3>
+                <p>or click to browse</p>
+                <input type="file" id="fileInput" accept=".csv" style="display: none;">
+            </div>
+            
+            <div class="file-info" id="fileInfo">
+                <h4>File loaded:</h4>
+                <p id="fileName"></p>
+            </div>
+            
+            <div class="data-summary" id="dataSummary">
+                <h2>Data Analysis</h2>
+                
+                <div class="summary-grid">
+                    <div class="summary-card">
+                        <h4 id="rowCount">0</h4>
+                        <p>Total Records</p>
+                    </div>
+                    <div class="summary-card">
+                        <h4 id="columnCount">0</h4>
+                        <p>Columns</p>
+                    </div>
+                    <div class="summary-card">
+                        <h4 id="dateRange">-</h4>
+                        <p>Date Range</p>
+                    </div>
+                    <div class="summary-card">
+                        <h4 id="roomTypes">0</h4>
+                        <p>Room Types</p>
+                    </div>
+                </div>
+                
+                <h3>Detected Columns</h3>
+                <div class="columns-grid" id="columnsGrid"></div>
+                
+                <div class="data-preview">
+                    <h3>Data Preview (First 10 rows)</h3>
+                    <div class="table-container">
+                        <table class="preview-table" id="previewTable">
+                            <thead></thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="insights" id="insights">
+                    <h3>🔍 Data Insights</h3>
+                    <div id="insightsList"></div>
+                </div>
+                
+                <div class="actions">
+                    <button class="btn btn-secondary" onclick="resetData()">Clear Data</button>
+                    <button class="btn btn-primary" onclick="processData()">Process & Upload</button>
+                </div>
+            </div>
+            
+            <div class="progress-section" id="progressSection">
+                <h3>Processing your data...</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <p id="progressText">Analyzing data structure...</p>
+            </div>
+            
+            <div class="success-message" id="successMessage">
+                <h2>✅ Data Successfully Processed!</h2>
+                <p>Your historical data has been uploaded and reference databases have been created.</p>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script src="new-upload-script.js"></script>
+</body>
+</html>

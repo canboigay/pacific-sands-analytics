@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pacific Sands GPT Schema</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2563eb;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .instructions {
+            background: #eff6ff;
+            border: 1px solid #93c5fd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .instructions h2 {
+            color: #1e40af;
+            margin-top: 0;
+        }
+        .auth-info {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .code-container {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            position: relative;
+        }
+        .code-header {
+            background: #1f2937;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .copy-btn {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 5px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .copy-btn:hover {
+            background: #2563eb;
+        }
+        pre {
+            margin: 0;
+            padding: 20px;
+            overflow-x: auto;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+        code {
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+        }
+        .highlight {
+            background: #fbbf24;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        .step {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f9fafb;
+            border-left: 4px solid #3b82f6;
+            border-radius: 0 4px 4px 0;
+        }
+        .step strong {
+            color: #1f2937;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏨 Pacific Sands Custom GPT Schema</h1>
+        
+        <div class="instructions">
+            <h2>Setup Instructions</h2>
+            <div class="step">
+                <strong>Step 1:</strong> Copy the entire JSON schema below
+            </div>
+            <div class="step">
+                <strong>Step 2:</strong> Go to your Custom GPT configuration in ChatGPT
+            </div>
+            <div class="step">
+                <strong>Step 3:</strong> Navigate to "Actions" → "Create new action"
+            </div>
+            <div class="step">
+                <strong>Step 4:</strong> Paste the schema into the "Schema" field
+            </div>
+            <div class="step">
+                <strong>Step 5:</strong> Set up Authentication (see details below)
+            </div>
+        </div>
+
+        <div class="auth-info">
+            <h3>🔐 Authentication Settings</h3>
+            <p><strong>Authentication Type:</strong> API Key</p>
+            <p><strong>Auth Type:</strong> Bearer Token</p>
+            <p><strong>API Key:</strong> <span class="highlight">ps_me2w0k3e_x81fsv0yz3k</span></p>
+            <p><strong>Custom Header Name:</strong> Authorization</p>
+        </div>
+
+        <div class="code-container">
+            <div class="code-header">
+                <span>📋 OpenAPI Schema for Pacific Sands GPT</span>
+                <button class="copy-btn" onclick="copySchema()">Copy Schema</button>
+            </div>
+            <pre><code id="schema-code">{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Pacific Sands Analytics API",
+    "description": "API for accessing Pacific Sands historical data, analytics, and competitor insights",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://your-domain.com/api",
+      "description": "Pacific Sands Analytics Server"
+    }
+  ],
+  "paths": {
+    "/analytics/insights": {
+      "get": {
+        "summary": "Get business insights",
+        "description": "Retrieve insights from historical data including pricing trends, occupancy patterns, and recommendations",
+        "operationId": "getInsights",
+        "parameters": [
+          {
+            "name": "date_from",
+            "in": "query",
+            "description": "Start date for analysis (YYYY-MM-DD)",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "date_to",
+            "in": "query",
+            "description": "End date for analysis (YYYY-MM-DD)",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "room_type",
+            "in": "query",
+            "description": "Filter by specific room type",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Insights retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pricing_insights": {
+                      "type": "object",
+                      "properties": {
+                        "average_rate": {"type": "number"},
+                        "rate_trend": {"type": "string"},
+                        "seasonal_patterns": {"type": "array", "items": {"type": "object"}}
+                      }
+                    },
+                    "occupancy_insights": {
+                      "type": "object",
+                      "properties": {
+                        "average_occupancy": {"type": "number"},
+                        "peak_periods": {"type": "array", "items": {"type": "string"}},
+                        "low_periods": {"type": "array", "items": {"type": "string"}}
+                      }
+                    },
+                    "recommendations": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "title": {"type": "string"},
+                          "description": {"type": "string"},
+                          "impact": {"type": "string", "enum": ["high", "medium", "low"]},
+                          "confidence": {"type": "number"}
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/analytics/competitors": {
+      "get": {
+        "summary": "Get competitor analysis",
+        "description": "Retrieve competitor pricing and occupancy data compared to Pacific Sands",
+        "operationId": "getCompetitorAnalysis",
+        "parameters": [
+          {
+            "name": "metric",
+            "in": "query",
+            "description": "Which metric to analyze",
+            "schema": {
+              "type": "string",
+              "enum": ["pricing", "occupancy", "satisfaction"],
+              "default": "pricing"
+            }
+          },
+          {
+            "name": "period",
+            "in": "query",
+            "description": "Time period for analysis",
+            "schema": {
+              "type": "string",
+              "enum": ["7days", "30days", "90days", "1year"],
+              "default": "30days"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Competitor analysis retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pacific_sands": {
+                      "type": "object",
+                      "properties": {
+                        "value": {"type": "number"},
+                        "rank": {"type": "integer"},
+                        "trend": {"type": "string"}
+                      }
+                    },
+                    "competitors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {"type": "string"},
+                          "value": {"type": "number"},
+                          "rank": {"type": "integer"},
+                          "difference_from_us": {"type": "number"}
+                        }
+                      }
+                    },
+                    "market_position": {
+                      "type": "object",
+                      "properties": {
+                        "percentile": {"type": "number"},
+                        "opportunities": {"type": "array", "items": {"type": "string"}}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/analytics/sentiment": {
+      "get": {
+        "summary": "Get customer sentiment analysis",
+        "description": "Retrieve customer sentiment trends and analysis from reviews and feedback",
+        "operationId": "getSentimentAnalysis",
+        "parameters": [
+          {
+            "name": "source",
+            "in": "query",
+            "description": "Review source platform",
+            "schema": {
+              "type": "string",
+              "enum": ["all", "tripadvisor", "google", "booking", "expedia", "direct"]
+            }
+          },
+          {
+            "name": "period",
+            "in": "query",
+            "description": "Time period for sentiment analysis",
+            "schema": {
+              "type": "string",
+              "enum": ["30days", "90days", "6months", "1year"],
+              "default": "90days"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sentiment analysis retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "overall_sentiment": {
+                      "type": "object",
+                      "properties": {
+                        "positive": {"type": "number"},
+                        "negative": {"type": "number"},
+                        "neutral": {"type": "number"}
+                      }
+                    },
+                    "trending_topics": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "topic": {"type": "string"},
+                          "sentiment": {"type": "string"},
+                          "mentions": {"type": "integer"}
+                        }
+                      }
+                    },
+                    "improvement_areas": {
+                      "type": "array",
+                      "items": {"type": "string"}
+                    },
+                    "strengths": {
+                      "type": "array",
+                      "items": {"type": "string"}
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/data/upload": {
+      "post": {
+        "summary": "Upload historical data",
+        "description": "Upload CSV data for analysis (rates, bookings, reviews, etc.)",
+        "operationId": "uploadData",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data_type": {
+                    "type": "string",
+                    "enum": ["rates", "bookings", "reviews", "competitors"],
+                    "description": "Type of data being uploaded"
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {"type": "object"},
+                    "description": "Array of data records"
+                  },
+                  "date_range": {
+                    "type": "object",
+                    "properties": {
+                      "start": {"type": "string", "format": "date"},
+                      "end": {"type": "string", "format": "date"}
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Data uploaded successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {"type": "boolean"},
+                    "records_processed": {"type": "integer"},
+                    "message": {"type": "string"},
+                    "insights_generated": {"type": "array", "items": {"type": "string"}}
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/forecasting/rates": {
+      "get": {
+        "summary": "Get rate forecasting",
+        "description": "Get AI-powered rate predictions based on historical data and market conditions",
+        "operationId": "getRateForecasting",
+        "parameters": [
+          {
+            "name": "room_type",
+            "in": "query",
+            "description": "Room type to forecast",
+            "schema": {"type": "string"}
+          },
+          {
+            "name": "forecast_days",
+            "in": "query",
+            "description": "Number of days to forecast",
+            "schema": {"type": "integer", "default": 30, "minimum": 1, "maximum": 365}
+          },
+          {
+            "name": "include_events",
+            "in": "query",
+            "description": "Include local events in forecasting",
+            "schema": {"type": "boolean", "default": true}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Rate forecast retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "current_rate": {"type": "number"},
+                    "forecast": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "date": {"type": "string", "format": "date"},
+                          "suggested_rate": {"type": "number"},
+                          "confidence": {"type": "number"},
+                          "factors": {"type": "array", "items": {"type": "string"}}
+                        }
+                      }
+                    },
+                    "revenue_impact": {
+                      "type": "object",
+                      "properties": {
+                        "current_trajectory": {"type": "number"},
+                        "optimized_trajectory": {"type": "number"},
+                        "potential_uplift": {"type": "number"}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {},
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization"
+      }
+    }
+  },
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ]
+}</code></pre>
+        </div>
+
+        <div style="margin-top: 30px; text-align: center; color: #6b7280;">
+            <p>💡 Remember to update the server URL (line 10) when you deploy your system</p>
+            <p>🔑 Your API Key: <strong>ps_me2w0k3e_x81fsv0yz3k</strong></p>
+        </div>
+    </div>
+
+    <script>
+        function copySchema() {
+            const schemaCode = document.getElementById('schema-code');
+            const text = schemaCode.textContent;
+            
+            navigator.clipboard.writeText(text).then(function() {
+                const btn = document.querySelector('.copy-btn');
+                const originalText = btn.textContent;
+                btn.textContent = '✓ Copied!';
+                btn.style.background = '#10b981';
+                
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '#3b82f6';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

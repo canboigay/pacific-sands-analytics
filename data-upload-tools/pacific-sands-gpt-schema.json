@@ -1,0 +1,510 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Pacific Sands Analytics API",
+    "description": "API for accessing Pacific Sands historical data, analytics, and competitor insights",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://your-domain.com/api",
+      "description": "Pacific Sands Analytics Server"
+    }
+  ],
+  "paths": {
+    "/analytics/insights": {
+      "get": {
+        "summary": "Get business insights",
+        "description": "Retrieve insights from historical data including pricing trends, occupancy patterns, and recommendations",
+        "operationId": "getInsights",
+        "parameters": [
+          {
+            "name": "date_from",
+            "in": "query",
+            "description": "Start date for analysis (YYYY-MM-DD)",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "date_to",
+            "in": "query",
+            "description": "End date for analysis (YYYY-MM-DD)",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "room_type",
+            "in": "query",
+            "description": "Filter by specific room type",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Insights retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pricing_insights": {
+                      "type": "object",
+                      "properties": {
+                        "average_rate": {"type": "number"},
+                        "rate_trend": {"type": "string"},
+                        "seasonal_patterns": {"type": "array", "items": {"type": "object"}}
+                      }
+                    },
+                    "occupancy_insights": {
+                      "type": "object",
+                      "properties": {
+                        "average_occupancy": {"type": "number"},
+                        "peak_periods": {"type": "array", "items": {"type": "string"}},
+                        "low_periods": {"type": "array", "items": {"type": "string"}}
+                      }
+                    },
+                    "recommendations": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "title": {"type": "string"},
+                          "description": {"type": "string"},
+                          "impact": {"type": "string", "enum": ["high", "medium", "low"]},
+                          "confidence": {"type": "number"}
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/analytics/competitors": {
+      "get": {
+        "summary": "Get competitor analysis",
+        "description": "Retrieve competitor pricing and occupancy data compared to Pacific Sands",
+        "operationId": "getCompetitorAnalysis",
+        "parameters": [
+          {
+            "name": "metric",
+            "in": "query",
+            "description": "Which metric to analyze",
+            "schema": {
+              "type": "string",
+              "enum": ["pricing", "occupancy", "satisfaction"],
+              "default": "pricing"
+            }
+          },
+          {
+            "name": "period",
+            "in": "query",
+            "description": "Time period for analysis",
+            "schema": {
+              "type": "string",
+              "enum": ["7days", "30days", "90days", "1year"],
+              "default": "30days"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Competitor analysis retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pacific_sands": {
+                      "type": "object",
+                      "properties": {
+                        "value": {"type": "number"},
+                        "rank": {"type": "integer"},
+                        "trend": {"type": "string"}
+                      }
+                    },
+                    "competitors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {"type": "string"},
+                          "value": {"type": "number"},
+                          "rank": {"type": "integer"},
+                          "difference_from_us": {"type": "number"}
+                        }
+                      }
+                    },
+                    "market_position": {
+                      "type": "object",
+                      "properties": {
+                        "percentile": {"type": "number"},
+                        "opportunities": {"type": "array", "items": {"type": "string"}}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/analytics/sentiment": {
+      "get": {
+        "summary": "Get customer sentiment analysis",
+        "description": "Retrieve customer sentiment trends and analysis from reviews and feedback",
+        "operationId": "getSentimentAnalysis",
+        "parameters": [
+          {
+            "name": "source",
+            "in": "query",
+            "description": "Review source platform",
+            "schema": {
+              "type": "string",
+              "enum": ["all", "tripadvisor", "google", "booking", "expedia", "direct"]
+            }
+          },
+          {
+            "name": "period",
+            "in": "query",
+            "description": "Time period for sentiment analysis",
+            "schema": {
+              "type": "string",
+              "enum": ["30days", "90days", "6months", "1year"],
+              "default": "90days"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sentiment analysis retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "overall_sentiment": {
+                      "type": "object",
+                      "properties": {
+                        "positive": {"type": "number"},
+                        "negative": {"type": "number"},
+                        "neutral": {"type": "number"}
+                      }
+                    },
+                    "trending_topics": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "topic": {"type": "string"},
+                          "sentiment": {"type": "string"},
+                          "mentions": {"type": "integer"}
+                        }
+                      }
+                    },
+                    "improvement_areas": {
+                      "type": "array",
+                      "items": {"type": "string"}
+                    },
+                    "strengths": {
+                      "type": "array",
+                      "items": {"type": "string"}
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/data/upload": {
+      "post": {
+        "summary": "Upload historical data",
+        "description": "Upload CSV data for analysis (rates, bookings, reviews, etc.)",
+        "operationId": "uploadData",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data_type": {
+                    "type": "string",
+                    "enum": ["rates", "bookings", "reviews", "competitors"],
+                    "description": "Type of data being uploaded"
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {"type": "object"},
+                    "description": "Array of data records"
+                  },
+                  "date_range": {
+                    "type": "object",
+                    "properties": {
+                      "start": {"type": "string", "format": "date"},
+                      "end": {"type": "string", "format": "date"}
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Data uploaded successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {"type": "boolean"},
+                    "records_processed": {"type": "integer"},
+                    "message": {"type": "string"},
+                    "insights_generated": {"type": "array", "items": {"type": "string"}}
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/forecasting/rates": {
+      "get": {
+        "summary": "Get rate forecasting",
+        "description": "Get AI-powered rate predictions based on historical data and market conditions",
+        "operationId": "getRateForecasting",
+        "parameters": [
+          {
+            "name": "room_type",
+            "in": "query",
+            "description": "Room type to forecast",
+            "schema": {"type": "string"}
+          },
+          {
+            "name": "forecast_days",
+            "in": "query",
+            "description": "Number of days to forecast",
+            "schema": {"type": "integer", "default": 30, "minimum": 1, "maximum": 365}
+          },
+          {
+            "name": "include_events",
+            "in": "query",
+            "description": "Include local events in forecasting",
+            "schema": {"type": "boolean", "default": true}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Rate forecast retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "current_rate": {"type": "number"},
+                    "forecast": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "date": {"type": "string", "format": "date"},
+                          "suggested_rate": {"type": "number"},
+                          "confidence": {"type": "number"},
+                          "factors": {"type": "array", "items": {"type": "string"}}
+                        }
+                      }
+                    },
+                    "revenue_impact": {
+                      "type": "object",
+                      "properties": {
+                        "current_trajectory": {"type": "number"},
+                        "optimized_trajectory": {"type": "number"},
+                        "potential_uplift": {"type": "number"}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/knowledge/store": {
+      "post": {
+        "summary": "Store qualitative insights and analysis",
+        "description": "Store GPT-generated insights, observations, and qualitative analysis for future reference",
+        "operationId": "storeQualitativeData",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "insight_type": {
+                    "type": "string",
+                    "enum": ["customer_insight", "market_observation", "operational_finding", "strategic_recommendation", "trend_analysis", "competitive_intelligence"]
+                  },
+                  "title": {"type": "string"},
+                  "content": {"type": "string"},
+                  "confidence_level": {"type": "number", "minimum": 0, "maximum": 1},
+                  "data_sources": {"type": "array", "items": {"type": "string"}},
+                  "tags": {"type": "array", "items": {"type": "string"}},
+                  "date_range": {
+                    "type": "object",
+                    "properties": {
+                      "start": {"type": "string", "format": "date"},
+                      "end": {"type": "string", "format": "date"}
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Insight stored successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {"type": "boolean"},
+                    "insight_id": {"type": "string"},
+                    "message": {"type": "string"}
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/knowledge/retrieve": {
+      "get": {
+        "summary": "Retrieve stored qualitative insights",
+        "description": "Search and retrieve previously stored insights for context and memory",
+        "operationId": "getQualitativeData",
+        "parameters": [
+          {
+            "name": "search_query",
+            "in": "query",
+            "schema": {"type": "string"},
+            "description": "Search term to find relevant insights"
+          },
+          {
+            "name": "insight_type",
+            "in": "query",
+            "schema": {"type": "string"},
+            "description": "Filter by type of insight"
+          },
+          {
+            "name": "tags",
+            "in": "query",
+            "schema": {"type": "string"},
+            "description": "Comma-separated tags to search for"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Insights retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "insights": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {"type": "string"},
+                          "title": {"type": "string"},
+                          "content": {"type": "string"},
+                          "confidence_level": {"type": "number"},
+                          "tags": {"type": "array", "items": {"type": "string"}},
+                          "created_at": {"type": "string", "format": "date-time"}
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/knowledge/synthesis": {
+      "get": {
+        "summary": "Get synthesized insights across all data",
+        "description": "Combine qualitative insights with quantitative data for comprehensive analysis",
+        "operationId": "getSynthesizedInsights",
+        "parameters": [
+          {
+            "name": "focus_area",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["customer_experience", "operational_efficiency", "competitive_position", "revenue_optimization"]
+            }
+          },
+          {
+            "name": "time_period",
+            "in": "query",
+            "schema": {"type": "string"},
+            "description": "Time period for synthesis"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Synthesized insights generated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "executive_summary": {"type": "string"},
+                    "key_findings": {"type": "array", "items": {"type": "object"}},
+                    "recommendations": {"type": "array", "items": {"type": "object"}}
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {},
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization"
+      }
+    }
+  },
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ]
+}

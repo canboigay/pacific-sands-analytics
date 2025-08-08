@@ -1,0 +1,153 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Historical Data Upload API",
+    "description": "API for uploading and processing historical hospitality data",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://your-domain.com/api",
+      "description": "Production server"
+    }
+  ],
+  "paths": {
+    "/upload-csv": {
+      "post": {
+        "summary": "Upload CSV data",
+        "description": "Upload and process CSV files containing historical data",
+        "operationId": "uploadCSV",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "CSV file to upload"
+                  },
+                  "data_type": {
+                    "type": "string",
+                    "enum": ["rates", "bookings", "reviews", "competitors"],
+                    "description": "Type of data being uploaded"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "File processed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "records_processed": {
+                      "type": "integer"
+                    },
+                    "date_range": {
+                      "type": "object",
+                      "properties": {
+                        "start": {"type": "string", "format": "date"},
+                        "end": {"type": "string", "format": "date"}
+                      }
+                    },
+                    "insights": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "type": {"type": "string"},
+                          "message": {"type": "string"}
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get-insights": {
+      "get": {
+        "summary": "Get data insights",
+        "description": "Retrieve insights from uploaded historical data",
+        "operationId": "getInsights",
+        "parameters": [
+          {
+            "name": "date_from",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "date_to",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Insights retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pricing_trends": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "room_type": {"type": "string"},
+                          "avg_rate": {"type": "number"},
+                          "trend": {"type": "string"}
+                        }
+                      }
+                    },
+                    "occupancy_patterns": {
+                      "type": "object"
+                    },
+                    "recommendations": {
+                      "type": "array",
+                      "items": {"type": "string"}
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-Key"
+      }
+    }
+  },
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ]
+}

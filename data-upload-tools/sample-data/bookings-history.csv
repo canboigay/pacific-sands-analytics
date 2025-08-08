@@ -1,0 +1,11 @@
+booking_id,guest_name,guest_email,check_in,check_out,room_type,rate,channel,status,guest_phone
+RES001,John Smith,john.smith@email.com,2024-06-01,2024-06-05,Ocean View Suite,289,Direct,Completed,555-0123
+RES002,Sarah Johnson,sarah.j@email.com,2024-06-03,2024-06-07,Standard King,189,Booking.com,Completed,555-0124
+RES003,Michael Chen,m.chen@email.com,2024-06-10,2024-06-12,Deluxe Double,229,Expedia,Completed,555-0125
+RES004,Emily Davis,emily.d@email.com,2024-06-15,2024-06-20,Ocean View Suite,309,Direct,Completed,555-0126
+RES005,Robert Wilson,r.wilson@email.com,2024-06-18,2024-06-22,Standard King,199,Airbnb,Cancelled,555-0127
+RES006,Lisa Anderson,lisa.a@email.com,2024-07-01,2024-07-04,Penthouse,489,Direct,Completed,555-0128
+RES007,David Brown,david.b@email.com,2024-07-05,2024-07-08,Deluxe Double,249,Booking.com,Completed,555-0129
+RES008,Jennifer Taylor,j.taylor@email.com,2024-07-10,2024-07-15,Ocean View Suite,329,Hotels.com,Completed,555-0130
+RES009,James Martinez,james.m@email.com,2024-07-12,2024-07-14,Standard King,179,Direct,No-show,555-0131
+RES010,Maria Garcia,maria.g@email.com,2024-07-20,2024-07-25,Deluxe Double,259,Expedia,Completed,555-0132

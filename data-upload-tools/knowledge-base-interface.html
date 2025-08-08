@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pacific Sands Knowledge Base</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0e7ff 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2.5rem;
+        }
+        .header p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+        .nav-tabs {
+            display: flex;
+            background: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .nav-tab {
+            flex: 1;
+            padding: 1rem;
+            text-align: center;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #64748b;
+            transition: all 0.3s;
+        }
+        .nav-tab.active {
+            background: white;
+            color: #4f46e5;
+            border-bottom: 2px solid #4f46e5;
+        }
+        .nav-tab:hover {
+            color: #4f46e5;
+            background: #f1f5f9;
+        }
+        .tab-content {
+            padding: 2rem;
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .insight-form {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #374151;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: white;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3);
+        }
+        .insights-list {
+            display: grid;
+            gap: 1rem;
+        }
+        .insight-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+        }
+        .insight-card:hover {
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+        .insight-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        .insight-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin: 0;
+        }
+        .insight-type {
+            background: #ddd6fe;
+            color: #7c3aed;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        .insight-content {
+            color: #4b5563;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        .insight-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+        .insight-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+        .tag {
+            background: #f3f4f6;
+            color: #374151;
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+        }
+        .search-section {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .search-row {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 1rem;
+            align-items: end;
+        }
+        .synthesis-section {
+            text-align: center;
+            padding: 3rem;
+        }
+        .synthesis-card {
+            background: linear-gradient(135deg, #fef3c7, #f59e0b);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            color: #92400e;
+        }
+        .synthesis-card h3 {
+            margin-top: 0;
+            color: #92400e;
+        }
+        .confidence-bar {
+            width: 100%;
+            height: 4px;
+            background: #e5e7eb;
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+        .confidence-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #f59e0b, #10b981);
+            border-radius: 2px;
+            transition: width 0.8s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧠 Knowledge Base</h1>
+            <p>Qualitative insights and institutional memory for Pacific Sands</p>
+        </div>
+        
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('store')">Store Insights</button>
+            <button class="nav-tab" onclick="showTab('search')">Search & Retrieve</button>
+            <button class="nav-tab" onclick="showTab('synthesis')">Synthesis & Analysis</button>
+        </div>
+        
+        <!-- Store Insights Tab -->
+        <div id="store-tab" class="tab-content active">
+            <div class="insight-form">
+                <h2>Store New Insight</h2>
+                <form id="insightForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="insightType">Insight Type</label>
+                            <select id="insightType" required>
+                                <option value="">Select type...</option>
+                                <option value="customer_insight">Customer Insight</option>
+                                <option value="market_observation">Market Observation</option>
+                                <option value="operational_finding">Operational Finding</option>
+                                <option value="strategic_recommendation">Strategic Recommendation</option>
+                                <option value="trend_analysis">Trend Analysis</option>
+                                <option value="competitive_intelligence">Competitive Intelligence</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="confidence">Confidence Level</label>
+                            <select id="confidence">
+                                <option value="0.9">High (90%)</option>
+                                <option value="0.7">Medium (70%)</option>
+                                <option value="0.5">Low (50%)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="title">Title</label>
+                        <input type="text" id="title" placeholder="Brief descriptive title" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="content">Detailed Analysis</label>
+                        <textarea id="content" placeholder="Enter your detailed qualitative analysis, observations, or insights..." required></textarea>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="tags">Tags (comma-separated)</label>
+                            <input type="text" id="tags" placeholder="service, pricing, customer-experience">
+                        </div>
+                        <div class="form-group">
+                            <label for="dataSources">Data Sources</label>
+                            <input type="text" id="dataSources" placeholder="review_data_q3.csv, survey_results.xlsx">
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Store Insight</button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Search Tab -->
+        <div id="search-tab" class="tab-content">
+            <div class="search-section">
+                <h2>Search Stored Insights</h2>
+                <div class="search-row">
+                    <div class="form-group">
+                        <input type="text" id="searchQuery" placeholder="Search insights, tags, or content...">
+                    </div>
+                    <button class="btn btn-primary" onclick="searchInsights()">Search</button>
+                </div>
+                
+                <div class="form-row" style="margin-top: 1rem;">
+                    <div class="form-group">
+                        <label for="filterType">Filter by Type</label>
+                        <select id="filterType">
+                            <option value="">All Types</option>
+                            <option value="customer_insight">Customer Insights</option>
+                            <option value="market_observation">Market Observations</option>
+                            <option value="operational_finding">Operational Findings</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="filterTags">Filter by Tags</label>
+                        <input type="text" id="filterTags" placeholder="service, pricing">
+                    </div>
+                </div>
+            </div>
+            
+            <div id="searchResults" class="insights-list">
+                <div class="insight-card">
+                    <div class="insight-header">
+                        <h3 class="insight-title">Sample Customer Experience Insight</h3>
+                        <span class="insight-type">Customer Insight</span>
+                    </div>
+                    <div class="insight-content">
+                        Guests consistently mention slow check-in process in Q3 reviews. Average wait time appears to be 12-15 minutes during peak periods. This correlates with lower satisfaction scores on weekends.
+                    </div>
+                    <div class="insight-meta">
+                        <span>Confidence: 85%</span>
+                        <span>Created: Aug 8, 2025</span>
+                        <span>Sources: 3 files</span>
+                    </div>
+                    <div class="confidence-bar">
+                        <div class="confidence-fill" style="width: 85%"></div>
+                    </div>
+                    <div class="insight-tags">
+                        <span class="tag">check-in</span>
+                        <span class="tag">customer-service</span>
+                        <span class="tag">wait-times</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Synthesis Tab -->
+        <div id="synthesis-tab" class="tab-content">
+            <div class="synthesis-section">
+                <h2>Synthesized Intelligence</h2>
+                <p>Combine qualitative insights with quantitative data for comprehensive analysis</p>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="focusArea">Focus Area</label>
+                        <select id="focusArea">
+                            <option value="customer_experience">Customer Experience</option>
+                            <option value="operational_efficiency">Operational Efficiency</option>
+                            <option value="competitive_position">Competitive Position</option>
+                            <option value="revenue_optimization">Revenue Optimization</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="timePeriod">Time Period</label>
+                        <select id="timePeriod">
+                            <option value="last_quarter">Last Quarter</option>
+                            <option value="ytd">Year to Date</option>
+                            <option value="2024">2024</option>
+                            <option value="last_year">Last Year</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary" onclick="generateSynthesis()">Generate Synthesis Report</button>
+                
+                <div class="synthesis-card">
+                    <h3>🎯 Executive Summary</h3>
+                    <p>Based on 47 qualitative insights and 12 quantitative datasets, customer experience improvements show the highest ROI potential...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName + '-tab').classList.add('active');
+            event.target.classList.add('active');
+        }
+        
+        document.getElementById('insightForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                insight_type: document.getElementById('insightType').value,
+                title: document.getElementById('title').value,
+                content: document.getElementById('content').value,
+                confidence_level: parseFloat(document.getElementById('confidence').value),
+                tags: document.getElementById('tags').value.split(',').map(tag => tag.trim()),
+                data_sources: document.getElementById('dataSources').value.split(',').map(source => source.trim()),
+                date_range: {
+                    start: new Date().toISOString().split('T')[0],
+                    end: new Date().toISOString().split('T')[0]
+                }
+            };
+            
+            console.log('Storing insight:', formData);
+            
+            // Here you would call the API to store the insight
+            // fetch('/knowledge/store', { method: 'POST', body: JSON.stringify(formData) })
+            
+            alert('Insight stored successfully!');
+            this.reset();
+        });
+        
+        function searchInsights() {
+            const query = document.getElementById('searchQuery').value;
+            const type = document.getElementById('filterType').value;
+            const tags = document.getElementById('filterTags').value;
+            
+            console.log('Searching for:', { query, type, tags });
+            
+            // Here you would call the API to search insights
+            // fetch('/knowledge/retrieve?' + new URLSearchParams({ search_query: query, insight_type: type, tags: tags }))
+            
+            alert('Search functionality would query stored insights here');
+        }
+        
+        function generateSynthesis() {
+            const focusArea = document.getElementById('focusArea').value;
+            const timePeriod = document.getElementById('timePeriod').value;
+            
+            console.log('Generating synthesis for:', { focusArea, timePeriod });
+            
+            // Here you would call the API for synthesis
+            // fetch('/knowledge/synthesis?' + new URLSearchParams({ focus_area: focusArea, time_period: timePeriod }))
+            
+            alert('Synthesis report would be generated here');
+        }
+    </script>
+</body>
+</html>

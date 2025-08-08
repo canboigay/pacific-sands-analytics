@@ -1,0 +1,130 @@
+{
+  "tools": [
+    {
+      "name": "upload_historical_bookings",
+      "description": "Upload historical booking data in bulk",
+      "url": "REPLACE_WITH_YOUR_WEBHOOK_URL",
+      "method": "POST",
+      "timeout": 60000,
+      "maxRetries": 3,
+      "input": {
+        "type": "object",
+        "properties": {
+          "data_type": {
+            "type": "string",
+            "enum": ["csv", "json", "excel"],
+            "description": "Format of the data being uploaded"
+          },
+          "time_range": {
+            "type": "object",
+            "properties": {
+              "start_date": {"type": "string", "format": "date"},
+              "end_date": {"type": "string", "format": "date"}
+            }
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "booking_id": {"type": "string"},
+                "guest_name": {"type": "string"},
+                "check_in": {"type": "string", "format": "date"},
+                "check_out": {"type": "string", "format": "date"},
+                "room_type": {"type": "string"},
+                "rate": {"type": "number"},
+                "channel": {"type": "string"},
+                "status": {"type": "string"}
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "upload_competitor_data",
+      "description": "Upload historical competitor pricing and availability data",
+      "url": "REPLACE_WITH_YOUR_WEBHOOK_URL",
+      "method": "POST",
+      "input": {
+        "type": "object",
+        "properties": {
+          "competitor_name": {"type": "string"},
+          "data_points": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "date": {"type": "string", "format": "date"},
+                "occupancy_rate": {"type": "number"},
+                "average_rate": {"type": "number"},
+                "available_rooms": {"type": "integer"}
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "upload_customer_reviews",
+      "description": "Upload historical customer reviews and sentiment data",
+      "url": "REPLACE_WITH_YOUR_WEBHOOK_URL",
+      "method": "POST",
+      "input": {
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "string",
+            "enum": ["tripadvisor", "google", "booking.com", "expedia", "direct"],
+            "description": "Review platform source"
+          },
+          "reviews": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "review_id": {"type": "string"},
+                "date": {"type": "string", "format": "date"},
+                "rating": {"type": "number", "minimum": 1, "maximum": 5},
+                "title": {"type": "string"},
+                "content": {"type": "string"},
+                "guest_type": {"type": "string"},
+                "sentiment_score": {"type": "number"}
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "upload_financial_data",
+      "description": "Upload historical revenue and financial metrics",
+      "url": "REPLACE_WITH_YOUR_WEBHOOK_URL",
+      "method": "POST",
+      "input": {
+        "type": "object",
+        "properties": {
+          "period": {
+            "type": "string",
+            "enum": ["daily", "weekly", "monthly"],
+            "description": "Aggregation period"
+          },
+          "metrics": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "date": {"type": "string", "format": "date"},
+                "revenue": {"type": "number"},
+                "adr": {"type": "number"},
+                "revpar": {"type": "number"},
+                "occupancy": {"type": "number"},
+                "bookings": {"type": "integer"}
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,257 @@
+{
+  "qualitative_data_endpoints": {
+    "/knowledge/store": {
+      "post": {
+        "summary": "Store qualitative insights and analysis",
+        "description": "Store GPT-generated insights, observations, and qualitative analysis for future reference",
+        "operationId": "storeQualitativeData",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "insight_type": {
+                    "type": "string",
+                    "enum": ["customer_insight", "market_observation", "operational_finding", "strategic_recommendation", "trend_analysis", "competitive_intelligence"],
+                    "description": "Category of qualitative insight"
+                  },
+                  "title": {
+                    "type": "string",
+                    "description": "Brief title for the insight"
+                  },
+                  "content": {
+                    "type": "string",
+                    "description": "Detailed qualitative analysis or insight"
+                  },
+                  "confidence_level": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1,
+                    "description": "Confidence level of the insight (0-1)"
+                  },
+                  "data_sources": {
+                    "type": "array",
+                    "items": {"type": "string"},
+                    "description": "References to data files or sources that support this insight"
+                  },
+                  "tags": {
+                    "type": "array",
+                    "items": {"type": "string"},
+                    "description": "Keywords for categorization and search"
+                  },
+                  "date_range": {
+                    "type": "object",
+                    "properties": {
+                      "start": {"type": "string", "format": "date"},
+                      "end": {"type": "string", "format": "date"}
+                    },
+                    "description": "Time period this insight relates to"
+                  },
+                  "actionable_items": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "action": {"type": "string"},
+                        "priority": {"type": "string", "enum": ["high", "medium", "low"]},
+                        "timeline": {"type": "string"}
+                      }
+                    }
+                  },
+                  "related_metrics": {
+                    "type": "array",
+                    "items": {"type": "string"},
+                    "description": "Quantitative metrics that relate to this insight"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/knowledge/retrieve": {
+      "get": {
+        "summary": "Retrieve stored qualitative insights",
+        "description": "Search and retrieve previously stored insights for context and memory",
+        "operationId": "getQualitativeData",
+        "parameters": [
+          {
+            "name": "insight_type",
+            "in": "query",
+            "schema": {"type": "string"},
+            "description": "Filter by type of insight"
+          },
+          {
+            "name": "tags",
+            "in": "query",
+            "schema": {"type": "string"},
+            "description": "Comma-separated tags to search for"
+          },
+          {
+            "name": "date_from",
+            "in": "query",
+            "schema": {"type": "string", "format": "date"},
+            "description": "Filter insights from this date"
+          },
+          {
+            "name": "date_to",
+            "in": "query",
+            "schema": {"type": "string", "format": "date"},
+            "description": "Filter insights to this date"
+          },
+          {
+            "name": "search_query",
+            "in": "query",
+            "schema": {"type": "string"},
+            "description": "Full-text search in insight content"
+          },
+          {
+            "name": "confidence_min",
+            "in": "query",
+            "schema": {"type": "number"},
+            "description": "Minimum confidence level"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Insights retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "insights": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {"type": "string"},
+                          "insight_type": {"type": "string"},
+                          "title": {"type": "string"},
+                          "content": {"type": "string"},
+                          "confidence_level": {"type": "number"},
+                          "created_at": {"type": "string", "format": "date-time"},
+                          "tags": {"type": "array", "items": {"type": "string"}},
+                          "actionable_items": {"type": "array"},
+                          "related_data": {"type": "array", "items": {"type": "string"}}
+                        }
+                      }
+                    },
+                    "total_count": {"type": "integer"},
+                    "related_suggestions": {
+                      "type": "array",
+                      "items": {"type": "string"},
+                      "description": "Suggested related insights to explore"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/knowledge/connect": {
+      "post": {
+        "summary": "Link qualitative insights to quantitative data",
+        "description": "Create connections between insights and specific data points or files",
+        "operationId": "linkInsightsToData",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "insight_id": {"type": "string"},
+                  "data_references": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "data_type": {"type": "string"},
+                        "file_name": {"type": "string"},
+                        "specific_metrics": {"type": "array", "items": {"type": "string"}},
+                        "correlation_strength": {"type": "string", "enum": ["strong", "moderate", "weak"]}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/knowledge/synthesis": {
+      "get": {
+        "summary": "Get synthesized insights across all data",
+        "description": "Combine qualitative insights with quantitative data for comprehensive analysis",
+        "operationId": "getSynthesizedInsights",
+        "parameters": [
+          {
+            "name": "focus_area",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["customer_experience", "operational_efficiency", "competitive_position", "revenue_optimization", "market_trends"]
+            }
+          },
+          {
+            "name": "time_period",
+            "in": "query",
+            "schema": {"type": "string"},
+            "description": "Time period for synthesis (e.g., 'last_quarter', '2024', 'ytd')"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Synthesized insights generated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "executive_summary": {"type": "string"},
+                    "key_findings": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "finding": {"type": "string"},
+                          "supporting_data": {"type": "array", "items": {"type": "string"}},
+                          "qualitative_evidence": {"type": "array", "items": {"type": "string"}},
+                          "confidence": {"type": "number"}
+                        }
+                      }
+                    },
+                    "trend_analysis": {"type": "object"},
+                    "recommendations": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "recommendation": {"type": "string"},
+                          "rationale": {"type": "string"},
+                          "expected_impact": {"type": "string"},
+                          "implementation_notes": {"type": "string"}
+                        }
+                      }
+                    },
+                    "data_gaps": {
+                      "type": "array",
+                      "items": {"type": "string"},
+                      "description": "Areas where additional data would improve insights"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

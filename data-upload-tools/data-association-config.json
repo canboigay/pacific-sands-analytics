@@ -1,0 +1,73 @@
+{
+  "data_relationships": {
+    "room_rates": {
+      "primary_key": "date",
+      "foreign_keys": {
+        "room_type": "room_types.type_code",
+        "season": "seasons.season_code"
+      },
+      "associations": [
+        {
+          "table": "bookings",
+          "match_on": ["date", "room_type"],
+          "derive": ["occupancy_rate", "actual_revenue"]
+        },
+        {
+          "table": "competitor_rates",
+          "match_on": ["date", "room_category"],
+          "derive": ["price_position", "market_share"]
+        }
+      ],
+      "calculated_fields": {
+        "revpar": "revenue / available_rooms",
+        "adr": "revenue / occupied_rooms",
+        "price_index": "our_rate / competitor_avg_rate"
+      }
+    },
+    "bookings": {
+      "primary_key": "booking_id",
+      "foreign_keys": {
+        "guest_id": "guests.id",
+        "room_type": "room_types.type_code"
+      },
+      "associations": [
+        {
+          "table": "guest_history",
+          "match_on": ["guest_email", "guest_phone"],
+          "derive": ["repeat_guest", "lifetime_value"]
+        }
+      ]
+    }
+  },
+  "auto_enrichment": {
+    "date_fields": {
+      "extract": ["day_of_week", "month", "season", "holiday"],
+      "calculate": ["days_until_arrival", "booking_window"]
+    },
+    "text_fields": {
+      "normalize": ["guest_name", "email"],
+      "extract_patterns": ["channel_category", "rate_code"]
+    },
+    "numeric_fields": {
+      "calculate_percentiles": true,
+      "identify_outliers": true
+    }
+  },
+  "data_quality": {
+    "duplicate_detection": {
+      "booking_id": "exact",
+      "guest_record": ["guest_email", "check_in", "check_out"]
+    },
+    "validation_rules": {
+      "rates": {
+        "min": 0,
+        "max": 9999,
+        "required": true
+      },
+      "dates": {
+        "format": ["YYYY-MM-DD", "MM/DD/YYYY"],
+        "range": "2020-01-01 to 2026-12-31"
+      }
+    }
+  }
+}

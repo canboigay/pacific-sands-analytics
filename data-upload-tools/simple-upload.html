@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV Data Upload</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .upload-area {
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .upload-area:hover {
+            border-color: #007bff;
+            background: #f8f9ff;
+        }
+        .upload-area.active {
+            border-color: #007bff;
+            background: #e6f3ff;
+        }
+        #fileInput {
+            display: none;
+        }
+        .file-info {
+            background: #e6f3ff;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            display: none;
+        }
+        .data-display {
+            margin-top: 20px;
+            display: none;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007bff;
+        }
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+        .preview-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        .preview-table th {
+            background: #f8f9fa;
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        .preview-table td {
+            padding: 8px 10px;
+            border: 1px solid #ddd;
+        }
+        .preview-table tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        .table-container {
+            max-height: 400px;
+            overflow: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+        .btn-secondary {
+            background: #6c757d;
+        }
+        .btn-secondary:hover {
+            background: #545b62;
+        }
+        .insights {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .insights h3 {
+            margin-top: 0;
+            color: #856404;
+        }
+        .insight-item {
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(255,255,255,0.7);
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 CSV Data Processor</h1>
+        <p>Upload your historical data to analyze and process</p>
+
+        <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+            <h3>📁 Click to Upload CSV File</h3>
+            <p>or drag and drop your file here</p>
+            <input type="file" id="fileInput" accept=".csv" />
+        </div>
+
+        <div class="file-info" id="fileInfo">
+            <strong>File loaded: </strong><span id="fileName"></span>
+        </div>
+
+        <div class="data-display" id="dataDisplay">
+            <h2>Data Analysis</h2>
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalRows">0</div>
+                    <div class="stat-label">Total Records</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalCols">0</div>
+                    <div class="stat-label">Columns</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="dateSpan">-</div>
+                    <div class="stat-label">Date Range</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="roomCount">0</div>
+                    <div class="stat-label">Room Types</div>
+                </div>
+            </div>
+
+            <h3>Columns Found:</h3>
+            <div id="columnsList"></div>
+
+            <h3>Data Preview (first 10 rows):</h3>
+            <div class="table-container">
+                <table class="preview-table" id="previewTable">
+                </table>
+            </div>
+
+            <div class="insights" id="insightsSection">
+                <h3>🔍 Key Insights</h3>
+                <div id="insightsList"></div>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn btn-secondary" onclick="resetUpload()">Clear Data</button>
+                <button class="btn" onclick="processData()">Process & Upload to System</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let csvData = [];
+        let csvHeaders = [];
+
+        // File upload handling
+        document.getElementById('fileInput').addEventListener('change', handleFileSelect);
+
+        // Drag and drop
+        const uploadArea = document.querySelector('.upload-area');
+        
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('active');
+        });
+        
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('active');
+        });
+        
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('active');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                processFile(files[0]);
+            }
+        });
+
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                processFile(file);
+            }
+        }
+
+        function processFile(file) {
+            if (!file.name.endsWith('.csv')) {
+                alert('Please select a CSV file');
+                return;
+            }
+
+            // Show file info
+            document.getElementById('fileInfo').style.display = 'block';
+            document.getElementById('fileName').textContent = file.name + ' (' + formatFileSize(file.size) + ')';
+
+            // Read CSV file
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const text = e.target.result;
+                parseCSV(text);
+            };
+            reader.readAsText(file);
+        }
+
+        function parseCSV(text) {
+            console.log('Parsing CSV...');
+            const lines = text.split('\n').filter(line => line.trim() !== '');
+            
+            if (lines.length === 0) {
+                alert('CSV file appears to be empty');
+                return;
+            }
+
+            // Parse headers
+            csvHeaders = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
+            console.log('Headers:', csvHeaders);
+
+            // Parse data rows
+            csvData = [];
+            for (let i = 1; i < lines.length; i++) {
+                const values = lines[i].split(',').map(v => v.trim().replace(/"/g, ''));
+                if (values.length === csvHeaders.length) {
+                    const row = {};
+                    csvHeaders.forEach((header, index) => {
+                        row[header] = values[index];
+                    });
+                    csvData.push(row);
+                }
+            }
+
+            console.log('Parsed data:', csvData.length, 'rows');
+            if (csvData.length > 0) {
+                analyzeData();
+                displayData();
+            } else {
+                alert('No valid data rows found in CSV');
+            }
+        }
+
+        function analyzeData() {
+            console.log('Analyzing data...');
+            
+            // Update stats
+            document.getElementById('totalRows').textContent = csvData.length.toLocaleString();
+            document.getElementById('totalCols').textContent = csvHeaders.length;
+
+            // Find date columns and range
+            let dateRange = '-';
+            const dateColumns = csvHeaders.filter(header => 
+                header.toLowerCase().includes('date') || 
+                header.toLowerCase().includes('time')
+            );
+
+            if (dateColumns.length > 0) {
+                const dates = csvData.map(row => new Date(row[dateColumns[0]]))
+                                   .filter(d => !isNaN(d))
+                                   .sort((a, b) => a - b);
+                
+                if (dates.length > 0) {
+                    const start = dates[0].toLocaleDateString();
+                    const end = dates[dates.length - 1].toLocaleDateString();
+                    dateRange = start + ' to ' + end;
+                }
+            }
+            document.getElementById('dateSpan').textContent = dateRange;
+
+            // Count room types
+            const roomColumns = csvHeaders.filter(header => 
+                header.toLowerCase().includes('room') ||
+                header.toLowerCase().includes('type') ||
+                header.toLowerCase().includes('category')
+            );
+
+            let roomTypeCount = 0;
+            if (roomColumns.length > 0) {
+                const roomTypes = new Set();
+                csvData.forEach(row => {
+                    roomColumns.forEach(col => {
+                        if (row[col]) roomTypes.add(row[col]);
+                    });
+                });
+                roomTypeCount = roomTypes.size;
+            }
+            document.getElementById('roomCount').textContent = roomTypeCount || 'N/A';
+        }
+
+        function displayData() {
+            console.log('Displaying data...');
+            
+            // Show columns
+            const columnsList = document.getElementById('columnsList');
+            columnsList.innerHTML = csvHeaders.map(header => 
+                `<span style="display: inline-block; background: #e9ecef; padding: 5px 10px; margin: 3px; border-radius: 15px; font-size: 14px;">${header}</span>`
+            ).join('');
+
+            // Show preview table
+            const table = document.getElementById('previewTable');
+            let tableHTML = '<tr>' + csvHeaders.map(h => `<th>${h}</th>`).join('') + '</tr>';
+            
+            // Show first 10 rows
+            const previewData = csvData.slice(0, 10);
+            previewData.forEach(row => {
+                tableHTML += '<tr>' + csvHeaders.map(h => `<td>${row[h] || ''}</td>`).join('') + '</tr>';
+            });
+            
+            table.innerHTML = tableHTML;
+
+            // Generate insights
+            generateInsights();
+
+            // Show the data display section
+            document.getElementById('dataDisplay').style.display = 'block';
+        }
+
+        function generateInsights() {
+            const insights = [];
+            
+            // Pricing insights
+            const priceColumns = csvHeaders.filter(header => 
+                header.toLowerCase().includes('rate') ||
+                header.toLowerCase().includes('price') ||
+                header.toLowerCase().includes('cost')
+            );
+
+            if (priceColumns.length > 0) {
+                priceColumns.forEach(col => {
+                    const values = csvData.map(row => parseFloat(row[col])).filter(v => !isNaN(v));
+                    if (values.length > 0) {
+                        const avg = values.reduce((a, b) => a + b, 0) / values.length;
+                        const min = Math.min(...values);
+                        const max = Math.max(...values);
+                        
+                        insights.push(
+                            `<strong>${col}:</strong> Average $${avg.toFixed(2)}, Range $${min} - $${max}`
+                        );
+                    }
+                });
+            }
+
+            // Data coverage
+            insights.push(`<strong>Data Coverage:</strong> ${csvData.length} records across ${csvHeaders.length} fields`);
+            
+            // Date insights
+            const dateColumns = csvHeaders.filter(h => h.toLowerCase().includes('date'));
+            if (dateColumns.length > 0) {
+                insights.push(`<strong>Time Span:</strong> Historical data with ${dateColumns.length} date field(s)`);
+            }
+
+            document.getElementById('insightsList').innerHTML = insights.map(insight => 
+                `<div class="insight-item">${insight}</div>`
+            ).join('');
+        }
+
+        function processData() {
+            alert(`Processing ${csvData.length} records...\n\nThis data will be:\n• Added to your reference database\n• Made available for analytics\n• Integrated with MCP tools`);
+        }
+
+        function resetUpload() {
+            csvData = [];
+            csvHeaders = [];
+            document.getElementById('fileInfo').style.display = 'none';
+            document.getElementById('dataDisplay').style.display = 'none';
+            document.getElementById('fileInput').value = '';
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes < 1024) return bytes + ' bytes';
+            if (bytes < 1048576) return Math.round(bytes / 1024) + ' KB';
+            return Math.round(bytes / 1048576) + ' MB';
+        }
+    </script>
+</body>
+</html>
