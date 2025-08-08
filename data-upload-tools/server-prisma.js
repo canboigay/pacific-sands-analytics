@@ -6,6 +6,23 @@ const { PrismaClient } = require('@prisma/client');
 const app = express();
 const prisma = new PrismaClient();
 
+// Simple local embedding generator for demonstration purposes
+const generateEmbedding = (text = '') => {
+    const maxLen = 64;
+    const embedding = Array(maxLen).fill(0);
+    for (let i = 0; i < Math.min(text.length, maxLen); i++) {
+        embedding[i] = text.charCodeAt(i) / 255;
+    }
+    return embedding;
+};
+
+const recordToEmbedding = (record) => {
+    const textContent = Object.values(record)
+        .filter(v => typeof v === 'string')
+        .join(' ');
+    return generateEmbedding(textContent);
+};
+
 // Middleware
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
@@ -98,6 +115,34 @@ app.post('/api/data/upload', authenticateAPI, async (req, res) => {
 
         const records = Array.isArray(data) ? data : [data];
         let uploadedCount = 0;
+
+        // Track unique headers for field definitions
+        const headers = new Set();
+        records.forEach(rec => Object.keys(rec).forEach(h => headers.add(h)));
+
+        await Promise.all(Array.from(headers).map(async (header) => {
+            try {
+                await prisma.fieldDefinition.upsert({
+                    where: { name: header },
+                    update: {},
+                    create: { name: header }
+                });
+            } catch (err) {
+                console.error(`FieldDefinition upsert failed for ${header}:`, err.message);
+            }
+        }));
+
+        // Store raw records with embeddings
+        const rawRecords = records.map(rec => ({
+            payload: rec,
+            embedding: recordToEmbedding(rec)
+        }));
+
+        try {
+            await prisma.rawRecord.createMany({ data: rawRecords });
+        } catch (err) {
+            console.error('RawRecord insertion failed:', err.message);
+        }
 
         // Process different data types
         if (data_type === 'rates') {
