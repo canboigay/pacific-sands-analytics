@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pacific Sands - Bulk CSV Upload</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2.5rem;
+        }
+        .header p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+        .upload-section {
+            padding: 2rem;
+        }
+        .upload-zone {
+            border: 3px dashed #d1d5db;
+            border-radius: 12px;
+            padding: 3rem;
+            text-align: center;
+            transition: all 0.3s;
+            background: #f9fafb;
+            margin-bottom: 2rem;
+        }
+        .upload-zone.dragover {
+            border-color: #4f46e5;
+            background: #f0f9ff;
+            transform: scale(1.02);
+        }
+        .upload-zone h2 {
+            margin-top: 0;
+            color: #374151;
+        }
+        .upload-zone p {
+            color: #6b7280;
+            margin-bottom: 1.5rem;
+        }
+        .file-input {
+            display: none;
+        }
+        .upload-btn {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .upload-btn:hover {
+            transform: translateY(-2px);
+        }
+        .progress-section {
+            margin-top: 2rem;
+            display: none;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4f46e5, #10b981);
+            width: 0%;
+            transition: width 0.5s;
+        }
+        .file-list {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+        .file-item {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #f3f4f6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .file-item:last-child {
+            border-bottom: none;
+        }
+        .file-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .status-uploading {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        .status-success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .status-error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        .upload-controls {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+        .control-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        .control-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #374151;
+        }
+        .control-group select,
+        .control-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        .start-upload-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 1rem;
+        }
+        .start-upload-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+        }
+        .start-upload-btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        .results-summary {
+            background: #f0f9ff;
+            border: 1px solid #bae6fd;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            display: none;
+        }
+        .summary-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .stat-card {
+            text-align: center;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #4f46e5;
+        }
+        .stat-label {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-top: 0.25rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Bulk CSV Upload</h1>
+            <p>Upload your 140 analyzed CSV files to Pacific Sands Analytics</p>
+        </div>
+        
+        <div class="upload-section">
+            <div class="upload-zone" id="uploadZone">
+                <h2>Drop your CSV files here</h2>
+                <p>Supports multiple file selection • Automatic data type detection • Progress tracking</p>
+                <button class="upload-btn" onclick="document.getElementById('fileInput').click()">
+                    📁 Select CSV Files
+                </button>
+                <input type="file" id="fileInput" class="file-input" multiple accept=".csv" />
+            </div>
+            
+            <div class="upload-controls">
+                <div class="control-group">
+                    <label for="dataTypeOverride">Data Type (auto-detected)</label>
+                    <select id="dataTypeOverride">
+                        <option value="">Auto-detect from filename</option>
+                        <option value="rates">Room Rates</option>
+                        <option value="bookings">Booking Data</option>
+                        <option value="reviews">Customer Reviews</option>
+                        <option value="competitors">Competitor Data</option>
+                        <option value="occupancy">Occupancy Data</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label for="dateRange">Date Range (optional)</label>
+                    <input type="text" id="dateRange" placeholder="e.g., 2023-2024" />
+                </div>
+            </div>
+            
+            <button class="start-upload-btn" id="startUploadBtn" onclick="startBulkUpload()" disabled>
+                🚀 Start Bulk Upload
+            </button>
+            
+            <div class="progress-section" id="progressSection">
+                <h3>Upload Progress</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div id="progressText">0 of 0 files uploaded</div>
+                
+                <div class="file-list" id="fileList"></div>
+            </div>
+            
+            <div class="results-summary" id="resultsSummary">
+                <h3>✅ Upload Complete!</h3>
+                <div class="summary-stats">
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalFiles">0</div>
+                        <div class="stat-label">Files Processed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalRecords">0</div>
+                        <div class="stat-label">Records Uploaded</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="successRate">0%</div>
+                        <div class="stat-label">Success Rate</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalSize">0MB</div>
+                        <div class="stat-label">Data Size</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let selectedFiles = [];
+        let uploadResults = [];
+        
+        // Drag and drop functionality
+        const uploadZone = document.getElementById('uploadZone');
+        const fileInput = document.getElementById('fileInput');
+        
+        uploadZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadZone.classList.add('dragover');
+        });
+        
+        uploadZone.addEventListener('dragleave', () => {
+            uploadZone.classList.remove('dragover');
+        });
+        
+        uploadZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadZone.classList.remove('dragover');
+            handleFiles(e.dataTransfer.files);
+        });
+        
+        fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+        
+        function handleFiles(files) {
+            selectedFiles = Array.from(files).filter(file => file.name.endsWith('.csv'));
+            displayFileList();
+            document.getElementById('startUploadBtn').disabled = selectedFiles.length === 0;
+        }
+        
+        function displayFileList() {
+            const fileList = document.getElementById('fileList');
+            const progressSection = document.getElementById('progressSection');
+            
+            if (selectedFiles.length === 0) {
+                progressSection.style.display = 'none';
+                return;
+            }
+            
+            progressSection.style.display = 'block';
+            document.getElementById('progressText').textContent = `0 of ${selectedFiles.length} files uploaded`;
+            
+            fileList.innerHTML = selectedFiles.map((file, index) => `
+                <div class="file-item" id="file-${index}">
+                    <div>
+                        <strong>${file.name}</strong>
+                        <small style="color: #6b7280; margin-left: 8px;">(${(file.size / 1024).toFixed(1)} KB)</small>
+                    </div>
+                    <span class="file-status status-pending" id="status-${index}">Pending</span>
+                </div>
+            `).join('');
+        }
+        
+        function detectDataType(filename) {
+            const name = filename.toLowerCase();
+            if (name.includes('rate') || name.includes('pricing')) return 'rates';
+            if (name.includes('booking') || name.includes('reservation')) return 'bookings';
+            if (name.includes('review') || name.includes('feedback')) return 'reviews';
+            if (name.includes('competitor') || name.includes('comp_')) return 'competitors';
+            if (name.includes('occupancy') || name.includes('occ_')) return 'occupancy';
+            return 'rates'; // default
+        }
+        
+        function parseCSV(text) {
+            const lines = text.trim().split('\n');
+            const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
+            
+            return lines.slice(1).map(line => {
+                const values = line.split(',').map(v => v.trim().replace(/"/g, ''));
+                const record = {};
+                headers.forEach((header, index) => {
+                    record[header] = values[index] || '';
+                });
+                return record;
+            });
+        }
+        
+        async function uploadFile(file, index) {
+            const statusElement = document.getElementById(`status-${index}`);
+            statusElement.textContent = 'Processing...';
+            statusElement.className = 'file-status status-uploading';
+            
+            try {
+                // Read file content
+                const text = await file.text();
+                const data = parseCSV(text);
+                
+                // Determine data type
+                const dataTypeOverride = document.getElementById('dataTypeOverride').value;
+                const dataType = dataTypeOverride || detectDataType(file.name);
+                
+                // Prepare upload payload
+                const uploadData = {
+                    data_type: dataType,
+                    data: data,
+                    source: 'bulk_csv_upload',
+                    filename: file.name,
+                    date_range: document.getElementById('dateRange').value,
+                    uploaded_at: new Date().toISOString()
+                };
+                
+                // Upload to API (replace with your actual API URL)
+                const response = await fetch('/api/data/upload', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ps_me2w0k3e_x81fsv0yz3k'
+                    },
+                    body: JSON.stringify(uploadData)
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    statusElement.textContent = `✅ Success (${result.records_processed} records)`;
+                    statusElement.className = 'file-status status-success';
+                    
+                    return {
+                        success: true,
+                        filename: file.name,
+                        records: result.records_processed,
+                        size: file.size
+                    };
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                
+            } catch (error) {
+                statusElement.textContent = `❌ Error: ${error.message}`;
+                statusElement.className = 'file-status status-error';
+                
+                return {
+                    success: false,
+                    filename: file.name,
+                    error: error.message,
+                    size: file.size
+                };
+            }
+        }
+        
+        async function startBulkUpload() {
+            const startBtn = document.getElementById('startUploadBtn');
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            
+            startBtn.disabled = true;
+            startBtn.textContent = '⏳ Uploading...';
+            uploadResults = [];
+            
+            // Upload files with concurrency limit (3 at a time)
+            const batchSize = 3;
+            for (let i = 0; i < selectedFiles.length; i += batchSize) {
+                const batch = selectedFiles.slice(i, i + batchSize);
+                const batchPromises = batch.map((file, batchIndex) => 
+                    uploadFile(file, i + batchIndex)
+                );
+                
+                const batchResults = await Promise.all(batchPromises);
+                uploadResults.push(...batchResults);
+                
+                // Update progress
+                const completed = uploadResults.length;
+                const progress = (completed / selectedFiles.length) * 100;
+                progressFill.style.width = `${progress}%`;
+                progressText.textContent = `${completed} of ${selectedFiles.length} files uploaded`;
+                
+                // Small delay between batches
+                if (i + batchSize < selectedFiles.length) {
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                }
+            }
+            
+            // Show results
+            showResults();
+            startBtn.textContent = '🚀 Start Bulk Upload';
+            startBtn.disabled = false;
+        }
+        
+        function showResults() {
+            const resultsSummary = document.getElementById('resultsSummary');
+            const successful = uploadResults.filter(r => r.success);
+            const totalRecords = successful.reduce((sum, r) => sum + (r.records || 0), 0);
+            const totalSize = uploadResults.reduce((sum, r) => sum + r.size, 0);
+            const successRate = ((successful.length / uploadResults.length) * 100).toFixed(1);
+            
+            document.getElementById('totalFiles').textContent = uploadResults.length;
+            document.getElementById('totalRecords').textContent = totalRecords.toLocaleString();
+            document.getElementById('successRate').textContent = `${successRate}%`;
+            document.getElementById('totalSize').textContent = `${(totalSize / (1024 * 1024)).toFixed(1)}MB`;
+            
+            resultsSummary.style.display = 'block';
+            resultsSummary.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
