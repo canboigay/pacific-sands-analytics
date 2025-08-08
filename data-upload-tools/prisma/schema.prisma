@@ -49,27 +49,45 @@ model OccupancyRecord {
 }
 
 model UploadMetadata {
-  id            Int      @id @default(autoincrement())
-  filename      String
-  dataType      String   @map("data_type")
-  recordsCount  Int      @map("records_count")
-  source        String   @default("csv_upload")
-  uploadedAt    DateTime @default(now()) @map("uploaded_at")
-  fileSize      Int?     @map("file_size")
-  processingTimeMs Int? @map("processing_time_ms")
+  id               String   @id @default(cuid())
+  filename         String
+  dataType         String   @map("data_type")
+  recordsCount     Int      @map("records_count")
+  source           String   @default("csv_upload")
+  uploadedAt       DateTime @default(now()) @map("uploaded_at")
+  fileSize         Int?     @map("file_size")
+  processingTimeMs Int?     @map("processing_time_ms")
+  purpose          String?
+  tags             String[] @db.Text
+  links            InsightUploadLink[]
 
   @@map("upload_metadata")
 }
 
 model Insight {
-  id         Int      @id @default(autoincrement())
-  text       String
-  source     String   @default("system")
-  confidence Float    @default(0.5)
-  impact     String   @default("medium") // low, medium, high
-  metadata   Json?
-  createdAt  DateTime @default(now()) @map("created_at")
-  updatedAt  DateTime @updatedAt @map("updated_at")
+  id            String   @id @default(cuid())
+  text          String
+  source        String   @default("system")
+  confidence    Float    @default(0.5)
+  impact        String   @default("medium") // low, medium, high
+  metadata      Json?
+  tags          String[] @db.Text
+  sourceUrl     String?  @map("source_url")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+  relatedUploads InsightUploadLink[]
 
   @@map("insights")
+}
+
+model InsightUploadLink {
+  id        String   @id @default(cuid())
+  insightId String
+  uploadId  String
+  createdAt DateTime @default(now()) @map("created_at")
+  insight   Insight  @relation(fields: [insightId], references: [id], onDelete: Cascade)
+  upload    UploadMetadata @relation(fields: [uploadId], references: [id], onDelete: Cascade)
+
+  @@map("insight_upload_links")
+  @@unique([insightId, uploadId])
 }
