@@ -8,16 +8,19 @@ import asyncio
 import schedule
 import time
 import logging
+import os
 from datetime import datetime, timedelta
 import json
 from web_scraping_system import PacificSandsScraper
 
+BASE_DIR = os.environ.get("PS_DATA_DIR", os.path.dirname(os.path.abspath(__file__)))
+
 # Configure logging
 logging.basicConfig(
-    level=logging.INFO, 
+    level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('/Users/simeong/data-upload-tools/scraper.log'),
+        logging.FileHandler(os.path.join(BASE_DIR, 'scraper.log')),
         logging.StreamHandler()
     ]
 )
@@ -60,8 +63,9 @@ class ScrapingScheduler:
             }
         }
         
+        config_path = os.path.join(BASE_DIR, 'scraper-config.json')
         try:
-            with open('/Users/simeong/data-upload-tools/scraper-config.json', 'r') as f:
+            with open(config_path, 'r') as f:
                 config = json.load(f)
                 # Merge with defaults for any missing keys
                 for key, value in default_config.items():
@@ -70,7 +74,7 @@ class ScrapingScheduler:
                 return config
         except FileNotFoundError:
             # Save default config
-            with open('/Users/simeong/data-upload-tools/scraper-config.json', 'w') as f:
+            with open(config_path, 'w') as f:
                 json.dump(default_config, f, indent=2)
             return default_config
 
