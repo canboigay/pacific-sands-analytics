@@ -1,0 +1,69 @@
+// Prisma schema for Pacific Sands Analytics
+// Supports Prisma Accelerate for optimal performance
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("PRISMA_DATABASE_URL")
+  directUrl = env("POSTGRES_URL")
+}
+
+model RateRecord {
+  id        Int      @id @default(autoincrement())
+  date      DateTime
+  roomType  String   @map("room_type")
+  rate      Float
+  channel   String   @default("Direct")
+  source    String   @default("api")
+  filename  String   @default("unknown")
+  metadata  Json?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("rate_records")
+}
+
+model OccupancyRecord {
+  id             Int      @id @default(autoincrement())
+  date           DateTime
+  roomType       String   @map("room_type")
+  occupancyRate  Float    @map("occupancy_rate")
+  roomsSold      Int      @default(0) @map("rooms_sold")
+  roomsAvailable Int      @default(0) @map("rooms_available")
+  source         String   @default("api")
+  filename       String   @default("unknown")
+  metadata       Json?
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  @@map("occupancy_records")
+}
+
+model UploadMetadata {
+  id            Int      @id @default(autoincrement())
+  filename      String
+  dataType      String   @map("data_type")
+  recordsCount  Int      @map("records_count")
+  source        String   @default("csv_upload")
+  uploadedAt    DateTime @default(now()) @map("uploaded_at")
+  fileSize      Int?     @map("file_size")
+  processingTimeMs Int? @map("processing_time_ms")
+
+  @@map("upload_metadata")
+}
+
+model Insight {
+  id         Int      @id @default(autoincrement())
+  text       String
+  source     String   @default("system")
+  confidence Float    @default(0.5)
+  impact     String   @default("medium") // low, medium, high
+  metadata   Json?
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  @@map("insights")
+}
