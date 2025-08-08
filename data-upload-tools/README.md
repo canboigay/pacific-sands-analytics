@@ -35,6 +35,10 @@ All endpoints require: `Authorization: Bearer ps_me2w0k3e_x81fsv0yz3k`
 - `POST /api/data/upload` - Upload historical data or scraped data
 - `GET /api/forecasting/rates` - AI rate forecasting
 
+### Raw Records
+- `GET /api/raw-records/search` - Filter records by fields stored in `payload`
+- `POST /api/raw-records/semantic-search` - Semantic search over embeddings
+
 ### Knowledge Base
 - `POST /api/knowledge/store` - Store qualitative insights
 - `GET /api/knowledge/retrieve` - Search stored insights
