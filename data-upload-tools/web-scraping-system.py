@@ -17,6 +17,7 @@ from bs4 import BeautifulSoup
 import logging
 from urllib.parse import urljoin, urlparse
 import random
+import os
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -374,25 +375,25 @@ class PacificSandsScraper:
 
     async def post_to_mcp(self, endpoint: str, data: Dict):
         """Post data to MCP system"""
-        mcp_base_url = "https://your-mcp-domain.com/api"  # Update with actual URL
-        api_key = "ps_me2w0k3e_x81fsv0yz3k"  # Your API key
-        
+        mcp_base_url = os.environ.get("MCP_BASE_URL", "http://localhost:3000/api")
+        api_key = os.environ.get("PS_API_KEY", "ps_me2w0k3e_x81fsv0yz3k")
+
         headers = {
             'Authorization': f'Bearer {api_key}',
             'Content-Type': 'application/json'
         }
-        
+
         try:
             async with self.session.post(
-                f"{mcp_base_url}{endpoint}", 
-                json=data, 
+                f"{mcp_base_url}{endpoint}",
+                json=data,
                 headers=headers
             ) as response:
                 if response.status == 200:
                     logger.info(f"Successfully uploaded {len(data.get('data', []))} records to MCP")
                 else:
                     logger.error(f"Failed to upload to MCP: {response.status}")
-                    
+
         except Exception as e:
             logger.error(f"Error posting to MCP: {e}")
 

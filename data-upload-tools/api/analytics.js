@@ -75,7 +75,9 @@ async function getInsights(req, res) {
             occupancyRecords,
             insights,
             rateStats,
-            occupancyStats
+            occupancyStats,
+            competitorStats,
+            sentimentGroups
         ] = await Promise.all([
             prisma.rateRecord.findMany({
                 where: { ...dateFilter, ...roomFilter },
@@ -101,6 +103,14 @@ async function getInsights(req, res) {
             prisma.occupancyRecord.aggregate({
                 where: { ...dateFilter, ...roomFilter },
                 _avg: { occupancyRate: true },
+                _count: true
+            }),
+            prisma.competitorRate.aggregate({
+                _avg: { rate: true },
+                _count: true
+            }),
+            prisma.socialMention.groupBy({
+                by: ['sentiment'],
                 _count: true
             })
         ]);
@@ -147,6 +157,11 @@ async function getInsights(req, res) {
             });
         });
 
+        const sentimentSummary = { positive: 0, negative: 0, neutral: 0 };
+        sentimentGroups.forEach(group => {
+            sentimentSummary[group.sentiment] = group._count;
+        });
+
         const response = {
             data_summary: {
                 total_rate_records: rateStats._count,
@@ -175,6 +190,11 @@ async function getInsights(req, res) {
                 latest_rates: rateRecords.slice(0, 10),
                 latest_occupancy: occupancyRecords.slice(0, 10)
             },
+            external_signals: {
+                competitor_average_rate: competitorStats._avg.rate || 0,
+                competitor_data_points: competitorStats._count,
+                sentiment_counts: sentimentSummary
+            },
             timestamp: new Date().toISOString()
         };
 
@@ -190,10 +210,18 @@ async function getCompetitorAnalysis(req, res) {
     const { metric = 'pricing', period = '30days' } = req.query;
 
     try {
-        // This would typically come from competitor data collection
-        // For now, we'll use insights and rate data to simulate competitor analysis
-        const [rateStats, insights] = await Promise.all([
+        const days = parseInt(period) || 30;
+        const fromDate = new Date();
+        fromDate.setDate(fromDate.getDate() - days);
+
+        const [rateStats, competitorGroups, insights] = await Promise.all([
             prisma.rateRecord.aggregate({
+                _avg: { rate: true },
+                _count: true
+            }),
+            prisma.competitorRate.groupBy({
+                by: ['competitorName'],
+                where: { date: { gte: fromDate } },
                 _avg: { rate: true },
                 _count: true
             }),
@@ -208,30 +236,34 @@ async function getCompetitorAnalysis(req, res) {
             })
         ]);
 
-        const ourAvgRate = rateStats._avg.rate || 285;
-        
-        // Simulated competitor data (in production, this would come from web scraping)
-        const competitorData = [
-            { name: "Seaside Resort", value: ourAvgRate * 1.1, rank: 1, difference_from_us: ourAvgRate * 0.1 },
-            { name: "Ocean View Hotel", value: ourAvgRate * 0.95, rank: 3, difference_from_us: -ourAvgRate * 0.05 },
-            { name: "Coastal Inn", value: ourAvgRate * 0.8, rank: 4, difference_from_us: -ourAvgRate * 0.2 }
-        ];
+        const ourAvgRate = rateStats._avg.rate || 0;
+        const competitors = competitorGroups
+            .sort((a, b) => b._avg.rate - a._avg.rate)
+            .map((c, idx) => ({
+                name: c.competitorName,
+                value: c._avg.rate,
+                rank: idx + 1,
+                difference_from_us: c._avg.rate - ourAvgRate,
+                data_points: c._count
+            }));
+
+        const pacificSandsRank = competitors.filter(c => c.value > ourAvgRate).length + 1;
 
         const response = {
             metric,
             period,
             pacific_sands: {
                 value: ourAvgRate,
-                rank: 2,
-                trend: "stable"
+                rank: pacificSandsRank,
+                trend: 'stable'
             },
-            competitors: competitorData,
+            competitors,
             market_position: {
                 percentile: 75,
                 opportunities: [
-                    "Consider premium pricing during peak season",
-                    "Monitor Seaside Resort's pricing strategy",
-                    "Leverage cost advantage over higher-priced competitors"
+                    'Consider premium pricing during peak season',
+                    "Monitor competitors' pricing strategy",
+                    'Leverage cost advantage over higher-priced competitors'
                 ]
             },
             data_confidence: Math.min(0.9, 0.5 + (rateStats._count * 0.01)),
@@ -251,56 +283,42 @@ async function getSentimentAnalysis(req, res) {
     const { source = 'all', period = '90days' } = req.query;
 
     try {
-        // Get insights that might contain sentiment information
-        const sentimentInsights = await prisma.insight.findMany({
-            where: {
-                OR: [
-                    { text: { contains: 'review', mode: 'insensitive' } },
-                    { text: { contains: 'sentiment', mode: 'insensitive' } },
-                    { text: { contains: 'satisfaction', mode: 'insensitive' } },
-                    { text: { contains: 'feedback', mode: 'insensitive' } }
-                ]
-            },
-            take: 10,
-            orderBy: { createdAt: 'desc' }
+        const days = parseInt(period) || 90;
+        const fromDate = new Date();
+        fromDate.setDate(fromDate.getDate() - days);
+
+        const mentionFilter = { timestamp: { gte: fromDate } };
+        if (source !== 'all') {
+            mentionFilter.platform = source;
+        }
+
+        const mentions = await prisma.socialMention.findMany({
+            where: mentionFilter,
+            orderBy: { timestamp: 'desc' },
+            take: 100
         });
 
-        // Simulated sentiment analysis (in production, this would come from review scraping/NLP)
+        const sentimentCounts = { positive: 0, negative: 0, neutral: 0 };
+        mentions.forEach(m => {
+            sentimentCounts[m.sentiment] = (sentimentCounts[m.sentiment] || 0) + 1;
+        });
+
+        const total = mentions.length || 1;
+
         const response = {
             source,
             period,
             overall_sentiment: {
-                positive: 73.5,
-                negative: 15.2,
-                neutral: 11.3
+                positive: (sentimentCounts.positive / total) * 100,
+                negative: (sentimentCounts.negative / total) * 100,
+                neutral: (sentimentCounts.neutral / total) * 100
             },
-            trending_topics: [
-                { topic: "Beach Access", sentiment: "positive", mentions: 45 },
-                { topic: "Room Service", sentiment: "positive", mentions: 32 },
-                { topic: "Wi-Fi Speed", sentiment: "negative", mentions: 18 },
-                { topic: "Pool Area", sentiment: "positive", mentions: 28 }
-            ],
-            improvement_areas: [
-                "Wi-Fi connectivity and speed",
-                "Check-in process efficiency",
-                "Breakfast variety"
-            ],
-            strengths: [
-                "Beachfront location",
-                "Friendly staff",
-                "Clean facilities",
-                "Ocean views"
-            ],
-            sentiment_trends: sentimentInsights.map(insight => ({
-                insight: insight.text,
-                confidence: insight.confidence,
-                created_at: insight.createdAt
+            sample_mentions: mentions.slice(0, 5).map(m => ({
+                platform: m.platform,
+                content: m.content,
+                sentiment: m.sentiment,
+                timestamp: m.timestamp
             })),
-            recommendations: [
-                "Focus on improving Wi-Fi infrastructure",
-                "Leverage positive beach access feedback in marketing",
-                "Address check-in process based on guest feedback"
-            ],
             timestamp: new Date().toISOString()
         };
 
