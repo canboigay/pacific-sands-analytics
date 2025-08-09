@@ -59,7 +59,7 @@ model UploadMetadata {
   processingTimeMs Int?     @map("processing_time_ms")
   purpose          String?
   tags             String[] @db.Text
-  links            InsightUploadLink[]
+  links            InsightSubmissionLink[]
 
   @@map("upload_metadata")
 }
@@ -75,12 +75,13 @@ model Insight {
   sourceUrl     String?  @map("source_url")
   createdAt     DateTime @default(now()) @map("created_at")
   updatedAt     DateTime @updatedAt @map("updated_at")
-  relatedUploads InsightUploadLink[]
+  relatedUploads InsightSubmissionLink[]
+  ids            InsightId[]
 
   @@map("insights")
 }
 
-model InsightUploadLink {
+model InsightSubmissionLink {
   id        String   @id @default(cuid())
   insightId String
   uploadId  String
@@ -88,8 +89,19 @@ model InsightUploadLink {
   insight   Insight  @relation(fields: [insightId], references: [id], onDelete: Cascade)
   upload    UploadMetadata @relation(fields: [uploadId], references: [id], onDelete: Cascade)
 
-  @@map("insight_upload_links")
+  @@map("insight_submission_links")
   @@unique([insightId, uploadId])
+}
+
+model InsightId {
+  id        String   @id @default(cuid())
+  insightId String
+  value     String
+  createdAt DateTime @default(now()) @map("created_at")
+  insight   Insight  @relation(fields: [insightId], references: [id], onDelete: Cascade)
+
+  @@map("insight_ids")
+  @@unique([insightId, value])
 }
 
 model CompetitorRate {
