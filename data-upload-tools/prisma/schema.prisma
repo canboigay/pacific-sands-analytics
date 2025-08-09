@@ -49,15 +49,18 @@ model OccupancyRecord {
 }
 
 model UploadMetadata {
-  id            Int      @id @default(autoincrement())
-  filename      String
-  dataType     DataType @relation(fields: [dataTypeId], references: [id])
-  dataTypeId   Int      @map("data_type_id")
-  recordsCount  Int      @map("records_count")
-  source        String   @default("csv_upload")
-  uploadedAt    DateTime @default(now()) @map("uploaded_at")
-  fileSize      Int?     @map("file_size")
-  processingTimeMs Int? @map("processing_time_ms")
+  id               String            @id @default(cuid())
+  filename         String
+  dataType         DataType          @relation(fields: [dataTypeId], references: [id])
+  dataTypeId       Int               @map("data_type_id")
+  recordsCount     Int               @map("records_count")
+  source           String            @default("csv_upload")
+  uploadedAt       DateTime          @default(now()) @map("uploaded_at")
+  fileSize         Int?              @map("file_size")
+  processingTimeMs Int?              @map("processing_time_ms")
+  purpose          String?
+  tags             String[]          @db.Text
+  links            InsightUploadLink[]
 
   @@map("upload_metadata")
 }
@@ -94,5 +97,17 @@ model Insight {
   createdAt  DateTime @default(now()) @map("created_at")
   updatedAt  DateTime @updatedAt @map("updated_at")
 
+  uploads    InsightUploadLink[]
+
   @@map("insights")
+}
+
+model InsightUploadLink {
+  insight   Insight        @relation(fields: [insightId], references: [id])
+  insightId Int            @map("insight_id")
+  upload    UploadMetadata @relation(fields: [uploadId], references: [id])
+  uploadId  String         @map("upload_id")
+
+  @@id([insightId, uploadId])
+  @@map("insight_upload_links")
 }
