@@ -49,14 +49,14 @@ model OccupancyRecord {
 }
 
 model UploadMetadata {
-  id               Int      @id @default(autoincrement())
-  filename         String
-  dataType         String   @map("data_type")
-  recordsCount     Int      @map("records_count")
-  source           String   @default("csv_upload")
-  uploadedAt       DateTime @default(now()) @map("uploaded_at")
-  fileSize         Int?     @map("file_size")
-  processingTimeMs Int?     @map("processing_time_ms")
+  id            Int      @id @default(autoincrement())
+  filename      String
+  dataType      String   @map("data_type")
+  recordsCount  Int      @map("records_count")
+  source        String   @default("csv_upload")
+  uploadedAt    DateTime @default(now()) @map("uploaded_at")
+  fileSize      Int?     @map("file_size")
+  processingTimeMs Int? @map("processing_time_ms")
 
   @@map("upload_metadata")
 }
