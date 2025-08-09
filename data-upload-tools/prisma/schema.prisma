@@ -91,3 +91,29 @@ model InsightUploadLink {
   @@map("insight_upload_links")
   @@unique([insightId, uploadId])
 }
+
+model CompetitorRate {
+  id             String   @id @default(cuid())
+  competitorName String   @map("competitor_name")
+  roomType       String?  @map("room_type")
+  rate           Float
+  date           DateTime
+  sourceUrl      String?  @map("source_url")
+  scrapedAt      DateTime @default(now()) @map("scraped_at")
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  @@map("competitor_rates")
+}
+
+model SocialMention {
+  id        String   @id @default(cuid())
+  platform  String
+  content   String
+  author    String?
+  sentiment String
+  url       String?
+  timestamp DateTime
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("social_mentions")
+}

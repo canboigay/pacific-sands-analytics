@@ -82,6 +82,38 @@ module.exports = async function handler(req, res) {
             });
             uploadedCount = occupancyRecords.length;
 
+        } else if (data_type === 'competitors') {
+            const competitorRecords = records.map(record => ({
+                competitorName: record.competitor_name || record.competitorName || record.name || 'Unknown',
+                roomType: record.room_type || record.roomType || null,
+                rate: parseFloat(record.rate || 0),
+                date: new Date(record.date || record.check_in || new Date()),
+                sourceUrl: record.source_url || record.sourceUrl || record.url || null,
+                scrapedAt: new Date(record.scraped_at || record.scrapedAt || new Date())
+            }));
+
+            await prisma.competitorRate.createMany({
+                data: competitorRecords,
+                skipDuplicates: true
+            });
+            uploadedCount = competitorRecords.length;
+
+        } else if (data_type === 'mentions') {
+            const mentionRecords = records.map(record => ({
+                platform: record.platform || 'unknown',
+                content: record.content || '',
+                author: record.author || null,
+                sentiment: record.sentiment || 'neutral',
+                url: record.url || null,
+                timestamp: new Date(record.timestamp || record.date || new Date())
+            }));
+
+            await prisma.socialMention.createMany({
+                data: mentionRecords,
+                skipDuplicates: true
+            });
+            uploadedCount = mentionRecords.length;
+
         } else {
             // For other data types, store as insights
             await prisma.insight.create({

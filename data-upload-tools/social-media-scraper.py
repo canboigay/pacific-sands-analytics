@@ -322,6 +322,32 @@ class SocialMediaScraper:
         logger.info(f"Social media monitoring complete: {len(all_mentions)} mentions found")
         return all_mentions
 
+    async def post_to_api(self, mentions: List[SocialMediaMention]):
+        """Upload scraped mentions to API"""
+        if not mentions:
+            return
+
+        api_base = os.environ.get("MCP_BASE_URL", "http://localhost:3000/api")
+        api_key = os.environ.get("PS_API_KEY", "ps_me2w0k3e_x81fsv0yz3k")
+
+        headers = {
+            'Authorization': f'Bearer {api_key}',
+            'Content-Type': 'application/json'
+        }
+
+        payload = {
+            'data_type': 'mentions',
+            'data': [asdict(m) for m in mentions],
+            'source': 'social_scraper',
+            'scraped_at': datetime.now().isoformat()
+        }
+
+        async with self.session.post(f"{api_base}/data/upload", json=payload, headers=headers) as response:
+            if response.status == 200:
+                logger.info(f"Uploaded {len(mentions)} mentions to API")
+            else:
+                logger.error(f"Failed to upload mentions: {response.status}")
+
 # Main execution for testing
 async def main():
     scraper = SocialMediaScraper()
@@ -329,14 +355,15 @@ async def main():
     
     try:
         mentions = await scraper.run_social_monitoring()
-        
+        await scraper.post_to_api(mentions)
+
         # Save to JSON file
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
         filename = os.path.join(BASE_DIR, f'social_mentions_{timestamp}.json')
-        
+
         with open(filename, 'w') as f:
             json.dump([asdict(mention) for mention in mentions], f, indent=2, default=str)
-            
+
         print(f"Saved {len(mentions)} social media mentions to {filename}")
         
     finally:
