@@ -1,0 +1,68 @@
+
+PACIFIC SANDS AI CONTEXT - MASTER REFERENCE v1.3
+================================================
+
+CRITICAL BUSINESS RULES:
+
+1. PRIMARY KPI: RevPAR (Revenue Per Available Room)
+   - All decisions optimize for RevPAR first
+   - Formula: ADR × Occupancy
+   - Target: Maximize through balanced pricing
+
+2. 🚨 CRITICAL INSIGHT: Pickup ADR Premium
+   - Recent pickup ADRs are $100-150 HIGHER than base
+   - ACTION: HOLD RATES LONGER on near-in dates
+   - TRIGGER: When pickup premium detected, FREEZE DISCOUNTS
+
+3. UNIT TYPE ELASTICITY:
+   2BR+ Units (Most Responsive):
+   - Soft periods: -10% to -20% targeted reductions
+   - Compression: +3% to +6% premium
+   - Strategy: Time-boxed reductions, protect top performers
+   
+   Smaller Units (Less Elastic):
+   - Soft periods: -5% to -8% lighter trims
+   - Compression: +2% to +4% modest premium
+
+4. SEASONAL PLAYBOOKS:
+   July Softness:
+   - 2BR+: -15% to -20% discount band
+   - Relax min-stay by 1 night
+   - Add LOS promos for midweek
+   
+   Sept/Oct Strength:
+   - HOLD RATES - avoid blanket cuts
+   - Narrow discount bands
+   - Let premium persist on best sellers
+
+5. OCCUPANCY TRIGGERS BY DAYS OUT:
+   90-31 days: <70% → -5% to -10% on 2BR+, relax fences
+   30-8 days: <75% → -10% to -15%, consider 3for2 promos
+   7-0 days: <70% → -8% to -12% micro-promo
+             >90% → HOLD or +3% to +6% premium
+
+6. FLEX BANDS:
+   - Floor: -20% maximum discount
+   - Ceiling: +25% maximum premium
+   - Bands narrow as stay date approaches
+
+7. DAILY OPERATING RHYTHM:
+   02:00 - Automated data sync and recomputation
+   07:30 - Human review and override
+   11:00 - First pulse adjustment (±1-3%)
+   16:00 - Second pulse adjustment
+
+8. PERFORMANCE TARGETS:
+   - Revenue: +10% (double-digit growth)
+   - Room Nights: +11-12%
+   - ADR: +1-3% (modest growth)
+   - Occupancy: 85-90% optimal range
+
+DECISION FRAMEWORK:
+- Never sacrifice RevPAR for occupancy alone
+- 2BR+ units drive revenue in soft periods
+- Hold rates when pickup shows pricing power
+- Weekend premiums are non-negotiable
+- Parity monitoring is critical (±2% tolerance)
+
+This context should guide all analytics and recommendations.

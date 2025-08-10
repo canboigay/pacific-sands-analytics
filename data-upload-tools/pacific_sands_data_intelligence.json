@@ -1,0 +1,3051 @@
+[
+  {
+    "filename": "20252026_Pace_Report_April_28__Mar_31_2025.csv",
+    "timestamp": "2025-08-09T13:55:02.090567",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.40190476190476193,
+      "total_records": 15,
+      "total_columns": 35,
+      "missing_data_pct": 59.80952380952381,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.40190476190476193,
+      0.2772588722239781,
+      0.0
+    ]
+  },
+  {
+    "filename": "PS_2025_Rate_ShopsSuggestions__April_1_2025.csv",
+    "timestamp": "2025-08-09T13:55:02.094354",
+    "data_type": "rate_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 1.0,
+      "total_records": 30,
+      "total_columns": 1,
+      "missing_data_pct": 0.0,
+      "quality_rating": "excellent"
+    },
+    "business_relevance": {
+      "score": 8,
+      "rating": "medium",
+      "factors": [
+        "Contains rate data - Revenue driver"
+      ]
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.3433987204485146,
+      0.4
+    ]
+  },
+  {
+    "filename": "20252026_Pace_Report_April_28__Jan_20_2025.csv",
+    "timestamp": "2025-08-09T13:55:02.095697",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.40190476190476193,
+      "total_records": 15,
+      "total_columns": 35,
+      "missing_data_pct": 59.80952380952381,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.40190476190476193,
+      0.2772588722239781,
+      0.0
+    ]
+  },
+  {
+    "filename": "PS_2025_Rate_ShopsSuggestions_June_9__Mar_4_2025.csv",
+    "timestamp": "2025-08-09T13:55:02.096963",
+    "data_type": "rate_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 1.0,
+      "total_records": 30,
+      "total_columns": 1,
+      "missing_data_pct": 0.0,
+      "quality_rating": "excellent"
+    },
+    "business_relevance": {
+      "score": 8,
+      "rating": "medium",
+      "factors": [
+        "Contains rate data - Revenue driver"
+      ]
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.3433987204485146,
+      0.4
+    ]
+  },
+  {
+    "filename": "Room Type-Table 1.csv",
+    "timestamp": "2025-08-09T13:55:02.162729",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.0,
+      "total_records": 11342,
+      "total_columns": 1,
+      "missing_data_pct": 100.0,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.9336356092559044,
+      0.0
+    ]
+  },
+  {
+    "filename": "PS_2025_Rate_ShopsSuggestions_June_9b__Jan_6.csv",
+    "timestamp": "2025-08-09T13:55:02.164798",
+    "data_type": "rate_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 1.0,
+      "total_records": 30,
+      "total_columns": 1,
+      "missing_data_pct": 0.0,
+      "quality_rating": "excellent"
+    },
+    "business_relevance": {
+      "score": 8,
+      "rating": "medium",
+      "factors": [
+        "Contains rate data - Revenue driver"
+      ]
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.3433987204485146,
+      0.4
+    ]
+  },
+  {
+    "filename": "Pacific_Sands_Occupancy__2023_2024.csv",
+    "timestamp": "2025-08-09T13:55:02.166131",
+    "data_type": "occupancy_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 1.0,
+      "total_records": 13,
+      "total_columns": 1,
+      "missing_data_pct": 0.0,
+      "quality_rating": "excellent"
+    },
+    "business_relevance": {
+      "score": 8,
+      "rating": "medium",
+      "factors": [
+        "Contains occupancy - Demand indicator"
+      ]
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.26390573296152586,
+      0.4
+    ]
+  },
+  {
+    "filename": "PS_2025_Rate_ShopsSuggestions__Apr_14_2025.csv",
+    "timestamp": "2025-08-09T13:55:02.167461",
+    "data_type": "rate_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 1.0,
+      "total_records": 30,
+      "total_columns": 1,
+      "missing_data_pct": 0.0,
+      "quality_rating": "excellent"
+    },
+    "business_relevance": {
+      "score": 8,
+      "rating": "medium",
+      "factors": [
+        "Contains rate data - Revenue driver"
+      ]
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.3433987204485146,
+      0.4
+    ]
+  },
+  {
+    "filename": "Room Class-Table 1.csv",
+    "timestamp": "2025-08-09T13:55:02.195039",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.0,
+      "total_records": 3026,
+      "total_columns": 1,
+      "missing_data_pct": 100.0,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.8015327309021719,
+      0.0
+    ]
+  },
+  {
+    "filename": "20252026_Pace_Report_June_8__June_8_2025.csv",
+    "timestamp": "2025-08-09T13:55:02.196539",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.40190476190476193,
+      "total_records": 15,
+      "total_columns": 35,
+      "missing_data_pct": 59.80952380952381,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.40190476190476193,
+      0.2772588722239781,
+      0.0
+    ]
+  },
+  {
+    "filename": "20252026_Pace_Report_June_8__Apr_14_2025.csv",
+    "timestamp": "2025-08-09T13:55:02.197643",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.40190476190476193,
+      "total_records": 15,
+      "total_columns": 35,
+      "missing_data_pct": 59.80952380952381,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.40190476190476193,
+      0.2772588722239781,
+      0.0
+    ]
+  },
+  {
+    "filename": "Pacific_Sands_Occupancy_June_8__2022_2023.csv",
+    "timestamp": "2025-08-09T13:55:02.198631",
+    "data_type": "occupancy_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 1.0,
+      "total_records": 13,
+      "total_columns": 1,
+      "missing_data_pct": 0.0,
+      "quality_rating": "excellent"
+    },
+    "business_relevance": {
+      "score": 8,
+      "rating": "medium",
+      "factors": [
+        "Contains occupancy - Demand indicator"
+      ]
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.26390573296152586,
+      0.4
+    ]
+  },
+  {
+    "filename": "20252026_Pace_Report_June_8__July_29_2024.csv",
+    "timestamp": "2025-08-09T13:55:02.199481",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.40190476190476193,
+      "total_records": 15,
+      "total_columns": 35,
+      "missing_data_pct": 59.80952380952381,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.40190476190476193,
+      0.2772588722239781,
+      0.0
+    ]
+  },
+  {
+    "filename": "20252026_Pace_Report_April_28__July_29_2024.csv",
+    "timestamp": "2025-08-09T13:55:02.200337",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.40190476190476193,
+      "total_records": 15,
+      "total_columns": 35,
+      "missing_data_pct": 59.80952380952381,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.40190476190476193,
+      0.2772588722239781,
+      0.0
+    ]
+  },
+  {
+    "filename": "20252026_Pace_Report_June_8__Dec_8_2024.csv",
+    "timestamp": "2025-08-09T13:55:02.201342",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.40190476190476193,
+      "total_records": 15,
+      "total_columns": 35,
+      "missing_data_pct": 59.80952380952381,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.40190476190476193,
+      0.2772588722239781,
+      0.0
+    ]
+  },
+  {
+    "filename": "20252026_Pace_Report_June_8__May_11_2025.csv",
+    "timestamp": "2025-08-09T13:55:02.202259",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.40190476190476193,
+      "total_records": 15,
+      "total_columns": 35,
+      "missing_data_pct": 59.80952380952381,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.40190476190476193,
+      0.2772588722239781,
+      0.0
+    ]
+  },
+  {
+    "filename": "Pacific_Sands_Occupancy__2022_2023.csv",
+    "timestamp": "2025-08-09T13:55:02.203424",
+    "data_type": "occupancy_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 1.0,
+      "total_records": 13,
+      "total_columns": 1,
+      "missing_data_pct": 0.0,
+      "quality_rating": "excellent"
+    },
+    "business_relevance": {
+      "score": 8,
+      "rating": "medium",
+      "factors": [
+        "Contains occupancy - Demand indicator"
+      ]
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.26390573296152586,
+      0.4
+    ]
+  },
+  {
+    "filename": "PaceReport_Apr28_Sept_3_2024.csv",
+    "timestamp": "2025-08-09T13:55:02.204184",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 1.0,
+      "total_records": 13,
+      "total_columns": 10,
+      "missing_data_pct": 0.0,
+      "quality_rating": "excellent"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.26390573296152586,
+      0.0
+    ]
+  },
+  {
+    "filename": "bookings-history.csv",
+    "timestamp": "2025-08-09T13:55:02.204885",
+    "data_type": "rate_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 1.0,
+      "total_records": 10,
+      "total_columns": 10,
+      "missing_data_pct": 0.0,
+      "quality_rating": "excellent"
+    },
+    "business_relevance": {
+      "score": 8,
+      "rating": "medium",
+      "factors": [
+        "Contains rate data - Revenue driver"
+      ]
+    },
+    "key_metrics": {
+      "avg_rate": 272.0,
+      "max_rate": 489.0,
+      "min_rate": 179.0,
+      "rate_std": 91.53627089241121
+    },
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.23978952727983707,
+      0.4
+    ]
+  },
+  {
+    "filename": "20252026_Pace_Report_April_28__Nov_26_2024.csv",
+    "timestamp": "2025-08-09T13:55:02.206137",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.40190476190476193,
+      "total_records": 15,
+      "total_columns": 35,
+      "missing_data_pct": 59.80952380952381,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.40190476190476193,
+      0.2772588722239781,
+      0.0
+    ]
+  },
+  {
+    "filename": "20252026_Pace_Report_April_28__Feb_18_2025.csv",
+    "timestamp": "2025-08-09T13:55:02.207058",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.40190476190476193,
+      "total_records": 15,
+      "total_columns": 35,
+      "missing_data_pct": 59.80952380952381,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.40190476190476193,
+      0.2772588722239781,
+      0.0
+    ]
+  },
+  {
+    "filename": "20252026_Pace_Report_April_28__Oct_15_2024.csv",
+    "timestamp": "2025-08-09T13:55:02.207960",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.40190476190476193,
+      "total_records": 15,
+      "total_columns": 35,
+      "missing_data_pct": 59.80952380952381,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.40190476190476193,
+      0.2772588722239781,
+      0.0
+    ]
+  },
+  {
+    "filename": "Property-Table 1.csv",
+    "timestamp": "2025-08-09T13:55:02.218494",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.9973684210526316,
+      "total_records": 380,
+      "total_columns": 1,
+      "missing_data_pct": 0.2631578947368421,
+      "quality_rating": "excellent"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.9973684210526316,
+      0.5942799375126702,
+      0.0
+    ]
+  },
+  {
+    "filename": "PS_2025_Rate_ShopsSuggestions__Feb_3.csv",
+    "timestamp": "2025-08-09T13:55:02.219881",
+    "data_type": "rate_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 1.0,
+      "total_records": 30,
+      "total_columns": 1,
+      "missing_data_pct": 0.0,
+      "quality_rating": "excellent"
+    },
+    "business_relevance": {
+      "score": 8,
+      "rating": "medium",
+      "factors": [
+        "Contains rate data - Revenue driver"
+      ]
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.3433987204485146,
+      0.4
+    ]
+  },
+  {
+    "filename": "20252026_Pace_Report_June_8__Oct_1_2024.csv",
+    "timestamp": "2025-08-09T13:55:02.221087",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.40190476190476193,
+      "total_records": 15,
+      "total_columns": 35,
+      "missing_data_pct": 59.80952380952381,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.40190476190476193,
+      0.2772588722239781,
+      0.0
+    ]
+  },
+  {
+    "filename": "Report Criteria-Table 1.csv",
+    "timestamp": "2025-08-09T13:55:02.225304",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.0,
+      "total_records": 4,
+      "total_columns": 1,
+      "missing_data_pct": 100.0,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.16094379124341002,
+      0.0
+    ]
+  },
+  {
+    "filename": "Business View-Table 1.csv",
+    "timestamp": "2025-08-09T13:55:02.238877",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.0,
+      "total_records": 1891,
+      "total_columns": 1,
+      "missing_data_pct": 100.0,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.7545389749611824,
+      0.0
+    ]
+  },
+  {
+    "filename": "Pacific_Sands_Occupancy_April_28__2022_2023.csv",
+    "timestamp": "2025-08-09T13:55:02.240169",
+    "data_type": "occupancy_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 1.0,
+      "total_records": 13,
+      "total_columns": 1,
+      "missing_data_pct": 0.0,
+      "quality_rating": "excellent"
+    },
+    "business_relevance": {
+      "score": 8,
+      "rating": "medium",
+      "factors": [
+        "Contains occupancy - Demand indicator"
+      ]
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.26390573296152586,
+      0.4
+    ]
+  },
+  {
+    "filename": "Historical_Rates_from_WebRezPro.csv",
+    "timestamp": "2025-08-09T13:55:02.241702",
+    "data_type": "rate_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 1.0,
+      "total_records": 2591,
+      "total_columns": 6,
+      "missing_data_pct": 0.0,
+      "quality_rating": "excellent"
+    },
+    "business_relevance": {
+      "score": 8,
+      "rating": "medium",
+      "factors": [
+        "Contains rate data - Revenue driver"
+      ]
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [
+      "Found 1787 rates below $150",
+      "Found 233 rates above $600",
+      "Found 77 statistical outliers"
+    ],
+    "vector_embedding": [
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.7860185057472165,
+      0.4
+    ]
+  },
+  {
+    "filename": "20252026_Pace_Report_June_8__Feb_3_2025.csv",
+    "timestamp": "2025-08-09T13:55:02.245285",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.40190476190476193,
+      "total_records": 15,
+      "total_columns": 35,
+      "missing_data_pct": 59.80952380952381,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.40190476190476193,
+      0.2772588722239781,
+      0.0
+    ]
+  },
+  {
+    "filename": "20252026_Pace_Report_June_8__Mar_31_2025.csv",
+    "timestamp": "2025-08-09T13:55:02.246319",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.40190476190476193,
+      "total_records": 15,
+      "total_columns": 35,
+      "missing_data_pct": 59.80952380952381,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.40190476190476193,
+      0.2772588722239781,
+      0.0
+    ]
+  },
+  {
+    "filename": "PS_2025_Rate_ShopsSuggestions_June_9b__Feb_3.csv",
+    "timestamp": "2025-08-09T13:55:02.247433",
+    "data_type": "rate_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 1.0,
+      "total_records": 30,
+      "total_columns": 1,
+      "missing_data_pct": 0.0,
+      "quality_rating": "excellent"
+    },
+    "business_relevance": {
+      "score": 8,
+      "rating": "medium",
+      "factors": [
+        "Contains rate data - Revenue driver"
+      ]
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.3433987204485146,
+      0.4
+    ]
+  },
+  {
+    "filename": "Market Segment-Table 1.csv",
+    "timestamp": "2025-08-09T13:55:02.322902",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.0,
+      "total_records": 31300,
+      "total_columns": 1,
+      "missing_data_pct": 100.0,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0351405324899678,
+      0.0
+    ]
+  },
+  {
+    "filename": "20252026_Pace_Report_June_8__Jan_20_2025.csv",
+    "timestamp": "2025-08-09T13:55:02.325069",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.40190476190476193,
+      "total_records": 15,
+      "total_columns": 35,
+      "missing_data_pct": 59.80952380952381,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.40190476190476193,
+      0.2772588722239781,
+      0.0
+    ]
+  },
+  {
+    "filename": "PS_2025_Rate_ShopsSuggestions_April_27__Apr_14_2025.csv",
+    "timestamp": "2025-08-09T13:55:02.326413",
+    "data_type": "rate_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 1.0,
+      "total_records": 30,
+      "total_columns": 1,
+      "missing_data_pct": 0.0,
+      "quality_rating": "excellent"
+    },
+    "business_relevance": {
+      "score": 8,
+      "rating": "medium",
+      "factors": [
+        "Contains rate data - Revenue driver"
+      ]
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.3433987204485146,
+      0.4
+    ]
+  },
+  {
+    "filename": "PS_2025_Rate_ShopsSuggestions_June_9__May_12_2025.csv",
+    "timestamp": "2025-08-09T13:55:02.327643",
+    "data_type": "rate_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 1.0,
+      "total_records": 30,
+      "total_columns": 1,
+      "missing_data_pct": 0.0,
+      "quality_rating": "excellent"
+    },
+    "business_relevance": {
+      "score": 8,
+      "rating": "medium",
+      "factors": [
+        "Contains rate data - Revenue driver"
+      ]
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.3433987204485146,
+      0.4
+    ]
+  },
+  {
+    "filename": "20252026_Pace_Report_April_28__Apr_14_2025.csv",
+    "timestamp": "2025-08-09T13:55:02.328718",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.40190476190476193,
+      "total_records": 15,
+      "total_columns": 35,
+      "missing_data_pct": 59.80952380952381,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.40190476190476193,
+      0.2772588722239781,
+      0.0
+    ]
+  },
+  {
+    "filename": "20252026_Pace_Report_June_8__Nov_26_2024.csv",
+    "timestamp": "2025-08-09T13:55:02.329614",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.40190476190476193,
+      "total_records": 15,
+      "total_columns": 35,
+      "missing_data_pct": 59.80952380952381,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.40190476190476193,
+      0.2772588722239781,
+      0.0
+    ]
+  },
+  {
+    "filename": "Pacific_Sands_Occupancy__2024_2025.csv",
+    "timestamp": "2025-08-09T13:55:02.330936",
+    "data_type": "occupancy_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 1.0,
+      "total_records": 13,
+      "total_columns": 1,
+      "missing_data_pct": 0.0,
+      "quality_rating": "excellent"
+    },
+    "business_relevance": {
+      "score": 8,
+      "rating": "medium",
+      "factors": [
+        "Contains occupancy - Demand indicator"
+      ]
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.26390573296152586,
+      0.4
+    ]
+  },
+  {
+    "filename": "Pacific_Sands_Rate_Forecast_2025_2026 (1).csv",
+    "timestamp": "2025-08-09T13:55:02.331971",
+    "data_type": "rate_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 1.0,
+      "total_records": 14,
+      "total_columns": 11,
+      "missing_data_pct": 0.0,
+      "quality_rating": "excellent"
+    },
+    "business_relevance": {
+      "score": 16,
+      "rating": "critical",
+      "factors": [
+        "Contains rate data - Revenue driver",
+        "Contains occupancy - Demand indicator"
+      ]
+    },
+    "key_metrics": {
+      "avg_rate": 1714.2857142857142,
+      "max_rate": 2200.0,
+      "min_rate": 1100.0,
+      "rate_std": 362.9094883070663
+    },
+    "patterns": [],
+    "anomalies": [
+      "Found 8 rates above $600",
+      "Found 8 rates above $600",
+      "Found 14 rates above $600",
+      "Found 14 rates above $600",
+      "Found 14 rates above $600",
+      "Found 14 rates above $600",
+      "Found 14 rates above $600"
+    ],
+    "vector_embedding": [
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.270805020110221,
+      0.8
+    ]
+  },
+  {
+    "filename": "Forecast Group-Table 1.csv",
+    "timestamp": "2025-08-09T13:55:02.350987",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.0,
+      "total_records": 3026,
+      "total_columns": 1,
+      "missing_data_pct": 100.0,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.8015327309021719,
+      0.0
+    ]
+  },
+  {
+    "filename": "20252026_Pace_Report_June_8__Feb_18_2025.csv",
+    "timestamp": "2025-08-09T13:55:02.352077",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.40190476190476193,
+      "total_records": 15,
+      "total_columns": 35,
+      "missing_data_pct": 59.80952380952381,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.40190476190476193,
+      0.2772588722239781,
+      0.0
+    ]
+  },
+  {
+    "filename": "20252026_Pace_Report_June_8__Oct_15_2024.csv",
+    "timestamp": "2025-08-09T13:55:02.352955",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.40190476190476193,
+      "total_records": 15,
+      "total_columns": 35,
+      "missing_data_pct": 59.80952380952381,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.40190476190476193,
+      0.2772588722239781,
+      0.0
+    ]
+  },
+  {
+    "filename": "PS_2025_Rate_ShopsSuggestions__Jan_6.csv",
+    "timestamp": "2025-08-09T13:55:02.354176",
+    "data_type": "rate_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 1.0,
+      "total_records": 30,
+      "total_columns": 1,
+      "missing_data_pct": 0.0,
+      "quality_rating": "excellent"
+    },
+    "business_relevance": {
+      "score": 8,
+      "rating": "medium",
+      "factors": [
+        "Contains rate data - Revenue driver"
+      ]
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.3433987204485146,
+      0.4
+    ]
+  },
+  {
+    "filename": "PS_2025_Rate_ShopsSuggestions__Mar_18_2025.csv",
+    "timestamp": "2025-08-09T13:55:02.355433",
+    "data_type": "rate_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 1.0,
+      "total_records": 30,
+      "total_columns": 1,
+      "missing_data_pct": 0.0,
+      "quality_rating": "excellent"
+    },
+    "business_relevance": {
+      "score": 8,
+      "rating": "medium",
+      "factors": [
+        "Contains rate data - Revenue driver"
+      ]
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.3433987204485146,
+      0.4
+    ]
+  },
+  {
+    "filename": "20252026_Pace_Report_June_8__Mar_3_2025.csv",
+    "timestamp": "2025-08-09T13:55:02.356541",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.40190476190476193,
+      "total_records": 15,
+      "total_columns": 35,
+      "missing_data_pct": 59.80952380952381,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.40190476190476193,
+      0.2772588722239781,
+      0.0
+    ]
+  },
+  {
+    "filename": "PS_2025_Rate_ShopsSuggestions__Feb_18.csv",
+    "timestamp": "2025-08-09T13:55:02.357699",
+    "data_type": "rate_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 1.0,
+      "total_records": 30,
+      "total_columns": 1,
+      "missing_data_pct": 0.0,
+      "quality_rating": "excellent"
+    },
+    "business_relevance": {
+      "score": 8,
+      "rating": "medium",
+      "factors": [
+        "Contains rate data - Revenue driver"
+      ]
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.3433987204485146,
+      0.4
+    ]
+  },
+  {
+    "filename": "PS_2025_Rate_ShopsSuggestions__Dec_23.csv",
+    "timestamp": "2025-08-09T13:55:02.359401",
+    "data_type": "rate_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 1.0,
+      "total_records": 30,
+      "total_columns": 1,
+      "missing_data_pct": 0.0,
+      "quality_rating": "excellent"
+    },
+    "business_relevance": {
+      "score": 8,
+      "rating": "medium",
+      "factors": [
+        "Contains rate data - Revenue driver"
+      ]
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.3433987204485146,
+      0.4
+    ]
+  },
+  {
+    "filename": "Pacific_Sands_Occupancy_May_11__2022_2023.csv",
+    "timestamp": "2025-08-09T13:55:02.360608",
+    "data_type": "occupancy_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 1.0,
+      "total_records": 13,
+      "total_columns": 1,
+      "missing_data_pct": 0.0,
+      "quality_rating": "excellent"
+    },
+    "business_relevance": {
+      "score": 8,
+      "rating": "medium",
+      "factors": [
+        "Contains occupancy - Demand indicator"
+      ]
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.26390573296152586,
+      0.4
+    ]
+  },
+  {
+    "filename": "Pacific_Sands_Occupancy__2025_2026.csv",
+    "timestamp": "2025-08-09T13:55:02.361550",
+    "data_type": "occupancy_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 1.0,
+      "total_records": 13,
+      "total_columns": 1,
+      "missing_data_pct": 0.0,
+      "quality_rating": "excellent"
+    },
+    "business_relevance": {
+      "score": 8,
+      "rating": "medium",
+      "factors": [
+        "Contains occupancy - Demand indicator"
+      ]
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.26390573296152586,
+      0.4
+    ]
+  },
+  {
+    "filename": "20252026_Pace_Report_April_28__Jan_6_2025.csv",
+    "timestamp": "2025-08-09T13:55:02.362589",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.40190476190476193,
+      "total_records": 15,
+      "total_columns": 35,
+      "missing_data_pct": 59.80952380952381,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.40190476190476193,
+      0.2772588722239781,
+      0.0
+    ]
+  },
+  {
+    "filename": "Pacific_Sands_Occupancy_May_25__2022_2023.csv",
+    "timestamp": "2025-08-09T13:55:02.363660",
+    "data_type": "occupancy_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 1.0,
+      "total_records": 13,
+      "total_columns": 1,
+      "missing_data_pct": 0.0,
+      "quality_rating": "excellent"
+    },
+    "business_relevance": {
+      "score": 8,
+      "rating": "medium",
+      "factors": [
+        "Contains occupancy - Demand indicator"
+      ]
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.26390573296152586,
+      0.4
+    ]
+  },
+  {
+    "filename": "PS_2025_Rate_ShopsSuggestions__Mar_4_2025.csv",
+    "timestamp": "2025-08-09T13:55:02.364805",
+    "data_type": "rate_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 1.0,
+      "total_records": 30,
+      "total_columns": 1,
+      "missing_data_pct": 0.0,
+      "quality_rating": "excellent"
+    },
+    "business_relevance": {
+      "score": 8,
+      "rating": "medium",
+      "factors": [
+        "Contains rate data - Revenue driver"
+      ]
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.3433987204485146,
+      0.4
+    ]
+  },
+  {
+    "filename": "20252026_Pace_Report_April_28__Nov_11_2024.csv",
+    "timestamp": "2025-08-09T13:55:02.365927",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.40190476190476193,
+      "total_records": 15,
+      "total_columns": 35,
+      "missing_data_pct": 59.80952380952381,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.40190476190476193,
+      0.2772588722239781,
+      0.0
+    ]
+  },
+  {
+    "filename": "20252026_Pace_Report_April_28__Sept_3_2024.csv",
+    "timestamp": "2025-08-09T13:55:02.366728",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.40190476190476193,
+      "total_records": 15,
+      "total_columns": 35,
+      "missing_data_pct": 59.80952380952381,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.40190476190476193,
+      0.2772588722239781,
+      0.0
+    ]
+  },
+  {
+    "filename": "PS_2025_Rate_ShopsSuggestions_June_9b__April_1_2025.csv",
+    "timestamp": "2025-08-09T13:55:02.367899",
+    "data_type": "rate_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 1.0,
+      "total_records": 30,
+      "total_columns": 1,
+      "missing_data_pct": 0.0,
+      "quality_rating": "excellent"
+    },
+    "business_relevance": {
+      "score": 8,
+      "rating": "medium",
+      "factors": [
+        "Contains rate data - Revenue driver"
+      ]
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.3433987204485146,
+      0.4
+    ]
+  },
+  {
+    "filename": "20252026_Pace_Report_April_28__Dec_23_2024.csv",
+    "timestamp": "2025-08-09T13:55:02.368841",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.40190476190476193,
+      "total_records": 15,
+      "total_columns": 35,
+      "missing_data_pct": 59.80952380952381,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.40190476190476193,
+      0.2772588722239781,
+      0.0
+    ]
+  },
+  {
+    "filename": "20252026_Pace_Report_April_28__Dec_8_2024.csv",
+    "timestamp": "2025-08-09T13:55:02.369643",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.40190476190476193,
+      "total_records": 15,
+      "total_columns": 35,
+      "missing_data_pct": 59.80952380952381,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.40190476190476193,
+      0.2772588722239781,
+      0.0
+    ]
+  },
+  {
+    "filename": "20252026_Pace_Report_April_28__Oct_28_2024.csv",
+    "timestamp": "2025-08-09T13:55:02.370430",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.40190476190476193,
+      "total_records": 15,
+      "total_columns": 35,
+      "missing_data_pct": 59.80952380952381,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.40190476190476193,
+      0.2772588722239781,
+      0.0
+    ]
+  },
+  {
+    "filename": "20252026_Pace_Report_June_8__July_15_2024.csv",
+    "timestamp": "2025-08-09T13:55:02.371367",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.40190476190476193,
+      "total_records": 15,
+      "total_columns": 35,
+      "missing_data_pct": 59.80952380952381,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.40190476190476193,
+      0.2772588722239781,
+      0.0
+    ]
+  },
+  {
+    "filename": "20252026_Pace_Report_April_28__July_15_2024.csv",
+    "timestamp": "2025-08-09T13:55:02.372334",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.40190476190476193,
+      "total_records": 15,
+      "total_columns": 35,
+      "missing_data_pct": 59.80952380952381,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.40190476190476193,
+      0.2772588722239781,
+      0.0
+    ]
+  },
+  {
+    "filename": "20252026_Pace_Report_June_8__Mar_17_2025.csv",
+    "timestamp": "2025-08-09T13:55:02.373524",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.40190476190476193,
+      "total_records": 15,
+      "total_columns": 35,
+      "missing_data_pct": 59.80952380952381,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.40190476190476193,
+      0.2772588722239781,
+      0.0
+    ]
+  },
+  {
+    "filename": "PS_2025_Rate_ShopsSuggestions__Apr_28_2025.csv",
+    "timestamp": "2025-08-09T13:55:02.374560",
+    "data_type": "rate_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 1.0,
+      "total_records": 30,
+      "total_columns": 1,
+      "missing_data_pct": 0.0,
+      "quality_rating": "excellent"
+    },
+    "business_relevance": {
+      "score": 8,
+      "rating": "medium",
+      "factors": [
+        "Contains rate data - Revenue driver"
+      ]
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.3433987204485146,
+      0.4
+    ]
+  },
+  {
+    "filename": "PS_2025_Rate_ShopsSuggestions__May_12_2025.csv",
+    "timestamp": "2025-08-09T13:55:02.375751",
+    "data_type": "rate_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 1.0,
+      "total_records": 30,
+      "total_columns": 1,
+      "missing_data_pct": 0.0,
+      "quality_rating": "excellent"
+    },
+    "business_relevance": {
+      "score": 8,
+      "rating": "medium",
+      "factors": [
+        "Contains rate data - Revenue driver"
+      ]
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.3433987204485146,
+      0.4
+    ]
+  },
+  {
+    "filename": "20252026_Pace_Report_April_28__Oct_1_2024.csv",
+    "timestamp": "2025-08-09T13:55:02.376676",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.40190476190476193,
+      "total_records": 15,
+      "total_columns": 35,
+      "missing_data_pct": 59.80952380952381,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.40190476190476193,
+      0.2772588722239781,
+      0.0
+    ]
+  },
+  {
+    "filename": "20252026_Pace_Report_June_8__Apr_28_2025.csv",
+    "timestamp": "2025-08-09T13:55:02.377587",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.40190476190476193,
+      "total_records": 15,
+      "total_columns": 35,
+      "missing_data_pct": 59.80952380952381,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.40190476190476193,
+      0.2772588722239781,
+      0.0
+    ]
+  },
+  {
+    "filename": "20252026_Pace_Report_June_8__May_26_2025.csv",
+    "timestamp": "2025-08-09T13:55:02.378497",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.40190476190476193,
+      "total_records": 15,
+      "total_columns": 35,
+      "missing_data_pct": 59.80952380952381,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.40190476190476193,
+      0.2772588722239781,
+      0.0
+    ]
+  },
+  {
+    "filename": "PS_2025_Rate_ShopsSuggestions_June_9b__Dec_23.csv",
+    "timestamp": "2025-08-09T13:55:02.379518",
+    "data_type": "rate_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 1.0,
+      "total_records": 30,
+      "total_columns": 1,
+      "missing_data_pct": 0.0,
+      "quality_rating": "excellent"
+    },
+    "business_relevance": {
+      "score": 8,
+      "rating": "medium",
+      "factors": [
+        "Contains rate data - Revenue driver"
+      ]
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.3433987204485146,
+      0.4
+    ]
+  },
+  {
+    "filename": "PS_2025_Rate_ShopsSuggestions_June_9b__Feb_18.csv",
+    "timestamp": "2025-08-09T13:55:02.380658",
+    "data_type": "rate_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 1.0,
+      "total_records": 30,
+      "total_columns": 1,
+      "missing_data_pct": 0.0,
+      "quality_rating": "excellent"
+    },
+    "business_relevance": {
+      "score": 8,
+      "rating": "medium",
+      "factors": [
+        "Contains rate data - Revenue driver"
+      ]
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.3433987204485146,
+      0.4
+    ]
+  },
+  {
+    "filename": "20252026_Pace_Report_April_28__Feb_3_2025.csv",
+    "timestamp": "2025-08-09T13:55:02.381594",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.40190476190476193,
+      "total_records": 15,
+      "total_columns": 35,
+      "missing_data_pct": 59.80952380952381,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.40190476190476193,
+      0.2772588722239781,
+      0.0
+    ]
+  },
+  {
+    "filename": "20252026_Pace_Report_June_8__Nov_11_2024.csv",
+    "timestamp": "2025-08-09T13:55:02.382762",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.40190476190476193,
+      "total_records": 15,
+      "total_columns": 35,
+      "missing_data_pct": 59.80952380952381,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.40190476190476193,
+      0.2772588722239781,
+      0.0
+    ]
+  },
+  {
+    "filename": "20252026_Pace_Report_June_8__Sept_3_2024.csv",
+    "timestamp": "2025-08-09T13:55:02.383551",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.40190476190476193,
+      "total_records": 15,
+      "total_columns": 35,
+      "missing_data_pct": 59.80952380952381,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.40190476190476193,
+      0.2772588722239781,
+      0.0
+    ]
+  },
+  {
+    "filename": "20252026_Pace_Report_June_8__Dec_23_2024.csv",
+    "timestamp": "2025-08-09T13:55:02.384460",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.40190476190476193,
+      "total_records": 15,
+      "total_columns": 35,
+      "missing_data_pct": 59.80952380952381,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.40190476190476193,
+      0.2772588722239781,
+      0.0
+    ]
+  },
+  {
+    "filename": "20252026_Pace_Report_June_8__Oct_28_2024.csv",
+    "timestamp": "2025-08-09T13:55:02.385221",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.40190476190476193,
+      "total_records": 15,
+      "total_columns": 35,
+      "missing_data_pct": 59.80952380952381,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.40190476190476193,
+      0.2772588722239781,
+      0.0
+    ]
+  },
+  {
+    "filename": "PS_2025_Rate_ShopsSuggestions_June_9b__Apr_14_2025.csv",
+    "timestamp": "2025-08-09T13:55:02.386252",
+    "data_type": "rate_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 1.0,
+      "total_records": 30,
+      "total_columns": 1,
+      "missing_data_pct": 0.0,
+      "quality_rating": "excellent"
+    },
+    "business_relevance": {
+      "score": 8,
+      "rating": "medium",
+      "factors": [
+        "Contains rate data - Revenue driver"
+      ]
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.3433987204485146,
+      0.4
+    ]
+  },
+  {
+    "filename": "PS_2025_Rate_ShopsSuggestions_June_9__June_9_2025.csv",
+    "timestamp": "2025-08-09T13:55:02.387557",
+    "data_type": "rate_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 1.0,
+      "total_records": 30,
+      "total_columns": 1,
+      "missing_data_pct": 0.0,
+      "quality_rating": "excellent"
+    },
+    "business_relevance": {
+      "score": 8,
+      "rating": "medium",
+      "factors": [
+        "Contains rate data - Revenue driver"
+      ]
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.3433987204485146,
+      0.4
+    ]
+  },
+  {
+    "filename": "PS_2025_Rate_ShopsSuggestions_June_9__Apr_14_2025.csv",
+    "timestamp": "2025-08-09T13:55:02.388949",
+    "data_type": "rate_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 1.0,
+      "total_records": 30,
+      "total_columns": 1,
+      "missing_data_pct": 0.0,
+      "quality_rating": "excellent"
+    },
+    "business_relevance": {
+      "score": 8,
+      "rating": "medium",
+      "factors": [
+        "Contains rate data - Revenue driver"
+      ]
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.3433987204485146,
+      0.4
+    ]
+  },
+  {
+    "filename": "20252026_Pace_Report_April_28__Mar_3_2025.csv",
+    "timestamp": "2025-08-09T13:55:02.390130",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.40190476190476193,
+      "total_records": 15,
+      "total_columns": 35,
+      "missing_data_pct": 59.80952380952381,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.40190476190476193,
+      0.2772588722239781,
+      0.0
+    ]
+  },
+  {
+    "filename": "20252026_Pace_Report_April_28__Mar_17_2025.csv",
+    "timestamp": "2025-08-09T13:55:02.391201",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.40190476190476193,
+      "total_records": 15,
+      "total_columns": 35,
+      "missing_data_pct": 59.80952380952381,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.40190476190476193,
+      0.2772588722239781,
+      0.0
+    ]
+  },
+  {
+    "filename": "20252026_Pace_Report_April_28__Apr_28_2025.csv",
+    "timestamp": "2025-08-09T13:55:02.392242",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.40190476190476193,
+      "total_records": 15,
+      "total_columns": 35,
+      "missing_data_pct": 59.80952380952381,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.40190476190476193,
+      0.2772588722239781,
+      0.0
+    ]
+  },
+  {
+    "filename": "PS_2025_Rate_ShopsSuggestions__Jan_20.csv",
+    "timestamp": "2025-08-09T13:55:02.393424",
+    "data_type": "rate_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 1.0,
+      "total_records": 30,
+      "total_columns": 1,
+      "missing_data_pct": 0.0,
+      "quality_rating": "excellent"
+    },
+    "business_relevance": {
+      "score": 8,
+      "rating": "medium",
+      "factors": [
+        "Contains rate data - Revenue driver"
+      ]
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.3433987204485146,
+      0.4
+    ]
+  },
+  {
+    "filename": "PaceReport_June8_June_8_2025.csv",
+    "timestamp": "2025-08-09T13:55:02.394466",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 1.0,
+      "total_records": 13,
+      "total_columns": 10,
+      "missing_data_pct": 0.0,
+      "quality_rating": "excellent"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.26390573296152586,
+      0.0
+    ]
+  },
+  {
+    "filename": "20252026_Pace_Report_June_8__Sept_18_2024.csv",
+    "timestamp": "2025-08-09T13:55:02.395471",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.40190476190476193,
+      "total_records": 15,
+      "total_columns": 35,
+      "missing_data_pct": 59.80952380952381,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.40190476190476193,
+      0.2772588722239781,
+      0.0
+    ]
+  },
+  {
+    "filename": "20252026_Pace_Report_April_28__Sept_18_2024.csv",
+    "timestamp": "2025-08-09T13:55:02.396291",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.40190476190476193,
+      "total_records": 15,
+      "total_columns": 35,
+      "missing_data_pct": 59.80952380952381,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.40190476190476193,
+      0.2772588722239781,
+      0.0
+    ]
+  },
+  {
+    "filename": "PaceReport_Apr28_July_15_2024.csv",
+    "timestamp": "2025-08-09T13:55:02.397107",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 1.0,
+      "total_records": 13,
+      "total_columns": 10,
+      "missing_data_pct": 0.0,
+      "quality_rating": "excellent"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.26390573296152586,
+      0.0
+    ]
+  },
+  {
+    "filename": "PS_2025_Rate_ShopsSuggestions_June_9__Jan_20.csv",
+    "timestamp": "2025-08-09T13:55:02.398039",
+    "data_type": "rate_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 1.0,
+      "total_records": 30,
+      "total_columns": 1,
+      "missing_data_pct": 0.0,
+      "quality_rating": "excellent"
+    },
+    "business_relevance": {
+      "score": 8,
+      "rating": "medium",
+      "factors": [
+        "Contains rate data - Revenue driver"
+      ]
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.3433987204485146,
+      0.4
+    ]
+  },
+  {
+    "filename": "20252026_Pace_Report_June_8__Jan_6_2025.csv",
+    "timestamp": "2025-08-09T13:55:02.399074",
+    "data_type": "revenue_data",
+    "temporal_range": {
+      "temporal_data": false
+    },
+    "quality_score": {
+      "completeness": 0.40190476190476193,
+      "total_records": 15,
+      "total_columns": 35,
+      "missing_data_pct": 59.80952380952381,
+      "quality_rating": "poor"
+    },
+    "business_relevance": {
+      "score": 0,
+      "rating": "low",
+      "factors": []
+    },
+    "key_metrics": {},
+    "patterns": [],
+    "anomalies": [],
+    "vector_embedding": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.40190476190476193,
+      0.2772588722239781,
+      0.0
+    ]
+  }
+]

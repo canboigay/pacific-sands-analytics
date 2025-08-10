@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pacific Sands - Live Links</title>
+    <style>
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 600px;
+            width: 90%;
+        }
+        h1 {
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #718096;
+            margin-bottom: 30px;
+        }
+        .link-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .link-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .link-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .link-url {
+            font-size: 14px;
+            opacity: 0.9;
+            word-break: break-all;
+        }
+        .status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            background: rgba(255,255,255,0.2);
+            font-size: 12px;
+            margin-top: 8px;
+        }
+        .instructions {
+            background: #f7fafc;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 4px;
+        }
+        .instructions h3 {
+            margin-top: 0;
+            color: #2d3748;
+        }
+        .instructions p {
+            color: #4a5568;
+            margin: 5px 0;
+        }
+        .code {
+            background: #2d3748;
+            color: #48bb78;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌊 Pacific Sands Analytics</h1>
+        <p class="subtitle">Your Live Deployment Links</p>
+        
+        <div class="link-card" onclick="window.open('https://vercel.com/dashboard', '_blank')">
+            <div class="link-title">📊 Vercel Dashboard</div>
+            <div class="link-url">https://vercel.com/dashboard</div>
+            <div class="status">Click to find your exact URLs</div>
+        </div>
+        
+        <div class="link-card" onclick="alert('Check Terminal for your exact URL')">
+            <div class="link-title">🖥️ Frontend Dashboard</div>
+            <div class="link-url">https://[your-project].vercel.app/dashboard</div>
+            <div class="status">Check Terminal or Vercel Dashboard</div>
+        </div>
+        
+        <div class="link-card" onclick="alert('Check Terminal for your exact URL')">
+            <div class="link-title">⚙️ Backend API</div>
+            <div class="link-url">https://[your-api].vercel.app/api</div>
+            <div class="status">Check Terminal or Vercel Dashboard</div>
+        </div>
+        
+        <div class="link-card" onclick="window.open('http://localhost:5555', '_blank')">
+            <div class="link-title">🗄️ Database Management</div>
+            <div class="link-url">http://localhost:5555</div>
+            <div class="status">Run: npx prisma studio</div>
+        </div>
+        
+        <div class="link-card" onclick="window.open('http://localhost:3000', '_blank')">
+            <div class="link-title">🔧 Local Development</div>
+            <div class="link-url">http://localhost:3000</div>
+            <div class="status">Run: npm run dev</div>
+        </div>
+        
+        <div class="instructions">
+            <h3>🚀 To Find Your Exact URLs:</h3>
+            <p>1. <strong>In Terminal:</strong> Look at the output above</p>
+            <p>2. <strong>In Vercel Dashboard:</strong> Click on your projects</p>
+            <p>3. <strong>Your URLs typically look like:</strong></p>
+            <p>   • Frontend: <span class="code">pacific-sands-frontend-[username].vercel.app</span></p>
+            <p>   • Backend: <span class="code">pacific-sands-api-[username].vercel.app</span></p>
+            <p>4. <strong>Add /dashboard to frontend URL to see analytics</strong></p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+{
+  "revenue_target": "Double-digit growth (10%+)",
+  "room_nights_target": "+11-12% vs LY",
+  "adr_target": "+1-3% modest growth",
+  "CRITICAL_FINDING": {
+    "insight": "Pickup ADRs are $100-150 HIGHER than base ADR",
+    "action": "HOLD RATES LONGER on compression/near-in dates",
+    "trigger": "When PickupADR >= BaseADR + \u03c3ADR, FREEZE DISCOUNTS"
+  },
+  "unit_type_strategy": {
+    "2BR+": {
+      "characteristic": "Most responsive to pricing",
+      "soft_period": "-10% to -20% targeted reductions",
+      "compression": "+3% to +6% premium",
+      "key": "Time-boxed reductions work best"
+    },
+    "smaller_units": {
+      "characteristic": "Less elastic",
+      "soft_period": "-5% to -8% lighter trims",
+      "compression": "+2% to +4% modest premium"
+    }
+  },
+  "seasonal_patterns": {
+    "WEAK": {
+      "periods": [
+        "Early/Mid July clusters",
+        "Aug 9",
+        "Nov 20"
+      ],
+      "playbook": "2BR+ -15% to -20%, relax min-stay, LOS promos"
+    },
+    "STRONG": {
+      "periods": [
+        "Mid/Late June",
+        "September",
+        "October"
+      ],
+      "playbook": "Hold rates, narrow discounts, let premium persist"
+    }
+  },
+  "operating_cadence": {
+    "02:00": "Data sync (rates, OTB, weather, events)",
+    "07:30": "Human review and validation",
+    "11:00": "Pulse adjustment \u00b11-3%",
+    "16:00": "Second pulse adjustment"
+  },
+  "flex_bands": {
+    "floor": -20,
+    "ceiling": 25,
+    "note": "Bands tighten as days-out decreases"
+  },
+  "kpi_priority": [
+    "RevPAR (Primary)",
+    "TRevPAR",
+    "Occupancy vs curve",
+    "ADR with pickup monitoring",
+    "Pace vs LY",
+    "Pickup ADR (CRITICAL)",
+    "Net Conversion",
+    "Cancellation Rate"
+  ]
+}

@@ -1,0 +1,651 @@
+
+        PACIFIC SANDS DATA CONTEXT SUMMARY
+        ===================================
+        
+        Available Data Sources:
+        
+        
+        File: 20252026_Pace_Report_April_28__Mar_31_2025.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 15
+        
+        
+        File: PS_2025_Rate_ShopsSuggestions__April_1_2025.csv
+        Type: rate_data
+        Relevance: medium
+        Quality: excellent
+        Records: 30
+        
+        
+        File: 20252026_Pace_Report_April_28__Jan_20_2025.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 15
+        
+        
+        File: PS_2025_Rate_ShopsSuggestions_June_9__Mar_4_2025.csv
+        Type: rate_data
+        Relevance: medium
+        Quality: excellent
+        Records: 30
+        
+        
+        File: Room Type-Table 1.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 11342
+        
+        
+        File: PS_2025_Rate_ShopsSuggestions_June_9b__Jan_6.csv
+        Type: rate_data
+        Relevance: medium
+        Quality: excellent
+        Records: 30
+        
+        
+        File: Pacific_Sands_Occupancy__2023_2024.csv
+        Type: occupancy_data
+        Relevance: medium
+        Quality: excellent
+        Records: 13
+        
+        
+        File: PS_2025_Rate_ShopsSuggestions__Apr_14_2025.csv
+        Type: rate_data
+        Relevance: medium
+        Quality: excellent
+        Records: 30
+        
+        
+        File: Room Class-Table 1.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 3026
+        
+        
+        File: 20252026_Pace_Report_June_8__June_8_2025.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 15
+        
+        
+        File: 20252026_Pace_Report_June_8__Apr_14_2025.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 15
+        
+        
+        File: Pacific_Sands_Occupancy_June_8__2022_2023.csv
+        Type: occupancy_data
+        Relevance: medium
+        Quality: excellent
+        Records: 13
+        
+        
+        File: 20252026_Pace_Report_June_8__July_29_2024.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 15
+        
+        
+        File: 20252026_Pace_Report_April_28__July_29_2024.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 15
+        
+        
+        File: 20252026_Pace_Report_June_8__Dec_8_2024.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 15
+        
+        
+        File: 20252026_Pace_Report_June_8__May_11_2025.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 15
+        
+        
+        File: Pacific_Sands_Occupancy__2022_2023.csv
+        Type: occupancy_data
+        Relevance: medium
+        Quality: excellent
+        Records: 13
+        
+        
+        File: PaceReport_Apr28_Sept_3_2024.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: excellent
+        Records: 13
+        
+        
+        File: bookings-history.csv
+        Type: rate_data
+        Relevance: medium
+        Quality: excellent
+        Records: 10
+        
+        Key Metrics:
+          - avg_rate: 272.00
+          - max_rate: 489.00
+          - min_rate: 179.00
+          - rate_std: 91.54
+        
+        File: 20252026_Pace_Report_April_28__Nov_26_2024.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 15
+        
+        
+        File: 20252026_Pace_Report_April_28__Feb_18_2025.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 15
+        
+        
+        File: 20252026_Pace_Report_April_28__Oct_15_2024.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 15
+        
+        
+        File: Property-Table 1.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: excellent
+        Records: 380
+        
+        
+        File: PS_2025_Rate_ShopsSuggestions__Feb_3.csv
+        Type: rate_data
+        Relevance: medium
+        Quality: excellent
+        Records: 30
+        
+        
+        File: 20252026_Pace_Report_June_8__Oct_1_2024.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 15
+        
+        
+        File: Report Criteria-Table 1.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 4
+        
+        
+        File: Business View-Table 1.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 1891
+        
+        
+        File: Pacific_Sands_Occupancy_April_28__2022_2023.csv
+        Type: occupancy_data
+        Relevance: medium
+        Quality: excellent
+        Records: 13
+        
+        
+        File: Historical_Rates_from_WebRezPro.csv
+        Type: rate_data
+        Relevance: medium
+        Quality: excellent
+        Records: 2591
+        
+        ⚠️ Anomalies:
+          - Found 1787 rates below $150
+          - Found 233 rates above $600
+          - Found 77 statistical outliers
+        
+        File: 20252026_Pace_Report_June_8__Feb_3_2025.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 15
+        
+        
+        File: 20252026_Pace_Report_June_8__Mar_31_2025.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 15
+        
+        
+        File: PS_2025_Rate_ShopsSuggestions_June_9b__Feb_3.csv
+        Type: rate_data
+        Relevance: medium
+        Quality: excellent
+        Records: 30
+        
+        
+        File: Market Segment-Table 1.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 31300
+        
+        
+        File: 20252026_Pace_Report_June_8__Jan_20_2025.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 15
+        
+        
+        File: PS_2025_Rate_ShopsSuggestions_April_27__Apr_14_2025.csv
+        Type: rate_data
+        Relevance: medium
+        Quality: excellent
+        Records: 30
+        
+        
+        File: PS_2025_Rate_ShopsSuggestions_June_9__May_12_2025.csv
+        Type: rate_data
+        Relevance: medium
+        Quality: excellent
+        Records: 30
+        
+        
+        File: 20252026_Pace_Report_April_28__Apr_14_2025.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 15
+        
+        
+        File: 20252026_Pace_Report_June_8__Nov_26_2024.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 15
+        
+        
+        File: Pacific_Sands_Occupancy__2024_2025.csv
+        Type: occupancy_data
+        Relevance: medium
+        Quality: excellent
+        Records: 13
+        
+        
+        File: Pacific_Sands_Rate_Forecast_2025_2026 (1).csv
+        Type: rate_data
+        Relevance: critical
+        Quality: excellent
+        Records: 14
+        
+        Key Metrics:
+          - avg_rate: 1714.29
+          - max_rate: 2200.00
+          - min_rate: 1100.00
+          - rate_std: 362.91
+        ⚠️ Anomalies:
+          - Found 8 rates above $600
+          - Found 8 rates above $600
+          - Found 14 rates above $600
+          - Found 14 rates above $600
+          - Found 14 rates above $600
+          - Found 14 rates above $600
+          - Found 14 rates above $600
+        
+        File: Forecast Group-Table 1.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 3026
+        
+        
+        File: 20252026_Pace_Report_June_8__Feb_18_2025.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 15
+        
+        
+        File: 20252026_Pace_Report_June_8__Oct_15_2024.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 15
+        
+        
+        File: PS_2025_Rate_ShopsSuggestions__Jan_6.csv
+        Type: rate_data
+        Relevance: medium
+        Quality: excellent
+        Records: 30
+        
+        
+        File: PS_2025_Rate_ShopsSuggestions__Mar_18_2025.csv
+        Type: rate_data
+        Relevance: medium
+        Quality: excellent
+        Records: 30
+        
+        
+        File: 20252026_Pace_Report_June_8__Mar_3_2025.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 15
+        
+        
+        File: PS_2025_Rate_ShopsSuggestions__Feb_18.csv
+        Type: rate_data
+        Relevance: medium
+        Quality: excellent
+        Records: 30
+        
+        
+        File: PS_2025_Rate_ShopsSuggestions__Dec_23.csv
+        Type: rate_data
+        Relevance: medium
+        Quality: excellent
+        Records: 30
+        
+        
+        File: Pacific_Sands_Occupancy_May_11__2022_2023.csv
+        Type: occupancy_data
+        Relevance: medium
+        Quality: excellent
+        Records: 13
+        
+        
+        File: Pacific_Sands_Occupancy__2025_2026.csv
+        Type: occupancy_data
+        Relevance: medium
+        Quality: excellent
+        Records: 13
+        
+        
+        File: 20252026_Pace_Report_April_28__Jan_6_2025.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 15
+        
+        
+        File: Pacific_Sands_Occupancy_May_25__2022_2023.csv
+        Type: occupancy_data
+        Relevance: medium
+        Quality: excellent
+        Records: 13
+        
+        
+        File: PS_2025_Rate_ShopsSuggestions__Mar_4_2025.csv
+        Type: rate_data
+        Relevance: medium
+        Quality: excellent
+        Records: 30
+        
+        
+        File: 20252026_Pace_Report_April_28__Nov_11_2024.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 15
+        
+        
+        File: 20252026_Pace_Report_April_28__Sept_3_2024.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 15
+        
+        
+        File: PS_2025_Rate_ShopsSuggestions_June_9b__April_1_2025.csv
+        Type: rate_data
+        Relevance: medium
+        Quality: excellent
+        Records: 30
+        
+        
+        File: 20252026_Pace_Report_April_28__Dec_23_2024.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 15
+        
+        
+        File: 20252026_Pace_Report_April_28__Dec_8_2024.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 15
+        
+        
+        File: 20252026_Pace_Report_April_28__Oct_28_2024.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 15
+        
+        
+        File: 20252026_Pace_Report_June_8__July_15_2024.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 15
+        
+        
+        File: 20252026_Pace_Report_April_28__July_15_2024.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 15
+        
+        
+        File: 20252026_Pace_Report_June_8__Mar_17_2025.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 15
+        
+        
+        File: PS_2025_Rate_ShopsSuggestions__Apr_28_2025.csv
+        Type: rate_data
+        Relevance: medium
+        Quality: excellent
+        Records: 30
+        
+        
+        File: PS_2025_Rate_ShopsSuggestions__May_12_2025.csv
+        Type: rate_data
+        Relevance: medium
+        Quality: excellent
+        Records: 30
+        
+        
+        File: 20252026_Pace_Report_April_28__Oct_1_2024.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 15
+        
+        
+        File: 20252026_Pace_Report_June_8__Apr_28_2025.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 15
+        
+        
+        File: 20252026_Pace_Report_June_8__May_26_2025.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 15
+        
+        
+        File: PS_2025_Rate_ShopsSuggestions_June_9b__Dec_23.csv
+        Type: rate_data
+        Relevance: medium
+        Quality: excellent
+        Records: 30
+        
+        
+        File: PS_2025_Rate_ShopsSuggestions_June_9b__Feb_18.csv
+        Type: rate_data
+        Relevance: medium
+        Quality: excellent
+        Records: 30
+        
+        
+        File: 20252026_Pace_Report_April_28__Feb_3_2025.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 15
+        
+        
+        File: 20252026_Pace_Report_June_8__Nov_11_2024.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 15
+        
+        
+        File: 20252026_Pace_Report_June_8__Sept_3_2024.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 15
+        
+        
+        File: 20252026_Pace_Report_June_8__Dec_23_2024.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 15
+        
+        
+        File: 20252026_Pace_Report_June_8__Oct_28_2024.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 15
+        
+        
+        File: PS_2025_Rate_ShopsSuggestions_June_9b__Apr_14_2025.csv
+        Type: rate_data
+        Relevance: medium
+        Quality: excellent
+        Records: 30
+        
+        
+        File: PS_2025_Rate_ShopsSuggestions_June_9__June_9_2025.csv
+        Type: rate_data
+        Relevance: medium
+        Quality: excellent
+        Records: 30
+        
+        
+        File: PS_2025_Rate_ShopsSuggestions_June_9__Apr_14_2025.csv
+        Type: rate_data
+        Relevance: medium
+        Quality: excellent
+        Records: 30
+        
+        
+        File: 20252026_Pace_Report_April_28__Mar_3_2025.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 15
+        
+        
+        File: 20252026_Pace_Report_April_28__Mar_17_2025.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 15
+        
+        
+        File: 20252026_Pace_Report_April_28__Apr_28_2025.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 15
+        
+        
+        File: PS_2025_Rate_ShopsSuggestions__Jan_20.csv
+        Type: rate_data
+        Relevance: medium
+        Quality: excellent
+        Records: 30
+        
+        
+        File: PaceReport_June8_June_8_2025.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: excellent
+        Records: 13
+        
+        
+        File: 20252026_Pace_Report_June_8__Sept_18_2024.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 15
+        
+        
+        File: 20252026_Pace_Report_April_28__Sept_18_2024.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 15
+        
+        
+        File: PaceReport_Apr28_July_15_2024.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: excellent
+        Records: 13
+        
+        
+        File: PS_2025_Rate_ShopsSuggestions_June_9__Jan_20.csv
+        Type: rate_data
+        Relevance: medium
+        Quality: excellent
+        Records: 30
+        
+        
+        File: 20252026_Pace_Report_June_8__Jan_6_2025.csv
+        Type: revenue_data
+        Relevance: low
+        Quality: poor
+        Records: 15
+        
+        
+        BUSINESS OBJECTIVES FOR ANALYSIS:
+        1. Maximize RevPAR (Primary KPI)
+        2. Maintain 85-90% optimal occupancy
+        3. Achieve market-leading position
+        4. Ensure >4.5 guest satisfaction
+        
+        KEY INSIGHTS TO EXTRACT:
+        - Revenue optimization opportunities
+        - Demand patterns and seasonality
+        - Competitive positioning gaps
+        - Pricing power indicators
+        - Operational efficiency metrics
+        

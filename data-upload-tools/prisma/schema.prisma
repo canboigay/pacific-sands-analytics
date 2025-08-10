@@ -1,131 +1,71 @@
-// Define database connection via Prisma Accelerate
-datasource db {
-  provider = "postgresql"
-  url      = env("PRISMA_DATABASE_URL")
-}
-
-// Define Prisma Client generation
+// Prisma schema for Pacific Sands Analytics
 generator client {
   provider = "prisma-client-js"
 }
 
-// Data models for Pacific Sands Analytics
-model User {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  email     String   @unique
-  name      String?
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_DATABASE_URL")
 }
 
-model RateRecord {
-  id        Int      @id @default(autoincrement())
+model RateData {
+  id        String   @id @default(uuid())
   date      DateTime
-  roomType  String   @map("room_type")
   rate      Float
-  channel   String   @default("Direct")
-  source    String   @default("api")
-  filename  String   @default("unknown")
-  metadata  Json?
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  @@map("rate_records")
+  roomType  String
+  occupancy Float?
+  source    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
-model OccupancyRecord {
-  id             Int      @id @default(autoincrement())
-  date           DateTime
-  roomType       String   @map("room_type")
-  occupancyRate  Float    @map("occupancy_rate")
-  roomsSold      Int      @default(0) @map("rooms_sold")
-  roomsAvailable Int      @default(0) @map("rooms_available")
-  source         String   @default("api")
-  filename       String   @default("unknown")
-  metadata       Json?
-  createdAt      DateTime @default(now()) @map("created_at")
-  updatedAt      DateTime @updatedAt @map("updated_at")
-
-  @@map("occupancy_records")
+model CompetitorData {
+  id           String   @id @default(uuid())
+  competitor   String
+  date         DateTime
+  rate         Float
+  roomType     String?
+  availability Int?
+  source       String?
+  createdAt    DateTime @default(now())
 }
 
-model UploadMetadata {
-  id               String   @id @default(cuid())
-  filename         String
-  dataType         String   @map("data_type")
-  recordsCount     Int      @map("records_count")
-  source           String   @default("csv_upload")
-  uploadedAt       DateTime @default(now()) @map("uploaded_at")
-  fileSize         Int?     @map("file_size")
-  processingTimeMs Int?     @map("processing_time_ms")
-  purpose          String?
-  tags             String[] @db.Text
-  links            InsightSubmissionLink[]
-
-  @@map("upload_metadata")
+model CustomerFeedback {
+  id         String   @id @default(uuid())
+  date       DateTime
+  rating     Float
+  comment    String?
+  category   String?
+  sentiment  String?
+  source     String?
+  createdAt  DateTime @default(now())
 }
 
-model Insight {
-  id            String   @id @default(cuid())
-  text          String
-  source        String   @default("system")
-  confidence    Float    @default(0.5)
-  impact        String   @default("medium") // low, medium, high
-  metadata      Json?
-  tags          String[] @db.Text
-  sourceUrl     String?  @map("source_url")
-  createdAt     DateTime @default(now()) @map("created_at")
-  updatedAt     DateTime @updatedAt @map("updated_at")
-  relatedUploads InsightSubmissionLink[]
-  ids            InsightId[]
-
-  @@map("insights")
+model MarketInsights {
+  id          String   @id @default(uuid())
+  date        DateTime
+  insight     String
+  category    String
+  importance  String?
+  source      String?
+  createdAt   DateTime @default(now())
 }
 
-model InsightSubmissionLink {
-  id        String   @id @default(cuid())
-  insightId String
-  uploadId  String
-  createdAt DateTime @default(now()) @map("created_at")
-  insight   Insight  @relation(fields: [insightId], references: [id], onDelete: Cascade)
-  upload    UploadMetadata @relation(fields: [uploadId], references: [id], onDelete: Cascade)
-
-  @@map("insight_submission_links")
-  @@unique([insightId, uploadId])
+model Forecast {
+  id          String   @id @default(uuid())
+  targetDate  DateTime
+  predictedRate Float
+  confidence  Float?
+  factors     String?
+  createdAt   DateTime @default(now())
 }
 
-model InsightId {
-  id        String   @id @default(cuid())
-  insightId String
-  value     String
-  createdAt DateTime @default(now()) @map("created_at")
-  insight   Insight  @relation(fields: [insightId], references: [id], onDelete: Cascade)
-
-  @@map("insight_ids")
-  @@unique([insightId, value])
-}
-
-model CompetitorRate {
-  id             String   @id @default(cuid())
-  competitorName String   @map("competitor_name")
-  roomType       String?  @map("room_type")
-  rate           Float
-  date           DateTime
-  sourceUrl      String?  @map("source_url")
-  scrapedAt      DateTime @default(now()) @map("scraped_at")
-  createdAt      DateTime @default(now()) @map("created_at")
-
-  @@map("competitor_rates")
-}
-
-model SocialMention {
-  id        String   @id @default(cuid())
-  platform  String
+model Knowledge {
+  id        String   @id @default(uuid())
+  type      String
   content   String
-  author    String?
-  sentiment String
-  url       String?
-  timestamp DateTime
-  createdAt DateTime @default(now()) @map("created_at")
-
-  @@map("social_mentions")
+  metadata  Json?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
