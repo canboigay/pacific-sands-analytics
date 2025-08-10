@@ -1,0 +1,32 @@
+// Add this to your navigation menu in _app.tsx
+const navigationItems = [
+  { name: 'Dashboard', href: '/' },
+  { name: 'RMS Alerts', href: '/rms-alerts', icon: '🚨' },
+  { name: 'Analytics', href: '/analytics' },
+  { name: 'Reports', href: '/reports' },
+  { name: 'Settings', href: '/settings' }
+];
+
+// Add notification badge for active alerts
+const [alertCount, setAlertCount] = useState(0);
+
+// Check for alerts periodically
+useEffect(() => {
+  const checkAlerts = async () => {
+    try {
+      const res = await fetch('/api/real-data');
+      const data = await res.json();
+      // Count critical alerts
+      let count = 0;
+      if (data.metrics?.occupancy < 0.65) count++;
+      if (Math.abs(data.metrics?.parityDelta || 0) > 0.02) count++;
+      setAlertCount(count);
+    } catch (err) {
+      console.error('Alert check failed:', err);
+    }
+  };
+  
+  checkAlerts();
+  const interval = setInterval(checkAlerts, 60000);
+  return () => clearInterval(interval);
+}, []);

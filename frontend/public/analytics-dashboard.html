@@ -1,0 +1,90 @@
+<!-- Paste the full HTML dashboard here -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pacific Sands Analytics Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+        .dashboard { max-width: 1400px; margin: 0 auto; background: rgba(255, 255, 255, 0.95); border-radius: 20px; padding: 30px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 2px solid #e2e8f0; }
+        .header h1 { color: #2d3748; font-size: 2.5rem; font-weight: 700; }
+        .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .metric-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 15px; padding: 20px; color: white; }
+        .metric-value { font-size: 2rem; font-weight: 700; margin: 10px 0; }
+        .charts-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)); gap: 30px; margin-bottom: 30px; }
+        .chart-card { background: white; border-radius: 15px; padding: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.07); }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <div class="header">
+            <h1>🌊 Pacific Sands Analytics</h1>
+        </div>
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div>Average Daily Rate</div>
+                <div class="metric-value">$285.50</div>
+                <div>↑ 12.5% vs last period</div>
+            </div>
+            <div class="metric-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                <div>Occupancy Rate</div>
+                <div class="metric-value">87.3%</div>
+                <div>↑ 5.2% vs last period</div>
+            </div>
+            <div class="metric-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                <div>RevPAR</div>
+                <div class="metric-value">$249.24</div>
+                <div>↑ 18.3% vs last period</div>
+            </div>
+            <div class="metric-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                <div>Total Revenue</div>
+                <div class="metric-value">$142.5K</div>
+                <div>↑ 22.1% vs last period</div>
+            </div>
+        </div>
+        <div class="charts-container">
+            <div class="chart-card">
+                <h3>📈 Rate Trends</h3>
+                <canvas id="rateChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h3>🏨 Occupancy</h3>
+                <canvas id="occupancyChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Initialize charts
+        const rateCtx = document.getElementById('rateChart').getContext('2d');
+        new Chart(rateCtx, {
+            type: 'line',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'Rates',
+                    data: [250, 260, 265, 270, 285, 320, 315],
+                    borderColor: '#667eea',
+                    tension: 0.4
+                }]
+            }
+        });
+        
+        const occupancyCtx = document.getElementById('occupancyChart').getContext('2d');
+        new Chart(occupancyCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'Occupancy %',
+                    data: [75, 78, 82, 85, 92, 95, 94],
+                    backgroundColor: '#4facfe'
+                }]
+            }
+        });
+    </script>
+</body>
+</html>
