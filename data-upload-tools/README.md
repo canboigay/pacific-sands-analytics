@@ -44,6 +44,22 @@ All endpoints require: `Authorization: Bearer ps_me2w0k3e_x81fsv0yz3k`
 - `GET /api/knowledge/retrieve` - Search stored insights
 - `GET /api/knowledge/synthesis` - Combined analysis
 
+## 📤 Unified Data Upload Tool
+
+Use `upload.py` to send CSV or Excel data to the API. The script can
+handle a single file or an entire directory, automatically detecting the
+appropriate data type (rates, competitors, or feedback) and uploading in
+batches.
+
+```bash
+python upload.py <path-to-file-or-directory> \
+  --api-url http://localhost:3000/api/upload \
+  --api-key ps_me2w0k3e_x81fsv0yz3k
+```
+
+This tool replaces older scripts such as `bulk-upload-script.js`,
+`upload_all_pacific_sands_data.py`, and `upload_ps_data.py`.
+
 ## 🤖 Automated Data Collection
 
 ### Web Scrapers
