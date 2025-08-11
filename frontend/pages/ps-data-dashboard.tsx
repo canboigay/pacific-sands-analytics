@@ -1,40 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useDashboardData } from '../src/hooks/useDashboardData';
 
 export default function PSDataDashboard() {
-  const [status, setStatus] = useState({
-    loading: true,
-    recordCount: 0,
-    dataSource: 'Checking...',
-    lastUpdate: null,
-    error: null
-  });
+  const { data, loading, lastUpdated } = useDashboardData(
+    '/api/real-data',
+    5000
+  );
 
-  useEffect(() => {
-    checkDataStatus();
-    const interval = setInterval(checkDataStatus, 5000); // Check every 5 seconds
-    return () => clearInterval(interval);
-  }, []);
-
-  const checkDataStatus = async () => {
-    try {
-      const response = await fetch('/api/real-data');
-      const data = await response.json();
-      
-      setStatus({
-        loading: false,
-        recordCount: data.metrics?.totalRecords || 0,
-        dataSource: data.metrics?.dataSource || 'Unknown',
-        lastUpdate: new Date().toLocaleTimeString(),
-        error: null
-      });
-    } catch (error) {
-      setStatus(prev => ({
-        ...prev,
-        loading: false,
-        error: error.message
-      }));
-    }
-  };
+  const recordCount = data?.metrics?.totalRecords || 0;
+  const lastUpdate = lastUpdated ? lastUpdated.toLocaleTimeString() : null;
 
   return (
     <div style={{
@@ -54,24 +28,24 @@ export default function PSDataDashboard() {
         </h1>
         
         <div style={{
-          background: status.recordCount > 0 ? '#d4edda' : '#fff3cd',
-          border: status.recordCount > 0 ? '3px solid #28a745' : '3px solid #ffc107',
+          background: recordCount > 0 ? '#d4edda' : '#fff3cd',
+          border: recordCount > 0 ? '3px solid #28a745' : '3px solid #ffc107',
           borderRadius: '15px',
           padding: '30px',
           marginBottom: '30px',
           fontSize: '1.2rem'
         }}>
           <h2 style={{ marginBottom: '20px' }}>
-            {status.loading ? '⏳ Checking database...' : 
-             status.recordCount > 0 ? '✅ PS DATA UPLOADED!' : 
+            {loading ? '⏳ Checking database...' :
+             recordCount > 0 ? '✅ PS DATA UPLOADED!' :
              '📤 Upload in progress...'}
           </h2>
-          
+
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
             <div>
               <strong>📊 Records in Database:</strong>
               <div style={{ fontSize: '2rem', color: '#28a745', marginTop: '10px' }}>
-                {status.recordCount.toLocaleString()}
+                {recordCount.toLocaleString()}
               </div>
             </div>
             <div>
@@ -81,9 +55,9 @@ export default function PSDataDashboard() {
               </div>
             </div>
           </div>
-          
+
           <div style={{ marginTop: '20px', fontSize: '1rem', opacity: 0.8 }}>
-            Last checked: {status.lastUpdate || 'Never'}
+            Last checked: {lastUpdate || 'Never'}
           </div>
         </div>
 
@@ -95,7 +69,7 @@ export default function PSDataDashboard() {
         }}>
           <StatusCard
             title='Upload Script'
-            status={status.loading ? 'running' : 'complete'}
+            status={loading ? 'running' : 'complete'}
             description='Processing PS Data folder files'
           />
           <StatusCard

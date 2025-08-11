@@ -1,56 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useDashboardData } from '../src/hooks/useDashboardData';
 
 export default function LiveDashboard() {
-  const [data, setData] = useState({
-    adr: 0,
-    occupancy: 0,
-    revpar: 0,
-    revenue: 0,
-    loading: true,
-    error: null
-  });
-
   // UPDATE THIS WITH YOUR ACTUAL API URL
   const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://pacific-sands-api.vercel.app';
   const API_KEY = 'ps_me2w0k3e_x81fsv0yz3k';
 
-  useEffect(() => {
-    fetchRealData();
-    const interval = setInterval(fetchRealData, 60000); // Refresh every minute
-    return () => clearInterval(interval);
-  }, []);
-
-  const fetchRealData = async () => {
-    try {
-      console.log('Fetching from:', API_URL);
-      
-      const response = await fetch(`${API_URL}/api/analytics?endpoint=insights`, {
-        headers: {
-          'Authorization': `Bearer ${API_KEY}`
-        }
-      });
-      
-      if (response.ok) {
-        const result = await response.json();
-        console.log('Received data:', result);
-        
-        setData({
-          adr: result.averageRate || 285.50,
-          occupancy: (result.occupancy || 0.873) * 100,
-          revpar: result.revpar || 249.24,
-          revenue: result.totalRevenue || 142500,
-          loading: false,
-          error: null
-        });
-      } else {
-        console.log('API returned:', response.status);
-        setData(prev => ({ ...prev, loading: false, error: 'API not responding' }));
+  const { data, loading, error, lastUpdated, refresh } = useDashboardData(
+    `${API_URL}/api/analytics?endpoint=insights`,
+    60000,
+    {
+      headers: {
+        Authorization: `Bearer ${API_KEY}`
       }
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      setData(prev => ({ ...prev, loading: false, error: error.message }));
     }
-  };
+  );
+
+  const adr = data?.averageRate ?? 285.5;
+  const occupancy = (data?.occupancy ?? 0.873) * 100;
+  const revpar = data?.revpar ?? 249.24;
+  const revenue = data?.totalRevenue ?? 142500;
+  const isError = Boolean(error);
 
   return (
     <div style={{
@@ -75,8 +45,8 @@ export default function LiveDashboard() {
           <h1 style={{ fontSize: '2.5rem', color: '#2d3748' }}>
             🌊 Pacific Sands - LIVE Data Dashboard
           </h1>
-          <button 
-            onClick={fetchRealData}
+          <button
+            onClick={refresh}
             style={{
               padding: '10px 20px',
               background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
@@ -91,7 +61,7 @@ export default function LiveDashboard() {
           </button>
         </div>
 
-        {data.loading ? (
+        {loading ? (
           <div style={{ textAlign: 'center', padding: '50px' }}>
             <div style={{
               width: '50px',
@@ -105,7 +75,7 @@ export default function LiveDashboard() {
             </div>
             <p style={{ marginTop: '20px', color: '#666' }}>Loading real data...</p>
           </div>
-        ) : data.error ? (
+        ) : error ? (
           <div style={{
             background: '#fed7d7',
             color: '#742a2a',
@@ -113,7 +83,7 @@ export default function LiveDashboard() {
             borderRadius: '10px',
             marginBottom: '20px'
           }}>
-            <strong>Connection Status:</strong> {data.error}
+            <strong>Connection Status:</strong> {error}
             <br/>
             <small>Using sample data. Check your API URL: {API_URL}</small>
           </div>
@@ -133,10 +103,10 @@ export default function LiveDashboard() {
           }}>
             <div style={{ fontSize: '0.9rem', opacity: 0.9 }}>Average Daily Rate</div>
             <div style={{ fontSize: '2rem', fontWeight: 'bold', margin: '10px 0' }}>
-              ${data.adr.toFixed(2)}
+              ${adr.toFixed(2)}
             </div>
             <div style={{ fontSize: '0.9rem' }}>
-              {data.error ? '📊 Sample Data' : '✅ LIVE Data'}
+              {isError ? '📊 Sample Data' : '✅ LIVE Data'}
             </div>
           </div>
 
@@ -148,10 +118,10 @@ export default function LiveDashboard() {
           }}>
             <div style={{ fontSize: '0.9rem', opacity: 0.9 }}>Occupancy Rate</div>
             <div style={{ fontSize: '2rem', fontWeight: 'bold', margin: '10px 0' }}>
-              {data.occupancy.toFixed(1)}%
+              {occupancy.toFixed(1)}%
             </div>
             <div style={{ fontSize: '0.9rem' }}>
-              {data.error ? '📊 Sample Data' : '✅ LIVE Data'}
+              {isError ? '📊 Sample Data' : '✅ LIVE Data'}
             </div>
           </div>
 
@@ -163,10 +133,10 @@ export default function LiveDashboard() {
           }}>
             <div style={{ fontSize: '0.9rem', opacity: 0.9 }}>RevPAR</div>
             <div style={{ fontSize: '2rem', fontWeight: 'bold', margin: '10px 0' }}>
-              ${data.revpar.toFixed(2)}
+              ${revpar.toFixed(2)}
             </div>
             <div style={{ fontSize: '0.9rem' }}>
-              {data.error ? '📊 Sample Data' : '✅ LIVE Data'}
+              {isError ? '📊 Sample Data' : '✅ LIVE Data'}
             </div>
           </div>
 
@@ -178,10 +148,10 @@ export default function LiveDashboard() {
           }}>
             <div style={{ fontSize: '0.9rem', opacity: 0.9 }}>Total Revenue</div>
             <div style={{ fontSize: '2rem', fontWeight: 'bold', margin: '10px 0' }}>
-              ${(data.revenue / 1000).toFixed(1)}K
+              ${(revenue / 1000).toFixed(1)}K
             </div>
             <div style={{ fontSize: '0.9rem' }}>
-              {data.error ? '📊 Sample Data' : '✅ LIVE Data'}
+              {isError ? '📊 Sample Data' : '✅ LIVE Data'}
             </div>
           </div>
         </div>
@@ -194,8 +164,8 @@ export default function LiveDashboard() {
         }}>
           <h3>📡 Connection Status</h3>
           <p>API Endpoint: <code>{API_URL}/api/analytics</code></p>
-          <p>Status: {data.error ? '❌ Not Connected - Using Sample Data' : '✅ Connected - Showing LIVE Data'}</p>
-          <p>Last Updated: {new Date().toLocaleTimeString()}</p>
+          <p>Status: {isError ? '❌ Not Connected - Using Sample Data' : '✅ Connected - Showing LIVE Data'}</p>
+          <p>Last Updated: {lastUpdated ? lastUpdated.toLocaleTimeString() : '--'}</p>
         </div>
 
         <style jsx>{\`
