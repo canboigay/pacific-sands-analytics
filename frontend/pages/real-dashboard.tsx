@@ -1,40 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useDashboardData } from '../src/hooks/useDashboardData';
 
 export default function RealDashboard() {
-  const [data, setData] = useState({
-    metrics: null,
-    loading: true,
-    dataSource: 'LOADING'
-  });
+  const { data, loading, lastUpdated, refresh } = useDashboardData(
+    '/api/real-data',
+    30000
+  );
 
-  useEffect(() => {
-    fetchRealData();
-    const interval = setInterval(fetchRealData, 30000); // Refresh every 30 seconds
-    return () => clearInterval(interval);
-  }, []);
-
-  const fetchRealData = async () => {
-    try {
-      // Fetch from local API that connects to Prisma
-      const response = await fetch('/api/real-data');
-      const result = await response.json();
-      
-      setData({
-        metrics: result.metrics,
-        loading: false,
-        dataSource: result.metrics?.dataSource || 'UNKNOWN'
-      });
-      
-      console.log('Data source:', result.metrics?.dataSource);
-      console.log('Total records:', result.metrics?.totalRecords);
-      
-    } catch (error) {
-      console.error('Error:', error);
-      setData(prev => ({ ...prev, loading: false }));
-    }
-  };
-
-  const isRealData = data.dataSource === 'REAL_DATABASE';
+  const metrics = data?.metrics || {};
+  const dataSource = metrics.dataSource || 'UNKNOWN';
+  const isRealData = dataSource === 'REAL_DATABASE';
 
   return (
     <div style={{
@@ -64,7 +39,7 @@ export default function RealDashboard() {
             </p>
           </div>
           <button 
-            onClick={fetchRealData}
+            onClick={refresh}
             style={{
               padding: '12px 24px',
               background: isRealData 
@@ -82,7 +57,7 @@ export default function RealDashboard() {
           </button>
         </div>
 
-        {data.loading ? (
+        {loading ? (
           <div style={{ textAlign: 'center', padding: '50px' }}>
             <p>Loading data from Prisma database...</p>
           </div>
@@ -95,11 +70,12 @@ export default function RealDashboard() {
               padding: '15px',
               marginBottom: '30px'
             }}>
-              <strong>📡 Data Source:</strong> {data.dataSource}
+              <strong>📡 Data Source:</strong> {dataSource}
               <br />
-              <strong>📊 Records in Database:</strong> {data.metrics?.totalRecords || 0}
+              <strong>📊 Records in Database:</strong> {metrics?.totalRecords || 0}
               <br />
-              <strong>🕐 Last Updated:</strong> {new Date().toLocaleTimeString()}
+              <strong>🕐 Last Updated:</strong>{' '}
+              {lastUpdated ? lastUpdated.toLocaleTimeString() : '--'}
             </div>
 
             <div style={{
@@ -110,28 +86,28 @@ export default function RealDashboard() {
             }}>
               <MetricCard
                 title='Average Daily Rate'
-                value={`$${(data.metrics?.averageRate || 0).toFixed(2)}`}
+                value={`$${(metrics?.averageRate || 0).toFixed(2)}`}
                 change='+12.5%'
                 color='linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
                 isReal={isRealData}
               />
               <MetricCard
                 title='Occupancy Rate'
-                value={`${((data.metrics?.occupancy || 0) * 100).toFixed(1)}%`}
+                value={`${((metrics?.occupancy || 0) * 100).toFixed(1)}%`}
                 change='+5.2%'
                 color='linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
                 isReal={isRealData}
               />
               <MetricCard
                 title='RevPAR'
-                value={`$${(data.metrics?.revpar || 0).toFixed(2)}`}
+                value={`$${(metrics?.revpar || 0).toFixed(2)}`}
                 change='+18.3%'
                 color='linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'
                 isReal={isRealData}
               />
               <MetricCard
                 title='Total Revenue'
-                value={`$${((data.metrics?.totalRevenue || 0) / 1000).toFixed(1)}K`}
+                value={`$${((metrics?.totalRevenue || 0) / 1000).toFixed(1)}K`}
                 change='+22.1%'
                 color='linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)'
                 isReal={isRealData}
