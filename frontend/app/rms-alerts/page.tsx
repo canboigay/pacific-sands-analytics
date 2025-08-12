@@ -5,6 +5,7 @@ import {
   CompetitorWidget,
   MarketAlertsWidget 
 } from '../../components/RMSWidgets';
+import { GPTAnalyticsWidget } from '../../components/GPTAnalyticsWidget';
 
 export default function RMSAlerts() {
   return (
@@ -172,6 +173,13 @@ export default function RMSAlerts() {
               </ul>
             </div>
           </div>
+        </div>
+
+        {/* GPT Analytics Row */}
+        <div style={{
+          marginBottom: '20px'
+        }}>
+          <GPTAnalyticsWidget />
         </div>
 
         {/* Navigation */}

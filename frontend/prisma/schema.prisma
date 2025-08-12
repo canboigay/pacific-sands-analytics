@@ -102,3 +102,109 @@ model Item {
   id   Int    @id @default(autoincrement())
   name String
 }
+
+// GPT Interaction Tracking
+model GPTInteraction {
+  id              String   @id @default(cuid())
+  timestamp       DateTime @default(now())
+  interactionType String   // "query", "response", "insight_stored", "forecast_generated"
+  endpoint        String   // API endpoint used
+  user            String?  @default("Sandy")
+  
+  // Request details
+  requestData     Json?    // Full request parameters
+  requestSummary  String?  // Human-readable summary
+  
+  // Response details
+  responseData    Json?    // Full response data
+  responseSummary String?  // Human-readable summary
+  
+  // Metrics
+  responseTime    Int?     // Response time in ms
+  dataPoints      Int?     // Number of data points returned/processed
+  confidence      Float?   // Confidence score if applicable
+  
+  // Categorization
+  category        String?  // "analytics", "forecasting", "knowledge", "operational"
+  tags            String?  // Comma-separated tags
+  
+  // Business impact
+  businessValue   String?  // Qualitative assessment of value
+  actionTaken     String?  // What action was taken based on this
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  @@index([timestamp])
+  @@index([interactionType])
+  @@index([category])
+}
+
+// GPT Generated Insights
+model GPTInsight {
+  id              String   @id @default(cuid())
+  generatedAt     DateTime @default(now())
+  insightType     String   // "trend", "anomaly", "recommendation", "forecast"
+  
+  // Content
+  title           String
+  content         String
+  summary         String?
+  
+  // Context
+  dataSource      String?  // Which data was analyzed
+  dateRange       String?  // Period covered
+  confidence      Float?   // 0-1 confidence score
+  
+  // Impact & Actions
+  priority        String?  @default("medium") // "high", "medium", "low"
+  actionable      Boolean  @default(true)
+  implemented     Boolean  @default(false)
+  implementedAt   DateTime?
+  outcome         String?  // Result if implemented
+  
+  // Categorization
+  category        String?  // "revenue", "occupancy", "pricing", "operations"
+  tags            String?  // Comma-separated tags
+  
+  // Metrics
+  potentialImpact String?  // Estimated impact
+  actualImpact    String?  // Measured impact after implementation
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  @@index([generatedAt])
+  @@index([insightType])
+  @@index([priority])
+  @@index([implemented])
+}
+
+// Daily GPT Usage Summary
+model GPTUsageSummary {
+  id              String   @id @default(cuid())
+  date            DateTime @unique
+  
+  // Quantitative Metrics
+  totalQueries    Int      @default(0)
+  totalResponses  Int      @default(0)
+  avgResponseTime Int?     // Average response time in ms
+  
+  // Endpoint usage
+  analyticsQueries Int     @default(0)
+  forecastQueries  Int     @default(0)
+  knowledgeQueries Int     @default(0)
+  insightsStored   Int     @default(0)
+  
+  // Data volume
+  dataPointsAnalyzed Int   @default(0)
+  recordsReturned    Int   @default(0)
+  
+  // Qualitative Metrics
+  keyInsights     Json?    // Array of key insights for the day
+  topQueries      Json?    // Most frequent query types
+  businessValue   String?  // Daily value assessment
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
