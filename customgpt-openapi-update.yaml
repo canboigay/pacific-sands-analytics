@@ -1,0 +1,208 @@
+openapi: 3.1.1
+info:
+  title: Pacific Sands Analytics API with Multi-Agent System
+  version: 2.0.0
+  description: Hotel analytics and AI agent system for Pacific Sands Resort
+
+servers:
+  - url: https://data-upload-tools-drrtek24q-pacific-sands.vercel.app/api
+    description: Legacy API Server
+  - url: https://frontend-d3ia661um-pacific-sands.vercel.app/api
+    description: New Multi-Agent Server
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API_KEY
+
+  schemas:
+    AgentResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        agent:
+          type: string
+          enum: [pricing, revenue, guest, marketing, operations, analytics]
+        recommendation:
+          type: string
+        confidence:
+          type: number
+          minimum: 0
+          maximum: 1
+        dataPoints:
+          type: integer
+        insights:
+          type: array
+          items:
+            type: string
+        actions:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+              description:
+                type: string
+              priority:
+                type: string
+                enum: [low, medium, high]
+        metadata:
+          type: object
+
+security:
+  - BearerAuth: []
+
+paths:
+  # NEW MULTI-AGENT ENDPOINT
+  /agents:
+    post:
+      servers:
+        - url: https://frontend-d3ia661um-pacific-sands.vercel.app/api
+      summary: Multi-Agent AI Orchestrator
+      description: |
+        Intelligently routes queries to specialized AI agents:
+        - **Pricing**: Rate optimization and strategy
+        - **Revenue**: Performance analysis and targets
+        - **Guest**: Experience insights and patterns
+        - **Marketing**: Campaign recommendations
+        - **Operations**: Staffing and housekeeping
+        - **Analytics**: Comprehensive analysis
+      operationId: queryMultiAgent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - query
+              properties:
+                query:
+                  type: string
+                  description: Natural language question or request
+                  example: "What rate should we charge for Ocean View rooms tomorrow?"
+                agent:
+                  type: string
+                  enum: [auto, pricing, revenue, guest, marketing, operations, analytics]
+                  default: auto
+                  description: Use 'auto' for automatic agent selection
+                context:
+                  type: object
+                  description: Optional context for more specific results
+                  properties:
+                    date:
+                      type: string
+                      format: date
+                      example: "2024-02-15"
+                    roomType:
+                      type: string
+                      example: "Ocean View"
+                    period:
+                      type: string
+                      example: "30days"
+      responses:
+        '200':
+          description: Successful agent response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentResponse'
+              examples:
+                pricingExample:
+                  value:
+                    success: true
+                    agent: "pricing"
+                    recommendation: "Recommended rate for Ocean View: $450"
+                    confidence: 0.85
+                    dataPoints: 150
+                    insights:
+                      - "Competitor rates averaging $425"
+                      - "High demand expected (85% occupancy)"
+                      - "Weekend premium applicable"
+                    actions:
+                      - type: "rate_update"
+                        description: "Update Ocean View rate to $450"
+                        priority: "high"
+
+  # EXISTING ENDPOINTS (kept for compatibility)
+  /data:
+    get:
+      servers:
+        - url: https://data-upload-tools-drrtek24q-pacific-sands.vercel.app/api
+      summary: Query historical data
+      operationId: queryData
+      parameters:
+        - name: type
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [occupancy, pace, rateshop]
+        - name: startDate
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /analytics:
+    get:
+      servers:
+        - url: https://data-upload-tools-drrtek24q-pacific-sands.vercel.app/api
+      summary: Get analytics insights
+      operationId: getAnalytics
+      parameters:
+        - name: endpoint
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [insights, competitors, sentiment]
+      responses:
+        '200':
+          description: Analytics data
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /knowledge:
+    post:
+      servers:
+        - url: https://data-upload-tools-drrtek24q-pacific-sands.vercel.app/api
+      summary: Store insights and knowledge
+      operationId: storeKnowledge
+      parameters:
+        - name: action
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [store, retrieve, synthesis]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
