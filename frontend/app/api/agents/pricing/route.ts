@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 import { AgentResponse } from '@/lib/agents/utils';
+import { fetchSandyData, getRateForecasting } from '@/lib/agents/sandy-data';
 
 const prisma = new PrismaClient();
 
@@ -8,8 +9,8 @@ export async function POST(request: NextRequest) {
   try {
     const { query, roomType = 'All', dates = [], occupancy = 0 } = await request.json();
 
-    // Get relevant data
-    const [occupancyData, competitorRates, historicalRates] = await Promise.all([
+    // Get relevant data from both local and Sandy's database
+    const [occupancyData, competitorRates, historicalRates, sandyData, forecast] = await Promise.all([
       prisma.occupancyData.findMany({
         where: {
           roomType,
@@ -28,12 +29,23 @@ export async function POST(request: NextRequest) {
         select: { adr: true, occupancyRate: true },
         take: 100,
         orderBy: { date: 'desc' }
-      })
+      }),
+      fetchSandyData(), // Get Sandy's production data
+      getRateForecasting(roomType, 30) // Get Sandy's forecast
     ]);
+
+    // Include Sandy's data in calculations
+    const hasSandyData = sandyData.totalRecords > 0;
+    if (hasSandyData) {
+      insights.push(`Using Sandy's production data: ${sandyData.totalRecords} records`);
+    }
 
     // Calculate optimal pricing
     const avgCompetitorRate = competitorRates.reduce((sum, r) => sum + (r.compRate || 0), 0) / competitorRates.length;
     const avgHistoricalADR = historicalRates.reduce((sum, r) => sum + (r.adr || 0), 0) / historicalRates.length;
+    
+    // Use Sandy's forecast if available
+    const forecastRate = forecast?.current_rate || avgHistoricalADR;
     
     // Pricing algorithm
     let recommendedRate = avgHistoricalADR;
