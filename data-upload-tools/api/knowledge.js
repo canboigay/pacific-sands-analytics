@@ -1,5 +1,12 @@
 // Knowledge management endpoints for Pacific Sands GPT
 const prisma = require('../src/lib/prisma');
+const { 
+    trackGPTInteraction, 
+    categorizeEndpoint, 
+    extractBusinessValue, 
+    summarizeResponse,
+    countDataPoints 
+} = require('./tracking-utils');
 
 // API Key authentication
 const authenticateAPI = (req) => {

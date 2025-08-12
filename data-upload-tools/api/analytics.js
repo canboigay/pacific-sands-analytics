@@ -1,5 +1,12 @@
 // Analytics endpoint for Pacific Sands GPT
 const { PrismaClient } = require('@prisma/client');
+const { 
+    trackGPTInteraction, 
+    categorizeEndpoint, 
+    extractBusinessValue, 
+    summarizeResponse,
+    countDataPoints 
+} = require('./tracking-utils');
 
 let prisma;
 if (!global.prisma) {
@@ -32,13 +39,20 @@ module.exports = async function handler(req, res) {
     const { endpoint } = query;
 
     try {
+        const startTime = Date.now();
+        let response = null;
+        let statusCode = 200;
+
         if (method === 'GET') {
             if (endpoint === 'insights') {
-                return await getInsights(req, res);
+                const result = await getInsights(req, res);
+                return result;
             } else if (endpoint === 'competitors') {
-                return await getCompetitorAnalysis(req, res);
+                const result = await getCompetitorAnalysis(req, res);
+                return result;
             } else if (endpoint === 'sentiment') {
-                return await getSentimentAnalysis(req, res);
+                const result = await getSentimentAnalysis(req, res);
+                return result;
             }
         }
 
@@ -198,6 +212,22 @@ async function getInsights(req, res) {
             timestamp: new Date().toISOString()
         };
 
+        // Track the interaction (fire and forget)
+        const responseTime = Date.now() - (req.startTime || Date.now());
+        trackGPTInteraction({
+            type: 'query',
+            endpoint: '/analytics?endpoint=insights',
+            request: req.query,
+            requestSummary: `Analytics insights for ${req.query.date_from || 'all time'} to ${req.query.date_to || 'now'}`,
+            response: response,
+            responseSummary: summarizeResponse('insights', response),
+            responseTime: responseTime,
+            dataPoints: countDataPoints(response),
+            category: 'analytics',
+            businessValue: 'Data-driven decision support',
+            tags: 'insights,analytics,metrics'
+        });
+
         return res.json(response);
 
     } catch (error) {
@@ -270,6 +300,21 @@ async function getCompetitorAnalysis(req, res) {
             competitive_insights: insights.map(insight => insight.text),
             timestamp: new Date().toISOString()
         };
+
+        // Track the interaction
+        trackGPTInteraction({
+            type: 'query',
+            endpoint: '/analytics?endpoint=competitors',
+            request: req.query,
+            requestSummary: `Competitor analysis for ${period}`,
+            response: response,
+            responseSummary: `Analyzed ${competitors.length} competitors`,
+            responseTime: Date.now() - (req.startTime || Date.now()),
+            dataPoints: rateStats._count + competitorGroups.reduce((sum, g) => sum + g._count, 0),
+            category: 'analytics',
+            businessValue: 'Competitive intelligence gathering',
+            tags: 'competitors,pricing,market-position'
+        });
 
         return res.json(response);
 
