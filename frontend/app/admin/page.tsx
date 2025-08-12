@@ -77,9 +77,9 @@ export default function AdminSettings() {
   return (
     <div style={{
       minHeight: '100vh',
-      background: 'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)',
+      background: 'linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%)',
       padding: '20px',
-      fontFamily: 'system-ui, sans-serif'
+      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
     }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         <div style={{
@@ -278,7 +278,7 @@ export default function AdminSettings() {
           
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '15px' }}>
             <div>
-              <label style={{ display: 'block', marginBottom: '5px', fontSize: '0.9rem', color: '#666' }}>
+              <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.875rem', color: '#374151', fontWeight: '500' }}>
                 Critical (%)
               </label>
               <input
@@ -295,7 +295,7 @@ export default function AdminSettings() {
             </div>
             
             <div>
-              <label style={{ display: 'block', marginBottom: '5px', fontSize: '0.9rem', color: '#666' }}>
+              <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.875rem', color: '#374151', fontWeight: '500' }}>
                 Low (%)
               </label>
               <input
@@ -312,7 +312,7 @@ export default function AdminSettings() {
             </div>
             
             <div>
-              <label style={{ display: 'block', marginBottom: '5px', fontSize: '0.9rem', color: '#666' }}>
+              <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.875rem', color: '#374151', fontWeight: '500' }}>
                 Target (%)
               </label>
               <input
@@ -329,7 +329,7 @@ export default function AdminSettings() {
             </div>
             
             <div>
-              <label style={{ display: 'block', marginBottom: '5px', fontSize: '0.9rem', color: '#666' }}>
+              <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.875rem', color: '#374151', fontWeight: '500' }}>
                 Optimal (%)
               </label>
               <input
@@ -352,7 +352,7 @@ export default function AdminSettings() {
           
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '15px' }}>
             <div>
-              <label style={{ display: 'block', marginBottom: '5px', fontSize: '0.9rem', color: '#666' }}>
+              <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.875rem', color: '#374151', fontWeight: '500' }}>
                 Base Rate ($)
               </label>
               <input
@@ -369,7 +369,7 @@ export default function AdminSettings() {
             </div>
             
             <div>
-              <label style={{ display: 'block', marginBottom: '5px', fontSize: '0.9rem', color: '#666' }}>
+              <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.875rem', color: '#374151', fontWeight: '500' }}>
                 Pickup Threshold ($)
               </label>
               <input
