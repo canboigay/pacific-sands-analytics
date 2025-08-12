@@ -48,13 +48,43 @@ export function KPIWidget() {
 
   return (
     <div style={{
-      background: 'white',
-      borderRadius: '15px',
-      padding: '25px',
-      boxShadow: '0 5px 20px rgba(0,0,0,0.1)',
-      borderLeft: '5px solid #28a745'
+      background: 'rgba(255, 255, 255, 0.95)',
+      borderRadius: '16px',
+      padding: '32px',
+      boxShadow: '0 4px 24px rgba(15, 23, 42, 0.08)',
+      backdropFilter: 'blur(8px)',
+      border: '1px solid rgba(226, 232, 240, 0.8)',
+      borderLeft: '4px solid #10b981'
     }}>
-      <h3 style={{ margin: '0 0 20px 0', color: '#28a745' }}>📊 Key Performance Indicators</h3>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px' }}>
+        <div style={{
+          width: '48px',
+          height: '48px',
+          borderRadius: '12px',
+          background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: '20px'
+        }}>📊</div>
+        <div>
+          <h3 style={{ 
+            margin: 0, 
+            color: '#0f172a',
+            fontSize: '1.25rem',
+            fontWeight: '600'
+          }}>
+            Key Performance Indicators
+          </h3>
+          <p style={{ 
+            color: '#64748b', 
+            margin: '4px 0 0 0',
+            fontSize: '0.875rem'
+          }}>
+            Real-time operational metrics
+          </p>
+        </div>
+      </div>
       
       <div style={{
         display: 'grid',
@@ -315,42 +345,73 @@ export function CompetitorWidget() {
 
   return (
     <div style={{
-      background: 'white',
-      borderRadius: '15px',
-      padding: '25px',
-      boxShadow: '0 5px 20px rgba(0,0,0,0.1)',
-      borderLeft: '5px solid #6f42c1'
+      background: 'rgba(255, 255, 255, 0.95)',
+      borderRadius: '16px',
+      padding: '32px',
+      boxShadow: '0 4px 24px rgba(15, 23, 42, 0.08)',
+      backdropFilter: 'blur(8px)',
+      border: '1px solid rgba(226, 232, 240, 0.8)',
+      borderLeft: '4px solid #8b5cf6'
     }}>
-      <h3 style={{ margin: '0 0 20px 0', color: '#6f42c1' }}>🏆 Competitor Analysis</h3>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px' }}>
+        <div style={{
+          width: '48px',
+          height: '48px',
+          borderRadius: '12px',
+          background: 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: '20px'
+        }}>🏆</div>
+        <div>
+          <h3 style={{ 
+            margin: 0, 
+            color: '#0f172a',
+            fontSize: '1.25rem',
+            fontWeight: '600'
+          }}>
+            Competitor Analysis
+          </h3>
+          <p style={{ 
+            color: '#64748b', 
+            margin: '4px 0 0 0',
+            fontSize: '0.875rem'
+          }}>
+            Market positioning & rate comparison
+          </p>
+        </div>
+      </div>
       
       <div style={{
-        background: '#f8f9fa',
-        padding: '15px',
-        borderRadius: '10px',
-        marginBottom: '20px'
+        background: '#f8fafc',
+        padding: '20px',
+        borderRadius: '12px',
+        marginBottom: '20px',
+        border: '1px solid #e2e8f0'
       }}>
-        <h4 style={{ margin: '0 0 10px 0', color: '#333' }}>📍 Our Position</h4>
+        <h4 style={{ margin: '0 0 12px 0', color: '#374151', fontWeight: '600' }}>📍 Our Position</h4>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div>
-            <div style={{ fontWeight: 'bold', color: '#6f42c1' }}>
+            <div style={{ fontWeight: '700', fontSize: '1.5rem', color: '#8b5cf6' }}>
               {formatCurrency(competitors.ourPosition.rate)}
             </div>
-            <div style={{ fontSize: '0.85rem', color: '#666' }}>Average Rate</div>
+            <div style={{ fontSize: '0.875rem', color: '#64748b' }}>Average Rate</div>
           </div>
           <div>
-            <div style={{ fontWeight: 'bold', color: '#6f42c1' }}>
+            <div style={{ fontWeight: '700', fontSize: '1.5rem', color: '#8b5cf6' }}>
               {formatPercent(competitors.ourPosition.occupancy)}
             </div>
-            <div style={{ fontSize: '0.85rem', color: '#666' }}>Occupancy</div>
+            <div style={{ fontSize: '0.875rem', color: '#64748b' }}>Occupancy</div>
           </div>
           <div>
-            <div style={{ fontWeight: 'bold', color: '#28a745' }}>2nd</div>
-            <div style={{ fontSize: '0.85rem', color: '#666' }}>Market Rank</div>
+            <div style={{ fontWeight: '700', fontSize: '1.5rem', color: '#10b981' }}>2nd</div>
+            <div style={{ fontSize: '0.875rem', color: '#64748b' }}>Market Rank</div>
           </div>
         </div>
       </div>
       
-      <h4 style={{ margin: '0 0 15px 0', color: '#333' }}>🔍 Market Comparison</h4>
+      <h4 style={{ margin: '0 0 16px 0', color: '#374151', fontWeight: '600', fontSize: '1rem' }}>🔍 Market Comparison</h4>
       
       {competitors.data.map((comp, index) => (
         <div key={index} style={{
@@ -359,28 +420,28 @@ export function CompetitorWidget() {
           alignItems: 'center',
           padding: '12px',
           marginBottom: '8px',
-          background: '#f8f9fa',
-          borderRadius: '8px',
-          border: '1px solid #dee2e6'
+          background: '#f8fafc',
+          borderRadius: '12px',
+          border: '1px solid #e2e8f0'
         }}>
           <div style={{ flex: 1 }}>
-            <div style={{ fontWeight: 'bold', fontSize: '0.9rem' }}>{comp.property}</div>
-            <div style={{ fontSize: '0.8rem', color: '#666' }}>{comp.position}</div>
+            <div style={{ fontWeight: '600', fontSize: '0.875rem', color: '#0f172a' }}>{comp.property}</div>
+            <div style={{ fontSize: '0.75rem', color: '#64748b' }}>{comp.position}</div>
           </div>
           <div style={{ textAlign: 'center', minWidth: '80px' }}>
-            <div style={{ fontWeight: 'bold', color: '#1e3c72' }}>
+            <div style={{ fontWeight: '600', color: '#0369a1' }}>
               {formatCurrency(comp.avgRate)}
             </div>
-            <div style={{ fontSize: '0.8rem', color: '#666' }}>Rate</div>
+            <div style={{ fontSize: '0.75rem', color: '#64748b' }}>Rate</div>
           </div>
           <div style={{ textAlign: 'center', minWidth: '70px' }}>
             <div style={{
-              fontWeight: 'bold',
-              color: comp.occupancy > 0.8 ? '#28a745' : comp.occupancy > 0.7 ? '#ffc107' : '#dc3545'
+              fontWeight: '600',
+              color: comp.occupancy > 0.8 ? '#059669' : comp.occupancy > 0.7 ? '#d97706' : '#dc2626'
             }}>
               {formatPercent(comp.occupancy)}
             </div>
-            <div style={{ fontSize: '0.8rem', color: '#666' }}>Occ</div>
+            <div style={{ fontSize: '0.75rem', color: '#64748b' }}>Occ</div>
           </div>
         </div>
       ))}
@@ -388,14 +449,14 @@ export function CompetitorWidget() {
       <div style={{
         marginTop: '15px',
         padding: '12px',
-        background: '#fff3cd',
-        borderRadius: '8px',
-        border: '1px solid #ffeaa7'
+        background: '#fef3c7',
+        borderRadius: '12px',
+        border: '1px solid #fde68a'
       }}>
-        <div style={{ fontSize: '0.85rem', fontWeight: 'bold', color: '#856404' }}>
+        <div style={{ fontSize: '0.875rem', fontWeight: '600', color: '#92400e', marginBottom: '8px' }}>
           💡 Market Insight
         </div>
-        <div style={{ fontSize: '0.8rem', color: '#856404', marginTop: '5px' }}>
+        <div style={{ fontSize: '0.875rem', color: '#92400e' }}>
           Our rates are competitive, but occupancy trails market leaders. Consider targeted promotions for midweek stays.
         </div>
       </div>
