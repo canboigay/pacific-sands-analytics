@@ -6,6 +6,7 @@ import {
   MarketAlertsWidget 
 } from '../../components/RMSWidgets';
 import { GPTAnalyticsWidget } from '../../components/GPTAnalyticsWidget';
+import { MultiAgentWidget } from '../../components/AgentWidgets/MultiAgentWidget';
 
 export default function RMSAlerts() {
   return (
@@ -180,6 +181,13 @@ export default function RMSAlerts() {
           marginBottom: '20px'
         }}>
           <GPTAnalyticsWidget />
+        </div>
+
+        {/* Multi-Agent System Row */}
+        <div style={{
+          marginBottom: '20px'
+        }}>
+          <MultiAgentWidget />
         </div>
 
         {/* Navigation */}

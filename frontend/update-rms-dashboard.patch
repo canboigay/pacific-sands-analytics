@@ -1,0 +1,23 @@
+--- a/app/rms-alerts/page.tsx
++++ b/app/rms-alerts/page.tsx
+@@ -7,6 +7,7 @@ import {
+ } from '../../components/RMSWidgets';
+ import { GPTAnalyticsWidget } from '../../components/GPTAnalyticsWidget';
++import { MultiAgentWidget } from '../../components/AgentWidgets/MultiAgentWidget';
+ 
+ export default function RMSAlerts() {
+   return (
+@@ -183,6 +184,13 @@ export default function RMSAlerts() {
+           <GPTAnalyticsWidget />
+         </div>
+ 
++        {/* Multi-Agent System Row */}
++        <div style={{
++          marginBottom: '20px'
++        }}>
++          <MultiAgentWidget />
++        </div>
++
+         {/* Navigation */}
+         <div style={{ 
+           display: 'flex', 
