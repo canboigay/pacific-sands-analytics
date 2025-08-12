@@ -1,11 +1,16 @@
+// Prisma schema file for Pacific Sands Analytics
+// PostgreSQL provider for production
+
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+// ============= CORE BUSINESS DATA =============
 
 model PaceReport {
   id            String   @id @default(cuid())
@@ -78,6 +83,7 @@ model DataImport {
   status        String
   errors        Json?
   metadata      Json?
+  processedBy   String?
   
   @@index([fileType, status])
 }
