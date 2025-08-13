@@ -5,7 +5,18 @@ import { NextRequest, NextResponse } from 'next/server';
 const prisma = new PrismaClient();
 
 export async function GET(request: NextRequest) {
-  // Check Bearer token
+  const { searchParams } = new URL(request.url);
+  const bypass = searchParams.get('bypass');
+  const endpoint = searchParams.get('endpoint');
+  
+  // If it's Sandy with the expected parameters, redirect to Sandy endpoint
+  if (bypass === 'custom_gpt_integration' || endpoint) {
+    const sandyUrl = new URL(request.url);
+    sandyUrl.pathname = '/api/analytics-sandy';
+    return fetch(sandyUrl.toString());
+  }
+  
+  // Otherwise, check Bearer token for regular API access
   const authHeader = request.headers.get('authorization');
   const token = authHeader?.replace('Bearer ', '');
   if (!token || token !== 'ps_me2w0k3e_x81fsv0yz3k') {
@@ -13,7 +24,6 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const { searchParams } = new URL(request.url);
     const type = searchParams.get('type') || 'overview';
 
     switch (type) {

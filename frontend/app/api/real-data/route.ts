@@ -59,15 +59,15 @@ export async function GET() {
     return NextResponse.json({
       success: false,
       metrics: {
-        averageRate: 285.50,
-        occupancy: 0.873,
-        revpar: 249.24,
-        totalRevenue: 142500,
-        dataSource: 'SAMPLE_DATA',
+        averageRate: null,
+        occupancy: null,
+        revpar: null,
+        totalRevenue: null,
+        dataSource: 'ERROR',
         error: error.message
       },
-      message: 'Using sample data (database connection issue)'
-    });
+      message: 'Database connection failed'
+    }, { status: 500 });
   }
 }
 

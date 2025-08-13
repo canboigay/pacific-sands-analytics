@@ -14,11 +14,12 @@ const formatPercent = (value: number) => `${(value * 100).toFixed(1)}%`;
 // Real-time KPI Widget
 export function KPIWidget() {
   const [metrics, setMetrics] = useState({
-    occupancy: 0.615,
-    adr: 532.50,
-    revpar: 327.49,
-    revenue: 142500,
-    loading: true
+    occupancy: null,
+    adr: null,
+    revpar: null,
+    revenue: null,
+    loading: true,
+    error: false
   });
 
   useEffect(() => {
@@ -28,16 +29,33 @@ export function KPIWidget() {
         if (response.ok) {
           const data = await response.json();
           setMetrics({
-            occupancy: data.metrics.occupancy || 0.615,
-            adr: data.metrics.averageRate || 532.50,
-            revpar: data.metrics.revpar || 327.49,
-            revenue: data.metrics.totalRevenue || 142500,
-            loading: false
+            occupancy: data.metrics.occupancy,
+            adr: data.metrics.averageRate,
+            revpar: data.metrics.revpar,
+            revenue: data.metrics.totalRevenue,
+            loading: false,
+            error: false
+          });
+        } else {
+          setMetrics({
+            occupancy: null,
+            adr: null,
+            revpar: null,
+            revenue: null,
+            loading: false,
+            error: true
           });
         }
       } catch (error) {
         console.error('Failed to fetch metrics:', error);
-        setMetrics(prev => ({ ...prev, loading: false }));
+        setMetrics({
+          occupancy: null,
+          adr: null,
+          revpar: null,
+          revenue: null,
+          loading: false,
+          error: true
+        });
       }
     };
 
@@ -92,42 +110,42 @@ export function KPIWidget() {
         gap: '20px'
       }}>
         <div style={{ textAlign: 'center' }}>
-          <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#1e3c72' }}>
-            {metrics.loading ? '...' : formatPercent(metrics.occupancy)}
+          <div style={{ fontSize: '2rem', fontWeight: 'bold', color: metrics.error ? '#dc3545' : '#1e3c72' }}>
+            {metrics.loading ? '...' : (metrics.error || metrics.occupancy === null ? 'Not Available' : formatPercent(metrics.occupancy))}
           </div>
           <div style={{ color: '#666', fontSize: '0.9rem' }}>Occupancy Rate</div>
           <div style={{ fontSize: '0.8rem', color: '#28a745', marginTop: '5px' }}>
-            ↗️ +2.3% vs LY
+            {metrics.error ? '' : '↗️ +2.3% vs LY'}
           </div>
         </div>
         
         <div style={{ textAlign: 'center' }}>
-          <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#1e3c72' }}>
-            {metrics.loading ? '...' : formatCurrency(metrics.adr)}
+          <div style={{ fontSize: '2rem', fontWeight: 'bold', color: metrics.error ? '#dc3545' : '#1e3c72' }}>
+            {metrics.loading ? '...' : (metrics.error || metrics.adr === null ? 'Not Available' : formatCurrency(metrics.adr))}
           </div>
           <div style={{ color: '#666', fontSize: '0.9rem' }}>Average Daily Rate</div>
           <div style={{ fontSize: '0.8rem', color: '#dc3545', marginTop: '5px' }}>
-            ↘️ -1.2% vs LY
+            {metrics.error ? '' : '↘️ -1.2% vs LY'}
           </div>
         </div>
         
         <div style={{ textAlign: 'center' }}>
-          <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#1e3c72' }}>
-            {metrics.loading ? '...' : formatCurrency(metrics.revpar)}
+          <div style={{ fontSize: '2rem', fontWeight: 'bold', color: metrics.error ? '#dc3545' : '#1e3c72' }}>
+            {metrics.loading ? '...' : (metrics.error || metrics.revpar === null ? 'Not Available' : formatCurrency(metrics.revpar))}
           </div>
           <div style={{ color: '#666', fontSize: '0.9rem' }}>RevPAR</div>
           <div style={{ fontSize: '0.8rem', color: '#28a745', marginTop: '5px' }}>
-            ↗️ +1.1% vs LY
+            {metrics.error ? '' : '↗️ +1.1% vs LY'}
           </div>
         </div>
         
         <div style={{ textAlign: 'center' }}>
-          <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1e3c72' }}>
-            {metrics.loading ? '...' : formatCurrency(metrics.revenue)}
+          <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: metrics.error ? '#dc3545' : '#1e3c72' }}>
+            {metrics.loading ? '...' : (metrics.error || metrics.revenue === null ? 'Not Available' : formatCurrency(metrics.revenue))}
           </div>
           <div style={{ color: '#666', fontSize: '0.9rem' }}>Total Revenue</div>
           <div style={{ fontSize: '0.8rem', color: '#28a745', marginTop: '5px' }}>
-            ↗️ +4.7% vs LY
+            {metrics.error ? '' : '↗️ +4.7% vs LY'}
           </div>
         </div>
       </div>
@@ -339,9 +357,45 @@ export function CompetitorWidget() {
       { property: 'Chesterman Beach B&B', avgRate: 325, occupancy: 0.91, position: 'Value' },
       { property: 'Crystal Cove Beach Resort', avgRate: 445, occupancy: 0.75, position: 'Direct Comp' }
     ],
-    ourPosition: { rate: 532, occupancy: 0.615 },
-    loading: false
+    ourPosition: { rate: null, occupancy: null },
+    loading: true,
+    error: false
   });
+
+  useEffect(() => {
+    const fetchOurMetrics = async () => {
+      try {
+        const response = await fetch('/api/real-data');
+        if (response.ok) {
+          const data = await response.json();
+          setCompetitors(prev => ({
+            ...prev,
+            ourPosition: {
+              rate: data.metrics.averageRate,
+              occupancy: data.metrics.occupancy
+            },
+            loading: false,
+            error: false
+          }));
+        } else {
+          setCompetitors(prev => ({
+            ...prev,
+            loading: false,
+            error: true
+          }));
+        }
+      } catch (error) {
+        console.error('Failed to fetch our metrics:', error);
+        setCompetitors(prev => ({
+          ...prev,
+          loading: false,
+          error: true
+        }));
+      }
+    };
+
+    fetchOurMetrics();
+  }, []);
 
   return (
     <div style={{
@@ -393,14 +447,14 @@ export function CompetitorWidget() {
         <h4 style={{ margin: '0 0 12px 0', color: '#374151', fontWeight: '600' }}>📍 Our Position</h4>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div>
-            <div style={{ fontWeight: '700', fontSize: '1.5rem', color: '#8b5cf6' }}>
-              {formatCurrency(competitors.ourPosition.rate)}
+            <div style={{ fontWeight: '700', fontSize: '1.5rem', color: competitors.error ? '#dc3545' : '#8b5cf6' }}>
+              {competitors.loading ? '...' : (competitors.error || competitors.ourPosition.rate === null ? 'Not Available' : formatCurrency(competitors.ourPosition.rate))}
             </div>
             <div style={{ fontSize: '0.875rem', color: '#64748b' }}>Average Rate</div>
           </div>
           <div>
-            <div style={{ fontWeight: '700', fontSize: '1.5rem', color: '#8b5cf6' }}>
-              {formatPercent(competitors.ourPosition.occupancy)}
+            <div style={{ fontWeight: '700', fontSize: '1.5rem', color: competitors.error ? '#dc3545' : '#8b5cf6' }}>
+              {competitors.loading ? '...' : (competitors.error || competitors.ourPosition.occupancy === null ? 'Not Available' : formatPercent(competitors.ourPosition.occupancy))}
             </div>
             <div style={{ fontSize: '0.875rem', color: '#64748b' }}>Occupancy</div>
           </div>
