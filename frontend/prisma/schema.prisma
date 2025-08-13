@@ -3,8 +3,9 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model PaceReport {
@@ -59,7 +60,7 @@ model RateShop {
   difference   Float?
   percentDiff  Float?
   availability String?
-  notes        String?
+  notes        String?  @db.Text
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
@@ -110,16 +111,16 @@ model GPTInteraction {
   endpoint        String
   user            String?  @default("Sandy")
   requestData     Json?
-  requestSummary  String?
+  requestSummary  String?  @db.Text
   responseData    Json?
-  responseSummary String?
+  responseSummary String?  @db.Text
   responseTime    Int?
   dataPoints      Int?
   confidence      Float?
   category        String?
   tags            String?
-  businessValue   String?
-  actionTaken     String?
+  businessValue   String?  @db.Text
+  actionTaken     String?  @db.Text
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 
@@ -133,8 +134,8 @@ model GPTInsight {
   generatedAt     DateTime  @default(now())
   insightType     String
   title           String
-  content         String
-  summary         String?
+  content         String    @db.Text
+  summary         String?   @db.Text
   dataSource      String?
   dateRange       String?
   confidence      Float?
@@ -142,11 +143,11 @@ model GPTInsight {
   actionable      Boolean   @default(true)
   implemented     Boolean   @default(false)
   implementedAt   DateTime?
-  outcome         String?
+  outcome         String?   @db.Text
   category        String?
   tags            String?
-  potentialImpact String?
-  actualImpact    String?
+  potentialImpact String?   @db.Text
+  actualImpact    String?   @db.Text
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
 
@@ -170,7 +171,125 @@ model GPTUsageSummary {
   recordsReturned    Int      @default(0)
   keyInsights        Json?
   topQueries         Json?
-  businessValue      String?
+  businessValue      String?  @db.Text
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
+}
+
+// RMS Dynamic Formula System Tables
+
+model RMSFormula {
+  id                 String            @id @default(cuid())
+  name               String            @unique
+  category           String            // pricing, occupancy, revenue, forecast
+  formulaExpression  String            @db.Text // The actual formula as string
+  variables          Json              // List of variables used in formula
+  description        String?           @db.Text
+  isActive           Boolean           @default(true)
+  version            Int               @default(1)
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+  createdBy          String?
+  
+  calculations       RMSCalculation[]
+  formulaVersions    RMSFormulaVersion[]
+  
+  @@index([category])
+  @@index([isActive])
+}
+
+model RMSFormulaVersion {
+  id                 String      @id @default(cuid())
+  formulaId          String
+  formula            RMSFormula  @relation(fields: [formulaId], references: [id])
+  version            Int
+  formulaExpression  String      @db.Text
+  variables          Json
+  changedBy          String
+  changeReason       String?     @db.Text
+  createdAt          DateTime    @default(now())
+  
+  @@unique([formulaId, version])
+  @@index([formulaId])
+}
+
+model RMSRule {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  ruleType    String    // trigger, threshold, modifier
+  conditions  Json      // JSON structure of conditions
+  actions     Json      // JSON structure of actions
+  priority    Int       @default(0)
+  isActive    Boolean   @default(true)
+  description String?   @db.Text
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  createdBy   String?
+  
+  executions  RMSRuleExecution[]
+  
+  @@index([ruleType])
+  @@index([isActive])
+  @@index([priority])
+}
+
+model RMSParameter {
+  id            String    @id @default(cuid())
+  parameterKey  String    @unique
+  parameterValue Json     // Can store numbers, strings, arrays, objects
+  parameterType String    // percentage, multiplier, fixed, range
+  category      String
+  description   String?   @db.Text
+  minValue      Float?
+  maxValue      Float?
+  defaultValue  Json?
+  updatedAt     DateTime  @updatedAt
+  updatedBy     String?
+  
+  @@index([category])
+  @@index([parameterKey])
+}
+
+model RMSCalculation {
+  id             String      @id @default(cuid())
+  formulaId      String
+  formula        RMSFormula  @relation(fields: [formulaId], references: [id])
+  inputValues    Json
+  outputValue    Json
+  executionTime  Float       // in milliseconds
+  calculatedAt   DateTime    @default(now())
+  metadata       Json?       // Additional context about the calculation
+  
+  @@index([formulaId])
+  @@index([calculatedAt])
+}
+
+model RMSRuleExecution {
+  id             String    @id @default(cuid())
+  ruleId         String
+  rule           RMSRule   @relation(fields: [ruleId], references: [id])
+  inputData      Json
+  conditionMet   Boolean
+  actionsTaken   Json?
+  executionTime  Float     // in milliseconds
+  executedAt     DateTime  @default(now())
+  metadata       Json?
+  
+  @@index([ruleId])
+  @@index([executedAt])
+}
+
+model RMSFormulaTest {
+  id             String    @id @default(cuid())
+  formulaName    String
+  testData       Json
+  expectedResult Json
+  actualResult   Json?
+  passed         Boolean?
+  errorMessage   String?   @db.Text
+  testedAt       DateTime  @default(now())
+  testedBy       String?
+  
+  @@index([formulaName])
+  @@index([testedAt])
 }

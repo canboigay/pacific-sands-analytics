@@ -6,6 +6,15 @@
     "app/api/**/*.ts": {
       "maxDuration": 10
     },
+    "app/api/admin/**/*.ts": {
+      "maxDuration": 30
+    },
+    "app/api/rms/**/*.ts": {
+      "maxDuration": 20
+    },
+    "app/api/sandy/**/*.ts": {
+      "maxDuration": 15
+    },
     "pages/api/**/*.ts": {
       "maxDuration": 10
     }
@@ -28,5 +37,10 @@
         }
       ]
     }
-  ]
+  ],
+  "env": {
+    "FORMULA_CACHE_TTL": "60",
+    "ENABLE_FORMULA_SANDBOX": "true",
+    "AUDIT_ALL_CALCULATIONS": "true"
+  }
 }

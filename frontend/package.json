@@ -4,13 +4,22 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && next build",
+    "build": "npm run build:packages && prisma generate && next build",
+    "build:packages": "npm run build:formula-engine && npm run build:rules-engine",
+    "build:formula-engine": "cd packages/@pacific/formula-engine && npm install && npm run build",
+    "build:rules-engine": "cd packages/@pacific/rules-engine && npm install && npm run build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "db:migrate": "prisma migrate deploy",
+    "db:seed:rms": "tsx prisma/seed-rms.ts",
+    "rms:setup": "./setup-rms.sh"
   },
   "dependencies": {
     "@prisma/client": "^6.13.0",
+    "mathjs": "^12.2.1",
+    "json-rules-engine": "^6.5.0",
+    "lodash": "^4.17.21",
     "next": "14.0.0",
     "papaparse": "^5.5.3",
     "prisma": "^6.13.0",
@@ -18,11 +27,18 @@
     "react-dom": "^18"
   },
   "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/lodash": "^4.14.202",
     "@types/node": "^20.19.10",
     "@types/papaparse": "^5.3.16",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "better-sqlite3": "^12.2.0",
     "ts-node": "^10.9.2",
+    "tsx": "^4.19.2",
     "typescript": "^5.9.2"
-  }
+  },
+  "workspaces": [
+    "packages/*"
+  ]
 }
