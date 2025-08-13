@@ -4,7 +4,7 @@ export async function GET(request: NextRequest) {
   // Root API endpoint for Sandy
   return NextResponse.json({
     message: "Pacific Sands Analytics API",
-    version: "3.1.1",
+    version: "3.1.2",
     status: "operational",
     database: "connected",
     custom_gpt_ready: true,
