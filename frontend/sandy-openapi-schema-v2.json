@@ -1,0 +1,399 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Pacific Sands Analytics API with RMS Intelligence System",
+    "version": "2.0.0",
+    "description": "Analytics and Revenue Management System API for Pacific Sands Resort, including dynamic formula engine and AI insights"
+  },
+  "servers": [
+    {
+      "url": "https://pacific-sands-analytics.vercel.app",
+      "description": "Production server"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "paths": {
+    "/api/sandy/formulas": {
+      "get": {
+        "summary": "Get RMS formula explanations",
+        "description": "Retrieve formulas with plain English explanations for AI understanding",
+        "operationId": "getSandyFormulas",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Specific formula name (e.g., baseline_adr)",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "description": "Formula category (pricing, revenue, forecast)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["pricing", "revenue", "forecast", "occupancy"]
+            }
+          },
+          {
+            "name": "explain",
+            "in": "query",
+            "description": "Include detailed explanations",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Formula explanations",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string" },
+                          "category": { "type": "string" },
+                          "description": { "type": "string" },
+                          "explanation": { "type": "string" },
+                          "variables": { "type": "object" },
+                          "complexity": { "type": "object" }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/sandy/insights": {
+      "post": {
+        "summary": "Generate RMS system insights",
+        "description": "Analyze RMS performance and generate actionable insights",
+        "operationId": "generateSandyInsights",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "context": {
+                    "type": "object",
+                    "description": "Additional context for insight generation"
+                  },
+                  "insightType": {
+                    "type": "string",
+                    "enum": ["performance", "rules", "parameters", "all"],
+                    "description": "Type of insights to generate"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Generated insights",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "insights": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "type": { "type": "string" },
+                              "title": { "type": "string" },
+                              "content": { "type": "string" },
+                              "confidence": { "type": "number" },
+                              "priority": { "type": "string" },
+                              "actionable": { "type": "boolean" }
+                            }
+                          }
+                        },
+                        "systemStatus": { "type": "object" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/sandy/query": {
+      "post": {
+        "summary": "Natural language RMS query",
+        "description": "Query the RMS system using natural language",
+        "operationId": "querySandyRMS",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["query"],
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "description": "Natural language query about formulas, parameters, or system status"
+                  },
+                  "context": {
+                    "type": "object",
+                    "description": "Optional context for the query"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Query response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "data": {
+                      "type": "object",
+                      "description": "Response data varies based on query type"
+                    },
+                    "query": { "type": "string" },
+                    "intent": { "type": "object" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/data": {
+      "get": {
+        "summary": "Query occupancy, pace, or rate shop data",
+        "operationId": "getData",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["occupancy", "pace", "rateshop"]
+            }
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "schema": { "type": "string", "format": "date" }
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "schema": { "type": "string", "format": "date" }
+          },
+          {
+            "name": "roomType",
+            "in": "query",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Requested data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "data": { "type": "array" },
+                    "summary": { "type": "object" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/gpt/dashboard": {
+      "get": {
+        "summary": "Get comprehensive dashboard data",
+        "operationId": "getDashboard",
+        "parameters": [
+          {
+            "name": "date",
+            "in": "query",
+            "schema": { "type": "string", "format": "date" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Dashboard data with current metrics and insights"
+          }
+        }
+      }
+    },
+    "/api/analytics/insights": {
+      "get": {
+        "summary": "Get analytical insights",
+        "operationId": "getInsights",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["occupancy", "revenue", "pace", "all"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Analytical insights and recommendations"
+          }
+        }
+      }
+    },
+    "/api/housekeeping/tasks": {
+      "get": {
+        "summary": "Get daily housekeeping tasks",
+        "operationId": "getHousekeepingTasks",
+        "parameters": [
+          {
+            "name": "date",
+            "in": "query",
+            "schema": { "type": "string", "format": "date" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Housekeeping task list with room details"
+          }
+        }
+      }
+    },
+    "/api/rms/calculate/adr": {
+      "post": {
+        "summary": "Calculate dynamic ADR using RMS formulas",
+        "description": "Calculate Average Daily Rate using database-driven formulas with multiple modifiers",
+        "operationId": "calculateADR",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["date", "roomType", "occupancy"],
+                "properties": {
+                  "date": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "Target date for ADR calculation"
+                  },
+                  "roomType": {
+                    "type": "string",
+                    "description": "Room type (e.g., Ocean View, Garden View)"
+                  },
+                  "occupancy": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 100,
+                    "description": "Current occupancy percentage"
+                  },
+                  "competitorRates": {
+                    "type": "array",
+                    "items": { "type": "number" },
+                    "description": "Array of competitor rates"
+                  },
+                  "eventDates": {
+                    "type": "array",
+                    "items": { "type": "string" },
+                    "description": "Array of event dates"
+                  },
+                  "manualAdjustment": {
+                    "type": "number",
+                    "description": "Manual adjustment factor"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Calculated ADR with breakdown",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "adr": { "type": "number" },
+                        "breakdown": {
+                          "type": "object",
+                          "properties": {
+                            "baseADR": { "type": "number" },
+                            "demandModifier": { "type": "number" },
+                            "competitorIndex": { "type": "number" },
+                            "seasonalityModifier": { "type": "number" },
+                            "eventPremium": { "type": "number" },
+                            "totalModifier": { "type": "number" }
+                          }
+                        },
+                        "formula": { "type": "object" },
+                        "rulesApplied": { "type": "array" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "API Key",
+        "description": "Use the API key: ps_me2w0k3e_x81fsv0yz3k"
+      }
+    }
+  }
+}
