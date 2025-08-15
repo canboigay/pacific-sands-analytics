@@ -10,7 +10,7 @@
     "dev": "tsc -w"
   },
   "dependencies": {
-    "@pacific/formula-engine": "workspace:*",
+    "@pacific/formula-engine": "file:../formula-engine",
     "json-rules-engine": "^6.5.0",
     "lodash": "^4.17.21"
   },

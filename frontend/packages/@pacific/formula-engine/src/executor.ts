@@ -55,6 +55,9 @@ export class FormulaExecutor {
       result.usedVariables = Array.from(usedVars);
 
     } catch (error: any) {
+      if (!result.errors) {
+        result.errors = [];
+      }
       result.errors.push(`Execution error: ${error.message}`);
     }
 

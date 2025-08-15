@@ -24,7 +24,9 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@pacific/formula-engine": ["./packages/@pacific/formula-engine/src"],
+      "@pacific/rules-engine": ["./packages/@pacific/rules-engine/src"]
     }
   },
   "include": [

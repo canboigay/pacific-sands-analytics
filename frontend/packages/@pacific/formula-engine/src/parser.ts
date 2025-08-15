@@ -73,59 +73,69 @@ export class FormulaParser {
   private traverseNode(node: MathNode, result: FormulaParseResult) {
     switch (node.type) {
       case 'SymbolNode':
-        if (!result.variables.includes(node.name)) {
-          result.variables.push(node.name);
+        const symbolNode = node as any;
+        if (!result.variables.includes(symbolNode.name)) {
+          result.variables.push(symbolNode.name);
         }
         break;
 
       case 'FunctionNode':
-        if (!result.functions.includes(node.fn.name)) {
-          result.functions.push(node.fn.name);
+        const functionNode = node as any;
+        if (!result.functions.includes(functionNode.fn.name)) {
+          result.functions.push(functionNode.fn.name);
         }
-        node.args.forEach(arg => this.traverseNode(arg, result));
+        functionNode.args.forEach((arg: any) => this.traverseNode(arg, result));
         break;
 
       case 'OperatorNode':
-        node.args.forEach(arg => this.traverseNode(arg, result));
+        const operatorNode = node as any;
+        operatorNode.args.forEach((arg: any) => this.traverseNode(arg, result));
         break;
 
       case 'ConditionalNode':
-        this.traverseNode(node.condition, result);
-        this.traverseNode(node.trueExpr, result);
-        this.traverseNode(node.falseExpr, result);
+        const conditionalNode = node as any;
+        this.traverseNode(conditionalNode.condition, result);
+        this.traverseNode(conditionalNode.trueExpr, result);
+        this.traverseNode(conditionalNode.falseExpr, result);
         break;
 
       case 'ArrayNode':
       case 'ObjectNode':
-        if ('items' in node) {
-          node.items.forEach(item => this.traverseNode(item, result));
+        const arrayOrObjectNode = node as any;
+        if ('items' in arrayOrObjectNode) {
+          arrayOrObjectNode.items.forEach((item: any) => this.traverseNode(item, result));
         }
         break;
 
       case 'AccessorNode':
-        this.traverseNode(node.object, result);
-        if ('index' in node) {
-          this.traverseNode(node.index, result);
+        const accessorNode = node as any;
+        this.traverseNode(accessorNode.object, result);
+        if ('index' in accessorNode) {
+          this.traverseNode(accessorNode.index, result);
         }
         break;
 
       case 'IndexNode':
-        this.traverseNode(node.object, result);
-        node.dimensions.forEach(dim => this.traverseNode(dim, result));
+        const indexNode = node as any;
+        this.traverseNode(indexNode.object, result);
+        indexNode.dimensions.forEach((dim: any) => this.traverseNode(dim, result));
         break;
 
       case 'RangeNode':
-        if (node.start) this.traverseNode(node.start, result);
-        if (node.end) this.traverseNode(node.end, result);
-        if (node.step) this.traverseNode(node.step, result);
+        const rangeNode = node as any;
+        if (rangeNode.start) this.traverseNode(rangeNode.start, result);
+        if (rangeNode.end) this.traverseNode(rangeNode.end, result);
+        if (rangeNode.step) this.traverseNode(rangeNode.step, result);
         break;
 
       case 'AssignmentNode':
-        this.traverseNode(node.value, result);
+        const assignmentNode = node as any;
+        this.traverseNode(assignmentNode.value, result);
         break;
 
       case 'BlockNode':
-        node.blocks.forEach(block => {
+        const blockNode = node as any;
+        blockNode.blocks.forEach((block: any) => {
           if ('node' in block) {
             this.traverseNode(block.node, result);
           }
@@ -143,12 +153,13 @@ export class FormulaParser {
     let maxDepth = depth;
 
     const traverse = (n: MathNode, d: number) => {
-      if (n.type === 'FunctionNode' && n.fn.name === 'if') {
+      const anyNode = n as any;
+      if (n.type === 'FunctionNode' && anyNode.fn && anyNode.fn.name === 'if') {
         const newDepth = d + 1;
         maxDepth = Math.max(maxDepth, newDepth);
-        n.args.forEach(arg => traverse(arg, newDepth));
-      } else if ('args' in n && Array.isArray(n.args)) {
-        n.args.forEach(arg => traverse(arg, d));
+        anyNode.args.forEach((arg: any) => traverse(arg, newDepth));
+      } else if ('args' in anyNode && Array.isArray(anyNode.args)) {
+        anyNode.args.forEach((arg: any) => traverse(arg, d));
       }
     };
 
