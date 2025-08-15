@@ -1,19 +1,58 @@
 # dependencies
 /node_modules
+**/node_modules
 
 # production
 /.next
 /out
+**/dist
+
+# environment files
+.env
+.env.*
+!.env.example
 
 # misc
 .DS_Store
-.env.local
-.env.*.local
 
+# logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+*.log
+
+# database
 dev.db
-package-lock.json
+*.db
+*.sqlite
+prisma/backups/
+
+# temporary files
+*.tmp
+*.backup
+*.backup-*
+*.save
+check-*.js
+check-*.ts
+migrate-*.js
+migrate-*.ts
+test-*.js
+test-*.ts
+setup-*.sh
+direct-*.ts
+generate-*.ts
+
+# backup files
+*-backup-*
+*.bak
+schema.backup*
+
+# build outputs
+packages/**/dist/
+
+# migrations
+prisma/migrations/migration_lock.toml
+
+# vercel
 .vercel
